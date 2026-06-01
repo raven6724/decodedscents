@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Decoded Scents — Find affordable dupes for expensive niche fragrances. AI-powered, community-verified."/>
+<meta property="og:title" content="Decoded Scents — Every Scent, Decoded."/>
+<title>Decoded Scents — Every Scent, Decoded.</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#d4af37;--gold-dim:#b8860b;--bg:#0a0a0f;--bg2:#0d1117;--text:#e8e0d0;--muted:#888;--green:#7ec8a0;--red:#e07070}
+html{scroll-behavior:smooth}
+body{font-family:Georgia,serif;background:linear-gradient(135deg,var(--bg),var(--bg2),var(--bg));color:var(--text);min-height:100vh;padding:20px 16px 80px}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes fade{0%,100%{opacity:0.4}50%{opacity:1}}
+@keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.header{text-align:center;padding:24px 0 20px}
+.logo{font-size:38px;font-weight:bold;letter-spacing:4px;color:var(--gold)}
+.logo span{color:#fff}
+.tagline{color:var(--muted);font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+
+.search-wrap{display:flex;gap:8px;max-width:580px;margin:0 auto 14px}
+.search-input{flex:1;padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(212,175,55,0.4);border-radius:8px;color:var(--text);font-size:16px;font-family:Georgia,serif;outline:none;transition:border-color 0.2s}
+.search-input:focus{border-color:var(--gold)}
+.search-btn{padding:14px 22px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:8px;color:#0a0a0f;font-weight:bold;font-size:14px;cursor:pointer;font-family:Georgia,serif;letter-spacing:1px;transition:opacity 0.2s}
+.search-btn:disabled{opacity:0.4;cursor:not-allowed}
+.search-btn:hover:not(:disabled){opacity:0.9}
+
+.suggestions{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:640px;margin:0 auto 28px}
+.suggestion{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:var(--muted);border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:Georgia,serif;transition:all 0.2s;user-select:none}
+.suggestion:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,0.08)}
+
+.loader{text-align:center;padding:50px 0;color:var(--gold);display:none}
+.loader.active{display:block}
+.loader-icon{font-size:28px;display:inline-block;animation:spin 2s linear infinite}
+.loader-text{margin-top:12px;font-size:13px;letter-spacing:1px;animation:fade 1.8s ease infinite}
+.loader-sub{margin-top:6px;font-size:11px;color:#555}
+
+.error-box{display:none;text-align:center;color:var(--red);max-width:520px;margin:0 auto;padding:16px;background:rgba(224,112,112,0.07);border-radius:10px;border:1px solid rgba(224,112,112,0.2)}
+.error-box.active{display:block}
+
+.results{display:none;animation:slideIn 0.4s ease}
+.results.active{display:block}
+
+.card-wrap{max-width:780px;margin:0 auto}
+.section-label{font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:12px}
+
+.original-card{background:linear-gradient(135deg,rgba(212,175,55,0.09),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.5);border-radius:14px;padding:20px;margin-bottom:24px}
+.original-label{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+.card-inner{display:flex;gap:16px;align-items:flex-start}
+.card-info{flex:1}
+.card-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.frag-name{font-size:19px;font-weight:bold;color:#f0e8d0}
+.frag-brand{color:var(--gold);font-size:13px}
+.frag-price-orig{color:var(--red);font-size:16px;font-weight:bold}
+.frag-price-dupe{color:var(--green);font-size:14px;font-weight:bold}
+.badge{background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:10px;display:inline-block}
+.frag-desc{color:#bbb;font-size:13px;line-height:1.5;margin:0 0 10px}
+
+.notes-row{margin-bottom:5px}
+.notes-label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.note-tag{display:inline-block;margin:2px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:11px}
+.note-tag.shared{background:rgba(212,175,55,0.22);border-color:rgba(212,175,55,0.6);color:#f0d060}
+
+.sim-wrap{margin-bottom:6px}
+.sim-header{display:flex;justify-content:space-between;margin-bottom:3px}
+.sim-label{color:var(--muted);font-size:11px}
+.sim-track{background:rgba(255,255,255,0.08);border-radius:10px;height:5px;overflow:hidden}
+.sim-fill{height:100%;border-radius:10px}
+
+.dupes-list{display:flex;flex-direction:column;gap:10px}
+.dupe-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 16px;cursor:pointer;transition:border-color 0.2s}
+.dupe-card:hover{border-color:rgba(212,175,55,0.3)}
+.dupe-card.open{border-color:rgba(212,175,55,0.5)}
+.expand-hint{text-align:center;margin-top:8px;color:#555;font-size:10px}
+
+.expanded-body{display:none;margin-top:12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px}
+.expanded-body.open{display:block}
+.expanded-label{color:var(--gold);font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.community-badge{margin-top:8px;padding:4px 10px;background:rgba(100,180,255,0.08);border:1px solid rgba(100,180,255,0.2);border-radius:8px;font-size:10px;color:#88aacc}
+
+.buy-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.buy-btn{flex:1;min-width:120px;padding:9px 0;border-radius:8px;font-size:12px;font-weight:bold;text-decoration:none;text-align:center;letter-spacing:0.5px;font-family:Georgia,serif;display:block;cursor:pointer;transition:opacity 0.2s}
+.buy-btn:hover{opacity:0.85}
+.buy-btn-amazon{background:linear-gradient(135deg,#ff9900,#e68a00);color:#111}
+.buy-btn-fnet{background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.35);color:var(--gold)}
+.buy-btn-fragrantica{background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);color:#ff8888}
+.buy-btn-google{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#888;width:100%;flex:none;min-width:unset}
+
+.bottle-wrap{flex-shrink:0;border-radius:10px;overflow:hidden;border:2px solid rgba(212,175,55,0.4);box-shadow:0 4px 18px rgba(0,0,0,0.5);cursor:zoom-in;position:relative;display:flex;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s}
+.bottle-wrap:hover{transform:scale(1.06);box-shadow:0 8px 28px rgba(212,175,55,0.4)}
+.bottle-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.bottle-loader{font-size:18px;animation:spin 1.5s linear infinite;color:var(--gold)}
+.bottle-zoom{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.55);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px}
+
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:20px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:85vw;max-height:65vh;border-radius:16px;border:2px solid rgba(212,175,55,0.5);box-shadow:0 0 80px rgba(212,175,55,0.25);object-fit:contain}
+.lightbox-name{color:var(--gold);font-size:18px;font-weight:bold;letter-spacing:1px;text-align:center}
+.lightbox-brand{color:var(--muted);font-size:13px;text-align:center}
+.lightbox-sub{color:#555;font-size:11px}
+.lightbox-link{background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.4);color:var(--gold);padding:8px 20px;border-radius:20px;font-size:12px;text-decoration:none;letter-spacing:1px}
+
+.new-search-btn{display:block;margin:28px auto 0;background:transparent;border:1px solid rgba(212,175,55,0.3);color:var(--gold);padding:10px 28px;border-radius:8px;cursor:pointer;font-size:12px;letter-spacing:1px;font-family:Georgia,serif;transition:border-color 0.2s}
+.new-search-btn:hover{border-color:var(--gold)}
+
+.footer{text-align:center;margin-top:50px;color:#444;font-size:11px;line-height:1.8}
+.footer a{color:#666;text-decoration:none}
+.footer a:hover{color:var(--gold)}
+
+@media(max-width:520px){.logo{font-size:28px}.card-inner{gap:12px}.buy-btns{flex-direction:column}.buy-btn{min-width:unset}}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <img id="lb-img" src="" alt=""/>
+  <div class="lightbox-name" id="lb-name"></div>
+  <div class="lightbox-brand" id="lb-brand"></div>
+  <div class="lightbox-sub">✦ AI-generated bottle image</div>
+  <a id="lb-link" href="#" target="_blank" rel="noopener noreferrer" class="lightbox-link">📖 View on Fragrantica</a>
+  <div class="lightbox-sub">Click anywhere to close</div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">✦ DECODED<span>SCENTS</span></div>
+  <div class="tagline">Every Scent, Decoded.</div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-input" id="search-input" type="text" placeholder="e.g. Creed Aventus, Dior Sauvage, Baccarat Rouge..."/>
+  <button class="search-btn" id="search-btn">FIND DUPES</button>
+</div>
+
+<!-- SUGGESTIONS -->
+<div class="suggestions" id="suggestions">
+  <span class="suggestion">Creed Aventus</span>
+  <span class="suggestion">Tom Ford Black Orchid</span>
+  <span class="suggestion">Baccarat Rouge 540</span>
+  <span class="suggestion">Dior Sauvage</span>
+  <span class="suggestion">Amouage Interlude</span>
+  <span class="suggestion">Parfums de Marly Layton</span>
+  <span class="suggestion">Xerjoff Naxos</span>
+  <span class="suggestion">Mind Games Queening</span>
+</div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-icon">✦</div>
+  <div class="loader-text" id="loader-text">Searching fragrance communities...</div>
+  <div class="loader-sub">Scanning Reddit, Fragrantica, TikTok & Instagram...</div>
+</div>
+
+<!-- ERROR -->
+<div class="error-box" id="error-box"></div>
+
+<!-- RESULTS -->
+<div class="results" id="results"></div>
+
+<!-- THE SCENT JOURNAL -->
+<div id="scent-journal" style="max-width:780px;margin:60px auto 0;padding:0 0 40px">
+  <div style="text-align:center;margin-bottom:30px">
+    <div style="font-size:10px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px">✦ Featured Reading</div>
+    <div style="font-size:28px;font-weight:bold;color:var(--gold);letter-spacing:2px">The Scent Journal</div>
+    <div style="color:var(--muted);font-size:13px;margin-top:6px">Stories, guides and discoveries from the world of fragrance</div>
+  </div>
+
+  <!-- Category Filter -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:24px">
+    <button onclick="filterArticles('all')" class="cat-btn active" data-cat="all">All</button>
+    <button onclick="filterArticles('dupes')" class="cat-btn" data-cat="dupes">Dupes</button>
+    <button onclick="filterArticles('gifts')" class="cat-btn" data-cat="gifts">Gift Guides</button>
+    <button onclick="filterArticles('reviews')" class="cat-btn" data-cat="reviews">Reviews</button>
+    <button onclick="filterArticles('guides')" class="cat-btn" data-cat="guides">Buying Guides</button>
+  </div>
+
+  <!-- Article Cards -->
+  <div style="display:flex;flex-direction:column;gap:16px" id="articles-list">
+
+    <!-- Article 1 -->
+    <div class="article-card" data-cat="dupes" onclick="window.location.href='articles/creed-aventus-dupes.html'" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:24px;cursor:pointer;transition:border-color 0.2s,transform 0.2s" onmouseover="this.style.borderColor='rgba(212,175,55,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)';this.style.transform='translateY(0)'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+        <div style="flex:1">
+          <span style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Dupes</span>
+          <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px;line-height:1.3">Top 10 Creed Aventus Dupes That Actually Smell the Same</div>
+          <p style="color:#bbb;font-size:13px;line-height:1.6;margin:0 0 16px">Creed Aventus costs up to $500 a bottle. We found 10 fragrances that smell almost identical — some for as little as $20. Here's the complete breakdown with similarity scores and honest reviews.</p>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span style="color:var(--muted);font-size:11px">✦ 8 min read</span>
+            <span style="color:var(--muted);font-size:11px">✦ Updated 2025</span>
+            <a href="articles/creed-aventus-dupes.html" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f;border:none;border-radius:8px;padding:8px 20px;font-size:12px;font-weight:bold;text-decoration:none;letter-spacing:1px;font-family:Georgia,serif">Read Article →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article 2 - Coming Soon -->
+    <div class="article-card" data-cat="dupes" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;opacity:0.6">
+      <span style="background:rgba(126,200,160,0.15);border:1px solid rgba(126,200,160,0.3);color:var(--green);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Coming Soon</span>
+      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px">Best Baccarat Rouge 540 Dupes Under $50</div>
+      <p style="color:#888;font-size:13px;line-height:1.6;margin:0">The most coveted fragrance of the decade — decoded. We found the best affordable alternatives that capture that iconic amber-floral signature.</p>
+    </div>
+
+    <!-- Article 3 - Coming Soon -->
+    <div class="article-card" data-cat="guides" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;opacity:0.6">
+      <span style="background:rgba(160,120,200,0.15);border:1px solid rgba(160,120,200,0.3);color:#a078c8;border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Coming Soon</span>
+      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px">The Complete Gift Guide — Finding the Perfect Fragrance for Someone You Love</div>
+      <p style="color:#888;font-size:13px;line-height:1.6;margin:0">Whether it's a birthday, anniversary, or Valentine's Day — this guide helps you find the perfect scent for every person in your life, at every budget.</p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.cat-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--muted);border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:Georgia,serif;transition:all 0.2s}
+.cat-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cat-btn.active{background:rgba(212,175,55,0.15);border-color:rgba(212,175,55,0.5);color:var(--gold)}
+.article-card{transition:all 0.2s}
+</style>
+
+<script>
+function filterArticles(cat){
+  document.querySelectorAll(".cat-btn").forEach(function(b){b.classList.remove("active");});
+  document.querySelector('[data-cat="'+cat+'"]').classList.add("active");
+  document.querySelectorAll(".article-card").forEach(function(card){
+    if(cat==="all"||card.getAttribute("data-cat")===cat){
+      card.style.display="block";
+    } else {
+      card.style.display="none";
+    }
+  });
+}
+</script>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>✦ Decoded Scents — AI-powered fragrance dupe finder</p>
+  <p style="margin-top:6px">
+    <a href="https://www.fragrantica.com" target="_blank">Fragrantica</a> &nbsp;·&nbsp;
+    <a href="https://www.fragrancenet.com" target="_blank">FragranceNet</a> &nbsp;·&nbsp;
+    <a href="https://www.amazon.com" target="_blank">Amazon</a>
+  </p>
+  <p style="margin-top:6px">© 2025 DecodedScents.com · We may earn affiliate commissions.</p>
+</div>
+
+<script>
+var WORKER_URL = "https://decodedscents.cfe1585.workers.dev";
+var AMZN_TAG = "decodedscents-20";
+
+// ── BRAND RETAILERS ──
+var BRANDS = {
+  "dua brand":       {p:["🌐 Dua Brand",    function(n){return "https://theduabrand.com/search?q="+enc(n);}],          s:["🛒 Amazon",        function(n){return "https://www.amazon.com/s?k="+enc("Dua Brand "+n)+"&tag="+AMZN_TAG;}]},
+  "dua":             {p:["🌐 Dua Brand",    function(n){return "https://theduabrand.com/search?q="+enc(n);}],          s:["🛒 Amazon",        function(n){return "https://www.amazon.com/s?k="+enc("Dua Brand "+n)+"&tag="+AMZN_TAG;}]},
+  "riffs":           {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Riffs "+n)+"&tag="+AMZN_TAG;}],        s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Riffs "+n);}]},
+  "afnan":           {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Afnan "+n)+"&tag="+AMZN_TAG;}],        s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Afnan "+n);}]},
+  "lattafa":         {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Lattafa "+n)+"&tag="+AMZN_TAG;}],      s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Lattafa "+n);}]},
+  "armaf":           {p:["🌐 Armaf",        function(n){return "https://armaf.com/search?q="+enc(n);}],                s:["🛒 Amazon",        function(n){return "https://www.amazon.com/s?k="+enc("Armaf "+n)+"&tag="+AMZN_TAG;}]},
+  "al haramain":     {p:["🌐 Al Haramain", function(n){return "https://alharamain.com/search?q="+enc(n);}],            s:["🛒 Amazon",        function(n){return "https://www.amazon.com/s?k="+enc("Al Haramain "+n)+"&tag="+AMZN_TAG;}]},
+  "rasasi":          {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Rasasi "+n)+"&tag="+AMZN_TAG;}],       s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Rasasi "+n);}]},
+  "arabiyat":        {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Arabiyat "+n)+"&tag="+AMZN_TAG;}],     s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Arabiyat "+n);}]},
+  "dumont":          {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Dumont "+n)+"&tag="+AMZN_TAG;}],       s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Dumont "+n);}]},
+  "french avenue":   {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("French Avenue "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("French Avenue "+n);}]},
+  "maison alhambra": {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Maison Alhambra "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop", function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Maison Alhambra "+n);}]},
+  "pendora":         {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Pendora "+n)+"&tag="+AMZN_TAG;}],      s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Pendora "+n);}]},
+  "zara":            {p:["🌐 Zara",         function(n){return "https://www.zara.com/us/en/search?searchTerm="+enc(n);}],s:["🛒 Amazon",   function(n){return "https://www.amazon.com/s?k="+enc("Zara "+n+" perfume")+"&tag="+AMZN_TAG;}]},
+  "khadlaj":         {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Khadlaj "+n)+"&tag="+AMZN_TAG;}],      s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Khadlaj "+n);}]},
+  "ajmal":           {p:["🌐 Ajmal",        function(n){return "https://www.ajmalperfume.com/search?q="+enc(n);}],     s:["🛒 Amazon",        function(n){return "https://www.amazon.com/s?k="+enc("Ajmal "+n)+"&tag="+AMZN_TAG;}]},
+  "swiss arabian":   {p:["🛒 Amazon",       function(n){return "https://www.amazon.com/s?k="+enc("Swiss Arabian "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",   function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Swiss Arabian "+n);}]},
+  "creed":           {p:["🌐 Creed",        function(n){return "https://www.creedboutique.com/search?q="+enc(n);}],    s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/creed-cologne";}]},
+  "tom ford":        {p:["🌐 Tom Ford",     function(n){return "https://www.tomford.com/search?q="+enc(n);}],          s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/tom-ford-cologne";}]},
+  "dior":            {p:["🌐 Dior",         function(n){return "https://www.dior.com/en_us/search#q="+enc(n);}],       s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/christian-dior-cologne";}]},
+  "chanel":          {p:["🌐 Chanel",       function(n){return "https://www.chanel.com/us/fragrance/search/?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/chanel-cologne";}]},
+  "amouage":         {p:["🌐 Amouage",      function(n){return "https://www.amouage.com/en-us/search?q="+enc(n);}],    s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/amouage-cologne";}]},
+  "xerjoff":         {p:["🌐 Xerjoff",      function(n){return "https://www.xerjoff.com/en/search?q="+enc(n);}],       s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/xerjoff-cologne";}]},
+  "parfums de marly":{p:["🌐 PDM",          function(n){return "https://www.parfumsdemarly.com/search?q="+enc(n);}],   s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/parfums-de-marly-cologne";}]},
+  "kilian":          {p:["🌐 By Kilian",    function(n){return "https://www.bykilian.com/en-us/search?q="+enc(n);}],   s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/by-kilian-cologne";}]},
+  "mfk":             {p:["🌐 MFK",          function(n){return "https://www.mfk.com/en-us/search?q="+enc(n);}],        s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/maison-francis-kurkdjian-cologne";}]},
+  "maison francis":  {p:["🌐 MFK",          function(n){return "https://www.mfk.com/en-us/search?q="+enc(n);}],        s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/maison-francis-kurkdjian-cologne";}]},
+  "ysl":             {p:["🌐 YSL",          function(n){return "https://www.yslbeauty.com/us/en/fragrance/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/yves-saint-laurent-cologne";}]},
+  "guerlain":        {p:["🌐 Guerlain",     function(n){return "https://www.guerlain.com/us/en-us/search?q="+enc(n);}],s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/guerlain-cologne";}]},
+  "versace":         {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/versace-cologne";}],        s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Versace "+n)+"&tag="+AMZN_TAG;}]},
+  "armani":          {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/giorgio-armani-cologne";}], s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Armani "+n)+"&tag="+AMZN_TAG;}]},
+  "paco":            {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/paco-rabanne-cologne";}],   s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Paco Rabanne "+n)+"&tag="+AMZN_TAG;}]},
+  "burberry":        {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/burberry-cologne";}],       s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Burberry "+n)+"&tag="+AMZN_TAG;}]},
+  "hugo boss":       {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/hugo-boss-cologne";}],      s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Hugo Boss "+n)+"&tag="+AMZN_TAG;}]},
+  "mont blanc":      {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/mont-blanc-cologne";}],     s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Mont Blanc "+n)+"&tag="+AMZN_TAG;}]},
+  "ralph":           {p:["🌐 Ralph Lauren", function(n){return "https://www.ralphlauren.com/search?q="+enc(n);}],       s:["🛍 FragranceNet",   function(){return "https://www.fragrancenet.com/ralph-lauren-cologne";}]},
+  "calvin klein":    {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/calvin-klein-cologne";}],   s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Calvin Klein "+n)+"&tag="+AMZN_TAG;}]},
+  "dolce":           {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/dolce-gabbana-cologne";}],  s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Dolce Gabbana "+n)+"&tag="+AMZN_TAG;}]},
+  "givenchy":        {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/givenchy-cologne";}],       s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Givenchy "+n)+"&tag="+AMZN_TAG;}]},
+  "prada":           {p:["🛍 FragranceNet", function(){return "https://www.fragrancenet.com/prada-cologne";}],          s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Prada "+n)+"&tag="+AMZN_TAG;}]},
+  "bath":            {p:["🌐 Bath & Body",  function(n){return "https://www.bathandbodyworks.com/search?q="+enc(n);}],  s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Bath Body Works "+n)+"&tag="+AMZN_TAG;}]},
+  "avon":            {p:["🌐 Avon",         function(n){return "https://www.avon.com/search?q="+enc(n);}],              s:["🛒 Amazon",         function(n){return "https://www.amazon.com/s?k="+enc("Avon "+n)+"&tag="+AMZN_TAG;}]},
+};
+
+function enc(s){return encodeURIComponent(s);}
+
+function getBrand(brand){
+  if(!brand) return null;
+  var b = brand.toLowerCase();
+  var keys = Object.keys(BRANDS);
+  for(var i=0;i<keys.length;i++){
+    if(b.indexOf(keys[i])!==-1) return BRANDS[keys[i]];
+  }
+  return null;
+}
+
+// ── STATE ──
+var imgCache = {};
+var expandedIdx = null;
+var currentData = null;
+var loaderTimer = null;
+var loaderPhrases = ["Searching fragrance communities...","Scanning Reddit & Fragrantica...","Checking TikTok & Instagram trends...","Compiling your perfect dupes...","Almost ready..."];
+var loaderPhrase = 0;
+
+function startLoader(){
+  loaderPhrase = 0;
+  document.getElementById("loader-text").textContent = loaderPhrases[0];
+  document.getElementById("loader").classList.add("active");
+  loaderTimer = setInterval(function(){
+    loaderPhrase = (loaderPhrase+1) % loaderPhrases.length;
+    document.getElementById("loader-text").textContent = loaderPhrases[loaderPhrase];
+  }, 1800);
+}
+
+function stopLoader(){
+  clearInterval(loaderTimer);
+  document.getElementById("loader").classList.remove("active");
+}
+
+function showError(msg){
+  var box = document.getElementById("error-box");
+  box.textContent = msg;
+  box.classList.add("active");
+}
+
+function hideError(){
+  document.getElementById("error-box").classList.remove("active");
+}
+
+function showResults(){document.getElementById("results").classList.add("active");}
+function hideResults(){document.getElementById("results").classList.remove("active");}
+function showSuggestions(){document.getElementById("suggestions").style.display="flex";}
+function hideSuggestions(){document.getElementById("suggestions").style.display="none";}
+
+function openLightbox(src, name, brand){
+  document.getElementById("lb-img").src = src;
+  document.getElementById("lb-name").textContent = name;
+  document.getElementById("lb-brand").textContent = brand;
+  document.getElementById("lb-link").href = "https://www.fragrantica.com/search/?query="+enc(name+" "+brand);
+  document.getElementById("lightbox").classList.add("open");
+}
+
+function closeLightbox(){
+  document.getElementById("lightbox").classList.remove("open");
+}
+
+function repairJSON(str){
+  var s = str.replace(/```json|```/g,"").trim();
+  var last = s.lastIndexOf('"}');
+  if(last!==-1){
+    s = s.substring(0,last+2);
+    var opens = (s.match(/\[/g)||[]).length-(s.match(/\]/g)||[]).length;
+    var braces = (s.match(/\{/g)||[]).length-(s.match(/\}/g)||[]).length;
+    for(var i=0;i<opens;i++) s+="]";
+    for(var i=0;i<braces;i++) s+="}";
+  }
+  return s;
+}
+
+function simColor(s){return s>=85?"#f0d060":s>=70?"#d4af37":"#b8860b";}
+function simGrad(s){return s>=85?"linear-gradient(90deg,#d4af37,#f5d060)":"linear-gradient(90deg,#8B6914,#d4af37)";}
+
+function noteTag(n, shared){
+  return '<span class="note-tag'+(shared?" shared":"")+'">'+ n +'</span>';
+}
+
+function renderNotes(notes, shared){
+  if(!notes) return "";
+  shared = shared||[];
+  var html = "";
+  function row(label, arr){
+    if(!arr||!arr.length) return "";
+    var tags = arr.map(function(n){return noteTag(n,shared.indexOf(n)!==-1);}).join("");
+    return '<div class="notes-row"><span class="notes-label">'+label+': </span>'+tags+'</div>';
+  }
+  return row("Top",notes.top)+row("Heart",notes.middle)+row("Base",notes.base);
+}
+
+function renderBuyBtns(name, brand, fragranticaQuery, amazonSearch){
+  var r = getBrand(brand);
+  var googleShop = "https://www.google.com/search?tbm=shop&q="+enc((amazonSearch||name)+" perfume");
+  var amzDefault = "https://www.amazon.com/s?k="+enc((amazonSearch||name)+" perfume")+"&tag="+AMZN_TAG;
+  var fnetDefault = "https://www.fragrancenet.com/search#q="+enc(name);
+  var fragrantica = "https://www.fragrantica.com/search/?query="+enc(fragranticaQuery||name);
+
+  var html = '<div class="buy-btns">';
+
+  if(r){
+    var pl = r.p[0]; var pu = r.p[1];
+    var sl = r.s[0]; var su = r.s[1];
+    var isAmzP = pl.indexOf("Amazon")!==-1;
+    var isAmzS = sl.indexOf("Amazon")!==-1;
+    html += '<a href="'+pu(name)+'" target="_blank" rel="noopener noreferrer" class="buy-btn" style="background:'+(isAmzP?"linear-gradient(135deg,#ff9900,#e68a00)":"rgba(160,120,200,0.15)")+';color:'+(isAmzP?"#111":"#d4af37")+';border:1px solid '+(isAmzP?"rgba(255,153,0,0.4)":"rgba(212,175,55,0.4)")+'">'+pl+'</a>';
+    html += '<a href="'+su(name)+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-fnet">'+sl+'</a>';
+  } else {
+    html += '<a href="'+amzDefault+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-amazon">🛒 Buy on Amazon</a>';
+    html += '<a href="'+fnetDefault+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-fnet">🌸 FragranceNet</a>';
+  }
+
+  html += '<a href="'+fragrantica+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-fragrantica">📖 View on Fragrantica</a>';
+  html += '<a href="'+googleShop+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-google">🔎 Compare Prices on Google Shopping</a>';
+  html += '</div>';
+  return html;
+}
+
+function renderBottleWrap(id, size){
+  var dim = size==="large"?114:70;
+  var radius = size==="large"?"14px":"10px";
+  var fontSize = size==="large"?"32px":"20px";
+  var colors = ["#d4af37","#7ec8a0","#a078c8","#6090c8","#c87050","#9090d0"];
+  var colorIdx = id.split("").reduce(function(a,c){return a+c.charCodeAt(0);},0) % colors.length;
+  var color = colors[colorIdx];
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="'+dim+'" height="'+dim+'" viewBox="0 0 100 100">'
+    +'<defs>'
+    +'<linearGradient id="bg'+id+'" x1="0%" y1="0%" x2="100%" y2="100%">'
+    +'<stop offset="0%" stop-color="'+color+'" stop-opacity="0.15"/>'
+    +'<stop offset="100%" stop-color="'+color+'" stop-opacity="0.05"/>'
+    +'</linearGradient>'
+    +'<linearGradient id="btl'+id+'" x1="0%" y1="0%" x2="100%" y2="100%">'
+    +'<stop offset="0%" stop-color="'+color+'" stop-opacity="0.9"/>'
+    +'<stop offset="100%" stop-color="'+color+'" stop-opacity="0.4"/>'
+    +'</linearGradient>'
+    +'<linearGradient id="sh'+id+'" x1="0%" y1="0%" x2="100%" y2="0%">'
+    +'<stop offset="0%" stop-color="white" stop-opacity="0.3"/>'
+    +'<stop offset="100%" stop-color="white" stop-opacity="0"/>'
+    +'</linearGradient>'
+    +'</defs>'
+    +'<rect width="100" height="100" fill="url(#bg'+id+')"/>'
+    +'<rect x="32" y="48" width="36" height="42" rx="5" fill="url(#btl'+id+')"/>'
+    +'<rect x="38" y="34" width="24" height="16" rx="3" fill="url(#btl'+id+')"/>'
+    +'<rect x="36" y="26" width="28" height="10" rx="4" fill="'+color+'"/>'
+    +'<rect x="42" y="20" width="16" height="8" rx="2" fill="'+color+'"/>'
+    +'<rect x="32" y="48" width="10" height="42" rx="5" fill="url(#sh'+id+')"/>'
+    +'<rect x="35" y="56" width="30" height="24" rx="2" fill="white" fill-opacity="0.07"/>'
+    +'</svg>';
+  return '<div class="bottle-wrap" id="'+id+'" style="width:'+dim+'px;height:'+dim+'px;border-radius:'+radius+';background:#0d1117;border:1px solid '+color+'44;box-shadow:0 4px 18px '+color+'22;overflow:hidden;cursor:default">'
+    +svg
+    +'</div>';
+}
+
+function renderOriginal(orig){
+  var fragrantica = "https://www.fragrantica.com/search/?query="+enc(orig.name+" "+orig.brand);
+  return '<div class="original-card">'
+    +'<div class="original-label">✦ Original Niche Fragrance</div>'
+    +'<div class="card-inner">'
+    +renderBottleWrap("bottle-orig","large")
+    +'<div class="card-info">'
+    +'<div class="card-header"><div><div class="frag-name">'+orig.name+'</div><div class="frag-brand">'+orig.brand+'</div></div>'
+    +'<div style="text-align:right">'
+    +'<div class="frag-price-orig">~'+orig.price+'*</div>'
+    +'<span class="badge">'+orig.scentFamily+'</span></div></div>'
+    +'<p class="frag-desc">'+orig.description+'</p>'
+    +'<p style="color:#666;font-size:10px;margin-bottom:8px">*Prices vary. Always check retailer for current pricing.</p>'
+    +renderNotes(orig.notes,[])
+    +renderBuyBtns(orig.name, orig.brand, orig.fragranticaQuery, orig.name+" "+orig.brand+" perfume")
+    +'</div></div></div>';
+}
+
+function renderDupe(d, i){
+  var sc = simColor(d.similarity);
+  var sg = simGrad(d.similarity);
+  return '<div class="dupe-card" id="dupe-'+i+'">'
+    +'<div class="card-inner">'
+    +renderBottleWrap("bottle-dupe-"+i,"small")
+    +'<div class="card-info">'
+    +'<div class="card-header"><div>'
+    +'<div><span style="color:var(--gold);font-size:12px">#'+(i+1)+'</span> <span style="font-size:15px;font-weight:bold">'+d.name+'</span></div>'
+    +'<div class="dupe-brand">'+d.brand+'</div></div>'
+    +'<div style="text-align:right">'
+    +'<div class="frag-price-dupe">~'+d.price+'*</div>'
+    +'<span class="badge">'+d.scentFamily+'</span></div></div>'
+    +'<div class="sim-wrap"><div class="sim-header"><span class="sim-label">Similarity</span><span style="color:'+sc+';font-weight:bold;font-size:13px">'+d.similarity+'%</span></div>'
+    +'<div class="sim-track"><div class="sim-fill" style="width:'+d.similarity+'%;background:'+sg+'"></div></div></div>'
+    +'</div></div>'
+    +'<div class="expanded-body" id="exp-'+i+'">'
+    +(d.communitySource?'<div class="community-badge">🌐 Community pick: '+d.communitySource+'</div>':'')
+    +'<div class="expanded-label" style="margin-top:10px">Shared Notes</div>'
+    +'<div style="margin-bottom:10px">'+(d.sharedNotes||[]).map(function(n){return noteTag(n,true);}).join("")+'</div>'
+    +renderNotes(d.notes, d.sharedNotes||[])
+    +'<div class="expanded-label" style="margin-top:10px">Why It Smells Similar</div>'
+    +'<p class="frag-desc">'+d.whySimilar+'</p>'
+    +'<p style="color:#666;font-size:10px;margin-bottom:4px">*Prices vary. Check retailer for current pricing.</p>'
+    +renderBuyBtns(d.name, d.brand, d.fragranticaQuery, d.amazonSearch)
+    +'</div>'
+    +'<div class="expand-hint" id="hint-'+i+'">▼ details & buy</div>'
+    +'</div>';
+}
+
+function toggleDupe(i){
+  var card = document.getElementById("dupe-"+i);
+  var body = document.getElementById("exp-"+i);
+  var hint = document.getElementById("hint-"+i);
+  var isOpen = expandedIdx===i;
+
+  if(expandedIdx!==null && expandedIdx!==i){
+    var oc = document.getElementById("dupe-"+expandedIdx);
+    var ob = document.getElementById("exp-"+expandedIdx);
+    var oh = document.getElementById("hint-"+expandedIdx);
+    if(oc) oc.classList.remove("open");
+    if(ob) ob.classList.remove("open");
+    if(oh) oh.textContent = "▼ details & buy";
+  }
+
+  if(isOpen){
+    card.classList.remove("open");
+    body.classList.remove("open");
+    hint.textContent = "▼ details & buy";
+    expandedIdx = null;
+  } else {
+    card.classList.add("open");
+    body.classList.add("open");
+    hint.textContent = "▲ collapse";
+    expandedIdx = i;
+  }
+}
+
+function renderResults(data){
+  var el = document.getElementById("results");
+  var html = '<div class="card-wrap">';
+  html += renderOriginal(data.original);
+  html += '<div class="section-label">✦ Top 5 Closest Dupes — Tap to Expand & Buy ✦</div>';
+  html += '<div class="dupes-list" id="dupes-list-main">';
+  for(var i=0;i<5&&i<data.dupes.length;i++) html += renderDupe(data.dupes[i], i);
+  html += '</div>';
+
+  if(data.dupes.length > 5){
+    html += '<div style="text-align:center;margin:16px 0">'
+      +'<button class="new-search-btn" id="expand-btn" style="border-color:rgba(212,175,55,0.5);color:var(--gold);padding:12px 32px;font-size:13px">✦ Show More Results</button>'
+      +'</div>';
+    html += '<div class="dupes-list" id="dupes-list-extra" style="display:none">';
+    for(var i=5;i<data.dupes.length;i++) html += renderDupe(data.dupes[i], i);
+    html += '</div>';
+  }
+
+  html += '<button class="new-search-btn" id="new-search-btn">✦ NEW SEARCH</button>';
+  html += '</div>';
+  el.innerHTML = html;
+  showResults();
+
+  // Attach dupe toggle handlers
+  for(var j=0;j<data.dupes.length;j++){
+    (function(idx){
+      var card = document.getElementById("dupe-"+idx);
+      if(card) card.addEventListener("click", function(){toggleDupe(idx);});
+    })(j);
+  }
+
+  // Expand button
+  var expandBtn = document.getElementById("expand-btn");
+  if(expandBtn){
+    expandBtn.addEventListener("click", function(){
+      var extra = document.getElementById("dupes-list-extra");
+      if(extra.style.display==="none"){
+        extra.style.display="flex";
+        expandBtn.textContent = "✦ Show Less";
+        // Load images for extra dupes
+        for(var k=5;k<data.dupes.length;k++){
+          (function(idx){
+            var d = data.dupes[idx];
+            loadBottle(d.name, d.brand, "bottle-dupe-"+idx, "small");
+          })(k);
+        }
+      } else {
+        extra.style.display="none";
+        expandBtn.textContent = "✦ Show More Results";
+      }
+    });
+  }
+
+  // New search button
+  document.getElementById("new-search-btn").addEventListener("click", resetSearch);
+
+  // Lightbox close
+  document.getElementById("lightbox").addEventListener("click", closeLightbox);
+
+  // Load images for top 5 first
+  loadImagesSequentially(data);
+}
+
+async function loadImagesSequentially(data){
+  // Images disabled for now - using SVG bottle illustrations
+  return;
+}
+
+async function loadBottle(name, brand, wrapId, size){
+  var key = name+"||"+brand;
+  var wrap = document.getElementById(wrapId);
+  if(!wrap) return;
+
+  if(imgCache[key]){
+    showBottle(wrap, imgCache[key], name, brand);
+    return;
+  }
+
+  try {
+    var controller = new AbortController();
+    var timeout = setTimeout(function(){controller.abort();}, 30000);
+    var res = await fetch(WORKER_URL+"/image", {
+      method:"POST",
+      signal:controller.signal,
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({name:name, brand:brand})
+    });
+    clearTimeout(timeout);
+    var j = await res.json();
+
+    if(j.error){
+      console.error("Image error for "+name+":", j.error, j.details||"");
+      wrap.innerHTML = '<span style="font-size:'+(size==="large"?28:18)+'px">🧴</span><div style="font-size:8px;color:#555;text-align:center;padding:2px">'+name.substring(0,8)+'</div>';
+      return;
+    }
+
+    if(j.url){
+      imgCache[key] = j.url;
+      // Test if image actually loads
+      var img = new Image();
+      img.onload = function(){ showBottle(wrap, j.url, name, brand); };
+      img.onerror = function(){
+        console.error("Image failed to load:", j.url);
+        wrap.innerHTML = '<span style="font-size:'+(size==="large"?28:18)+'px">🧴</span>';
+      };
+      img.src = j.url;
+    } else {
+      wrap.innerHTML = '<span style="font-size:'+(size==="large"?28:18)+'px">🧴</span>';
+    }
+  } catch(e){
+    console.error("Fetch error for "+name+":", e.message);
+    if(wrap) wrap.innerHTML = '<span style="font-size:'+(size==="large"?28:18)+'px">🧴</span>';
+  }
+}
+
+function showBottle(wrap, src, name, brand){
+  if(!wrap) return;
+  wrap.innerHTML = '<img src="'+src+'" alt="'+name+'" style="width:100%;height:100%;object-fit:cover;display:block"/><div class="bottle-zoom">🔍</div>';
+  wrap.onclick = function(e){
+    e.stopPropagation();
+    openLightbox(src, name, brand);
+  };
+}
+
+function resetSearch(){
+  hideResults();
+  hideError();
+  showSuggestions();
+  document.getElementById("results").innerHTML = "";
+  document.getElementById("search-input").value = "";
+  document.getElementById("search-input").focus();
+  currentData = null;
+  expandedIdx = null;
+}
+
+// ── SEARCH CACHE for consistent results ──
+var searchCache = {};
+
+async function doSearch(){
+  var query = document.getElementById("search-input").value.trim();
+  if(!query) return;
+
+  // Return cached result for same query
+  if(searchCache[query.toLowerCase()]){
+    hideSuggestions();
+    hideError();
+    stopLoader();
+    document.getElementById("search-btn").disabled = false;
+    renderResults(searchCache[query.toLowerCase()]);
+    return;
+  }
+
+  hideSuggestions();
+  hideResults();
+  hideError();
+  document.getElementById("results").innerHTML = "";
+  startLoader();
+  document.getElementById("search-btn").disabled = true;
+  expandedIdx = null;
+
+  try {
+    var res = await fetch(WORKER_URL+"/search", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({query:query})
+    });
+    var json = await res.json();
+    if(json.error) throw new Error(json.error);
+
+    var parsed;
+    try { parsed = JSON.parse(json.result); }
+    catch(e1){
+      try { parsed = JSON.parse(repairJSON(json.result)); }
+      catch(e2){ throw new Error("Could not parse results. Please try again."); }
+    }
+
+    // Cache results so same search always returns same results
+    searchCache[query.toLowerCase()] = parsed;
+    currentData = parsed;
+    stopLoader();
+    renderResults(parsed);
+
+  } catch(e){
+    stopLoader();
+    var msg = e.message;
+    if(msg.indexOf("rate limit")!==-1){
+      msg = "⏳ We are getting lots of searches right now! Please wait 30 seconds and try again.";
+    }
+    showError(msg);
+    showSuggestions();
+  }
+
+  document.getElementById("search-btn").disabled = false;
+}
+
+// ── INIT ──
+window.addEventListener("DOMContentLoaded", function(){
+  // Suggestion chips
+  var chips = document.querySelectorAll(".suggestion");
+  for(var i=0;i<chips.length;i++){
+    (function(chip){
+      chip.addEventListener("click", function(){
+        document.getElementById("search-input").value = chip.textContent.trim();
+        doSearch();
+      });
+    })(chips[i]);
+  }
+
+  // Search button
+  document.getElementById("search-btn").addEventListener("click", doSearch);
+
+  // Enter key
+  document.getElementById("search-input").addEventListener("keydown", function(e){
+    if(e.key==="Enter") doSearch();
+  });
+});
+</script>
+</body>
+</html>
