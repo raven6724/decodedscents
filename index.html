@@ -537,42 +537,99 @@
       </svg>`;
     }
 
-    // ── BRAND ROUTER ──
-    function brandLinks(name, brand) {
-      const b = (brand||"").toLowerCase();
-      const n = encodeURIComponent(name + " " + brand + " perfume");
-      const brandSites = {
-        "dua": `https://theduabrand.com/search?q=${encodeURIComponent(name)}`,
-        "riffs": `https://riffsofficial.com/search?q=${encodeURIComponent(name)}`,
-        "afnan": `https://www.fragrancenet.com/search?keyword=${encodeURIComponent(brand+"+"+name)}`,
-        "lattafa": `https://www.fragrancenet.com/search?keyword=${encodeURIComponent(brand+"+"+name)}`,
-        "maison alhambra": `https://www.fragrancenet.com/search?keyword=${encodeURIComponent(brand+"+"+name)}`,
-        "armaf": `https://www.fragrancenet.com/search?keyword=${encodeURIComponent(brand+"+"+name)}`,
-        "al haramain": `https://alharamain.com/search?q=${encodeURIComponent(name)}`,
-        "arabiyat": `https://www.amazon.com/s?k=${n}&tag=${AFFILIATE}`,
-        "rasasi": `https://www.fragrancenet.com/search?keyword=${encodeURIComponent(brand+"+"+name)}`,
-        "zara": `https://www.zara.com/us/en/search?searchTerm=${encodeURIComponent(name)}`,
-        "pendora": `https://www.amazon.com/s?k=${n}&tag=${AFFILIATE}`,
-        "dumont": `https://www.amazon.com/s?k=${n}&tag=${AFFILIATE}`,
-        "fragrance world": `https://www.amazon.com/s?k=${n}&tag=${AFFILIATE}`,
-        "dossier": `https://www.amazon.com/s?k=${encodeURIComponent("Dossier "+name+" perfume")}&tag=${AFFILIATE}`,
-      };
-      const primary = Object.entries(brandSites).find(([k])=>b.includes(k))?.[1]
-        || `https://www.amazon.com/s?k=${n}&tag=${AFFILIATE}`;
-      const amazon  = `https://www.amazon.com/s?k=${n}&tag=${AFFILIATE}`;
-      const google  = `https://www.google.com/search?q=${encodeURIComponent(name+" "+brand+" perfume buy")}`;
-      return { primary, amazon, google };
+    // ── DIRECT LINK BUILDER ──
+    // Builds the most direct possible URL to the actual product page
+    function buildBuyLink(name, brand, duaSlug, amazonSearch) {
+      const b = (brand || "").toLowerCase();
+
+      // ── DUA FRAGRANCES — direct product page via slug ──
+      if (b.includes("dua")) {
+        if (duaSlug && duaSlug.length > 2) {
+          // AI returned a slug — go directly to the product
+          return `https://theduabrand.com/products/${duaSlug.toLowerCase().replace(/\s+/g, "-")}`;
+        }
+        // Fallback: construct slug from name
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://theduabrand.com/products/${slug}`;
+      }
+
+      // ── ARMAF — FragranceNet direct brand page ──
+      if (b.includes("armaf")) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://www.fragrancenet.com/cologne/armaf/${slug}`;
+      }
+
+      // ── LATTAFA — FragranceNet direct brand page ──
+      if (b.includes("lattafa")) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://www.fragrancenet.com/cologne/lattafa-perfumes/${slug}`;
+      }
+
+      // ── MAISON ALHAMBRA — Amazon precise search ──
+      if (b.includes("maison alhambra") || b.includes("alhambra")) {
+        const search = amazonSearch || `Maison Alhambra ${name} perfume`;
+        return `https://www.amazon.com/s?k=${encodeURIComponent('"'+search+'"')}&tag=${AFFILIATE}`;
+      }
+
+      // ── RASASI — FragranceNet direct brand page ──
+      if (b.includes("rasasi")) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://www.fragrancenet.com/cologne/rasasi/${slug}`;
+      }
+
+      // ── AL HARAMAIN — official site direct search ──
+      if (b.includes("al haramain") || b.includes("haramain")) {
+        return `https://alharamain.com/search?type=product&q=${encodeURIComponent(name)}`;
+      }
+
+      // ── AFNAN — FragranceNet direct brand page ──
+      if (b.includes("afnan")) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://www.fragrancenet.com/cologne/afnan-perfumes/${slug}`;
+      }
+
+      // ── DOSSIER — their direct product page ──
+      if (b.includes("dossier")) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://dossier.co/products/${slug}`;
+      }
+
+      // ── ZARA — official site ──
+      if (b.includes("zara")) {
+        return `https://www.zara.com/us/en/search?searchTerm=${encodeURIComponent(name)}&section=WOMAN,MAN`;
+      }
+
+      // ── RIFFS — official site ──
+      if (b.includes("riffs")) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `https://riffsofficial.com/products/${slug}`;
+      }
+
+      // ── ALL OTHERS — Amazon with precise quoted search ──
+      const search = amazonSearch || `${name} ${brand} perfume`;
+      return `https://www.amazon.com/s?k=${encodeURIComponent('"'+name+'" '+brand+' perfume')}&tag=${AFFILIATE}`;
     }
 
-    // ── RENDER ──
+    // Amazon link — always precise quoted search
+    function buildAmazonLink(name, brand, amazonSearch) {
+      const search = amazonSearch || `${name} ${brand} perfume`;
+      return `https://www.amazon.com/s?k=${encodeURIComponent('"'+name+'" '+brand)}&tag=${AFFILIATE}`;
+    }
+
+    // Fragrantica direct link using their search
+    function buildFragranticaLink(fragranticaQuery, name) {
+      const q = fragranticaQuery || name;
+      return `https://www.fragrantica.com/search/?query=${encodeURIComponent(q)}`;
+    }
+
     function render(data) {
       const orig  = data.original || {};
       const dupes = data.dupes    || [];
       allDupes    = dupes;
-      showing     = 5;
+      showing     = 5; // Top 5 only
 
       const origLinks = brandLinks(orig.name, orig.brand);
-      const origAmazon = `https://www.amazon.com/s?k=${encodeURIComponent(orig.name+" "+orig.brand+" perfume")}&tag=${AFFILIATE}`;
+      const origAmazon = `https://www.amazon.com/s?k=${encodeURIComponent('"'+orig.name+'" '+orig.brand+' perfume')}&tag=${AFFILIATE}`;
       const fragQ = encodeURIComponent(orig.fragranticaQuery || orig.name);
 
       const notesHTML = (tier, notes) => `
@@ -601,13 +658,13 @@
         </div>
 
         <div class="section-header">
-          <div class="section-title">Top <span>${Math.min(showing, dupes.length)}</span> Dupes</div>
+          <div class="section-title">Top <span>${Math.min(5, dupes.length)}</span> Dupes</div>
         </div>
         <div class="dupes-grid" id="dupes-grid">
-          ${renderDupes(dupes.slice(0, showing))}
+          ${renderDupes(dupes.slice(0, 5))}
         </div>`;
 
-      if (dupes.length > 5) {
+      if (false) { // Removed - AI returns top 5 only
         html += `<button id="show-more-btn">✦ Show All ${dupes.length} Results</button>`;
       }
       html += `<button id="new-search-btn">← New Search</button>`;
@@ -638,10 +695,13 @@
 
     function renderDupes(list) {
       return list.map((d, i) => {
-        const links = brandLinks(d.name, d.brand);
-        const fq = encodeURIComponent(d.fragranticaQuery || d.name);
-        const pct = d.similarity || 80;
-        const shared = (d.sharedNotes||[]).map(n=>`<span class="shared-pill">${n}</span>`).join("");
+        // Build the most direct possible links
+        const buyLink      = buildBuyLink(d.name, d.brand, d.duaSlug, d.amazonSearch);
+        const amazonLink   = buildAmazonLink(d.name, d.brand, d.amazonSearch);
+        const fragLink     = buildFragranticaLink(d.fragranticaQuery, d.name);
+        const pct          = d.similarity || 80;
+        const shared       = (d.sharedNotes||[]).map(n=>`<span class="shared-pill">${n}</span>`).join("");
+
         return `
           <div class="dupe-card" data-index="${i}">
             <div class="dupe-card-header">
@@ -665,10 +725,9 @@
               ${shared ? `<div class="shared-label">Shared Notes</div><div class="shared-pills">${shared}</div>` : ""}
               <div class="community-badge">✦ ${d.communitySource||"Community verified"}</div>
               <div class="dupe-btns">
-                <a href="${links.primary}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy Now</a>
-                <a href="${links.amazon}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">Amazon</a>
-                <a href="https://www.fragrantica.com/search/?query=${fq}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
-                <a href="${links.google}" target="_blank" rel="noopener" class="btn-sm btn-google">🔎 Compare</a>
+                <a href="${buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy Now</a>
+                <a href="${amazonLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">🛍 Amazon</a>
+                <a href="${fragLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
               </div>
             </div>
           </div>`;
