@@ -1,537 +1,712 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Decoded Scents — Find affordable dupes for expensive niche fragrances. AI-powered search with community-verified results."/>
-<meta name="keywords" content="fragrance dupe finder, perfume dupe, niche fragrance alternative, cheap perfume dupe, creed aventus dupe"/>
-<meta property="og:title" content="Decoded Scents — Every Scent, Decoded."/>
-<meta property="og:description" content="Find the best affordable dupes for any niche or luxury fragrance. AI-powered, community-verified. Every scent decoded."/>
-<title>Decoded Scents — Every Scent, Decoded.</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#d4af37;--gold-dim:#b8860b;--gold-faint:rgba(212,175,55,0.12);--bg:#0a0a0f;--bg2:#0d1117;--text:#e8e0d0;--muted:#888;--green:#7ec8a0;--red:#e07070;--purple:#a078c8;--blue:#6090c8}
-html{scroll-behavior:smooth}
-body{font-family:Georgia,serif;background:linear-gradient(135deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%);color:var(--text);min-height:100vh;padding:20px 16px 80px}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes fade{0%,100%{opacity:0.4}50%{opacity:1}}
-@keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.header{text-align:center;marginBottom:24px;paddingTop:14px}
-.logo{font-size:34px;font-weight:bold;letter-spacing:4px;color:var(--gold)}
-.logo span{color:#fff}
-.tagline{color:var(--muted);font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-top:4px}
-.search-wrap{display:flex;gap:8px;max-width:580px;margin:0 auto 14px}
-.search-input{flex:1;padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(212,175,55,0.4);border-radius:8px;color:var(--text);font-size:16px;font-family:Georgia,serif;outline:none;transition:border-color 0.2s}
-.search-input:focus{border-color:var(--gold)}
-.search-btn{padding:14px 22px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:8px;color:#0a0a0f;font-weight:bold;font-size:14px;cursor:pointer;font-family:Georgia,serif;letter-spacing:1px;transition:opacity 0.2s}
-.search-btn:disabled{opacity:0.4;cursor:not-allowed}
-.search-btn:hover:not(:disabled){opacity:0.9}
-.suggestions{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:640px;margin:0 auto 28px}
-.suggestion{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:var(--muted);border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:Georgia,serif;transition:all 0.2s;user-select:none}
-.suggestion:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,0.08)}
-.loader{text-align:center;padding:50px 0;color:var(--gold);display:none}
-.loader.active{display:block}
-.loader-icon{font-size:28px;display:inline-block;animation:spin 2s linear infinite}
-.loader-text{margin-top:12px;font-size:13px;letter-spacing:1px;animation:fade 1.8s ease infinite}
-.loader-sub{margin-top:6px;font-size:11px;color:#555}
-.error-box{display:none;text-align:center;color:var(--red);max-width:520px;margin:0 auto;padding:16px;background:rgba(224,112,112,0.07);border-radius:10px;border:1px solid rgba(224,112,112,0.2)}
-.error-box.active{display:block}
-.results{display:none;animation:slideIn 0.4s ease}
-.results.active{display:block}
-.card-wrap{max-width:780px;margin:0 auto}
-.section-label{font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:12px}
-.original-card{background:linear-gradient(135deg,rgba(212,175,55,0.09),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.5);border-radius:14px;padding:20px;margin-bottom:24px}
-.original-label{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
-.card-inner{display:flex;gap:16px;align-items:flex-start}
-.card-info{flex:1}
-.card-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.frag-name{font-size:19px;font-weight:bold;color:#f0e8d0}
-.frag-brand{color:var(--gold);font-size:13px}
-.frag-price-orig{color:var(--red);font-size:16px;font-weight:bold}
-.frag-price-dupe{color:var(--green);font-size:14px;font-weight:bold}
-.badge{background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:10px;display:inline-block}
-.frag-desc{color:#bbb;font-size:13px;line-height:1.5;margin:0 0 10px}
-.notes-row{margin-bottom:5px}
-.notes-label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
-.note-tag{display:inline-block;margin:2px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:11px}
-.note-tag.shared{background:rgba(212,175,55,0.22);border-color:rgba(212,175,55,0.6);color:#f0d060}
-.sim-wrap{margin-bottom:6px}
-.sim-header{display:flex;justify-content:space-between;margin-bottom:3px}
-.sim-label{color:var(--muted);font-size:11px}
-.sim-track{background:rgba(255,255,255,0.08);border-radius:10px;height:5px;overflow:hidden}
-.sim-fill{height:100%;border-radius:10px}
-.dupes-list{display:flex;flex-direction:column;gap:10px}
-.dupe-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 16px;cursor:pointer;transition:border-color 0.2s}
-.dupe-card:hover{border-color:rgba(212,175,55,0.3)}
-.dupe-card.open{border-color:rgba(212,175,55,0.5)}
-.expand-hint{text-align:center;margin-top:8px;color:#555;font-size:10px}
-.expanded-body{display:none;margin-top:12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px}
-.expanded-body.open{display:block}
-.expanded-label{color:var(--gold);font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
-.community-badge{margin-top:8px;padding:4px 10px;background:rgba(100,180,255,0.08);border:1px solid rgba(100,180,255,0.2);border-radius:8px;font-size:10px;color:#88aacc}
-.buy-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.buy-btn{flex:1;min-width:120px;padding:9px 0;border-radius:8px;font-size:12px;font-weight:bold;text-decoration:none;text-align:center;letter-spacing:0.5px;font-family:Georgia,serif;display:block;cursor:pointer;transition:opacity 0.2s}
-.buy-btn:hover{opacity:0.85}
-.buy-btn-amazon{background:linear-gradient(135deg,#ff9900,#e68a00);color:#111}
-.buy-btn-fnet{background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.35);color:var(--gold)}
-.buy-btn-fragrantica{background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);color:#ff8888}
-.buy-btn-google{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#888;width:100%;flex:none;min-width:unset}
-.bottle-wrap{flex-shrink:0;border-radius:10px;overflow:hidden;border:2px solid rgba(212,175,55,0.4);box-shadow:0 4px 18px rgba(0,0,0,0.5);cursor:zoom-in;position:relative;display:flex;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s}
-.bottle-wrap:hover{transform:scale(1.06);box-shadow:0 8px 28px rgba(212,175,55,0.4)}
-.bottle-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-.bottle-loader{font-size:18px;animation:spin 1.5s linear infinite;color:var(--gold)}
-.bottle-zoom{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.55);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:20px;cursor:zoom-out}
-.lightbox.open{display:flex}
-.lightbox img{max-width:85vw;max-height:65vh;border-radius:16px;border:2px solid rgba(212,175,55,0.5);box-shadow:0 0 80px rgba(212,175,55,0.25);object-fit:contain}
-.lightbox-name{color:var(--gold);font-size:18px;font-weight:bold;letter-spacing:1px;text-align:center}
-.lightbox-brand{color:var(--muted);font-size:13px;text-align:center}
-.lightbox-sub{color:#555;font-size:11px}
-.lightbox-link{background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.4);color:var(--gold);padding:8px 20px;border-radius:20px;font-size:12px;text-decoration:none;letter-spacing:1px}
-.new-search-btn{display:block;margin:28px auto 0;background:transparent;border:1px solid rgba(212,175,55,0.3);color:var(--gold);padding:10px 28px;border-radius:8px;cursor:pointer;font-size:12px;letter-spacing:1px;font-family:Georgia,serif;transition:border-color 0.2s}
-.new-search-btn:hover{border-color:var(--gold)}
-.footer{text-align:center;margin-top:50px;color:#444;font-size:11px;line-height:1.8}
-.footer a{color:#666;text-decoration:none}
-.footer a:hover{color:var(--gold)}
-.cat-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--muted);border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:Georgia,serif;transition:all 0.2s}
-.cat-btn:hover{border-color:var(--gold);color:var(--gold)}
-.cat-btn.active{background:rgba(212,175,55,0.15);border-color:rgba(212,175,55,0.5);color:var(--gold)}
-.article-card{transition:all 0.2s}
-@media(max-width:520px){.logo{font-size:28px}.card-inner{gap:12px}.buy-btns{flex-direction:column}.buy-btn{min-width:unset}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>She Didn't Know It Wasn't the $135 Bottle | Decoded Scents</title>
+  <meta name="description" content="A professional comparison of Dossier Gourmand Orange Blossom and Lancôme La Vie Est Belle. Same feeling, $106 difference. We break down every note, every moment, every reason why." />
+  <meta name="keywords" content="Dossier Gourmand Orange Blossom vs La Vie Est Belle, La Vie Est Belle dupe, Dossier perfume review, Lancome dupe, affordable La Vie Est Belle alternative, best La Vie Est Belle clone" />
+  <link rel="canonical" href="https://decodedscents.com/Articles/yara-vs-la-vie-est-belle.html" />
+
+  <meta property="og:title" content="She Didn't Know It Wasn't the $135 Bottle" />
+  <meta property="og:description" content="Dossier Gourmand Orange Blossom vs Lancôme La Vie Est Belle — the community's most accurate dupe, tested and decoded." />
+  <meta property="og:url" content="https://decodedscents.com/Articles/yara-vs-la-vie-est-belle.html" />
+  <meta property="og:type" content="article" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.12);
+      --green: #4caf7d;
+      --green-light: #6fcf97;
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --bg3: #16161f;
+      --bg4: #1c1c28;
+      --text: #e8e4dc;
+      --text-muted: #9a9590;
+      --text-dim: #6b6760;
+      --border: rgba(201,168,76,0.2);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1.85;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,15,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--gold);
+      text-decoration: none; letter-spacing: 0.04em;
+    }
+    .nav-back {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 100px 2rem 80px; text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-category {
+      display: inline-block;
+      background: var(--gold-dim); border: 1px solid var(--border);
+      color: var(--gold); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700; line-height: 1.15; color: #fff;
+      max-width: 820px; margin: 0 auto 1.5rem;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero-subtitle {
+      font-size: 1.1rem; color: var(--text-muted);
+      max-width: 620px; margin: 0 auto 2.5rem;
+      font-style: italic; font-family: 'Playfair Display', serif;
+    }
+    .hero-meta {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; flex-wrap: wrap;
+      font-size: 0.8rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .hero-divider {
+      width: 60px; height: 1px;
+      background: var(--gold); margin: 3rem auto 0; opacity: 0.5;
+    }
+
+    /* LAYOUT */
+    .container { max-width: 820px; margin: 0 auto; padding: 0 2rem; }
+
+    /* BODY */
+    .article-body { padding: 4rem 0; }
+    .article-body p {
+      color: var(--text); margin-bottom: 1.6rem;
+      font-size: 1.05rem; line-height: 1.9;
+    }
+    .article-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700; color: #fff;
+      margin: 3rem 0 1.2rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600;
+      color: var(--gold-light); margin: 2rem 0 0.8rem;
+    }
+    .article-body blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.5rem; margin: 2.5rem 0;
+      background: var(--bg3);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1.15rem;
+      color: var(--text); line-height: 1.7;
+    }
+    .article-body blockquote cite {
+      display: block; margin-top: 0.6rem;
+      font-size: 0.8rem; font-style: normal;
+      color: var(--text-dim); text-transform: uppercase;
+      letter-spacing: 0.08em; font-family: 'Inter', sans-serif;
+    }
+
+    /* AVAILABILITY BADGE */
+    .availability-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(76,175,125,0.1); border: 1px solid rgba(76,175,125,0.3);
+      color: var(--green-light); border-radius: 50px;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; margin-bottom: 1.5rem;
+    }
+
+    /* GLANCE CARDS */
+    .glance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2.5rem 0; }
+    .glance-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      position: relative; overflow: hidden;
+    }
+    .glance-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .glance-card.original::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+    .glance-card.dupe::before { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+    .glance-card-label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem;
+    }
+    .glance-card.original .glance-card-label { color: var(--gold); }
+    .glance-card.dupe .glance-card-label { color: var(--green-light); }
+    .glance-card h4 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: #fff; margin-bottom: 0.2rem; }
+    .glance-card .brand { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.2rem; }
+    .glance-price { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; margin: 1rem 0 0.3rem; }
+    .glance-card.original .glance-price { color: var(--gold); }
+    .glance-card.dupe .glance-price { color: var(--green-light); }
+    .glance-stat {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.87rem;
+    }
+    .glance-stat:last-child { border-bottom: none; }
+    .glance-stat-label { color: var(--text-muted); }
+    .glance-stat-value { color: var(--text); font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      text-align: center; padding: 3rem 2rem; margin: 3rem 0;
+      background: linear-gradient(135deg, var(--bg3), var(--bg4));
+      border: 1px solid var(--border); border-radius: var(--radius);
+      position: relative;
+    }
+    .pull-quote::before {
+      content: '"'; position: absolute; top: -0.5rem; left: 2rem;
+      font-family: 'Playfair Display', serif; font-size: 6rem;
+      color: var(--gold); opacity: 0.18; line-height: 1;
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-style: italic; color: #fff;
+      line-height: 1.5; margin: 0 !important;
+    }
+    .pull-quote span {
+      display: block; margin-top: 1rem;
+      font-size: 0.78rem; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* NOTE COMPARISON */
+    .note-comparison {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin: 2.5rem 0;
+    }
+    .note-header {
+      display: grid; grid-template-columns: 100px 1fr 1fr;
+      background: var(--bg4); padding: 1rem 1.5rem;
+      font-size: 0.73rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); border-bottom: 1px solid var(--border);
+    }
+    .note-row {
+      display: grid; grid-template-columns: 100px 1fr 1fr;
+      padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: start;
+    }
+    .note-row:last-child { border-bottom: none; }
+    .note-tier { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); padding-top: 0.2rem; }
+    .note-list { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
+    .note-shared { color: var(--gold-light); font-weight: 600; }
+
+    /* SCORE GRID */
+    .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2.5rem 0; }
+    .score-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .score-card h4 { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+    .score-item { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
+    .score-item:last-child { margin-bottom: 0; }
+    .score-label { font-size: 0.8rem; color: var(--text-muted); width: 88px; flex-shrink: 0; }
+    .score-bar-wrap { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .score-bar { height: 100%; border-radius: 3px; }
+    .score-card.original .score-bar { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+    .score-card.dupe .score-bar { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+    .score-num { font-size: 0.8rem; font-weight: 600; width: 32px; text-align: right; flex-shrink: 0; }
+    .score-card.original .score-num { color: var(--gold); }
+    .score-card.dupe .score-num { color: var(--green-light); }
+
+    /* SIMILARITY */
+    .similarity-banner {
+      display: flex; align-items: center; justify-content: center; gap: 2rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem; margin: 2.5rem 0; text-align: center;
+      flex-wrap: wrap;
+    }
+    .sim-score { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .sim-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; }
+    .sim-divider { width: 1px; height: 60px; background: var(--border); }
+    .sim-text { font-size: 0.95rem; color: var(--text-muted); max-width: 280px; text-align: left; line-height: 1.6; }
+
+    /* HONEST DIFFERENCE BOX */
+    .honest-box {
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3);
+      border-radius: var(--radius); padding: 1.5rem 2rem; margin: 2rem 0;
+    }
+    .honest-box-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .honest-box p { color: var(--text-muted); font-size: 0.93rem; line-height: 1.7; margin: 0 !important; }
+
+    /* WHO IS IT FOR */
+    .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+    .who-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .who-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    .who-card ul { list-style: none; padding: 0; }
+    .who-card ul li { font-size: 0.87rem; color: var(--text-muted); padding: 0.35rem 0 0.35rem 1.2rem; position: relative; line-height: 1.5; }
+    .who-card ul li::before { content: '✦'; position: absolute; left: 0; font-size: 0.5rem; color: var(--gold); top: 0.6rem; }
+
+    /* VERDICT */
+    .verdict-box {
+      background: linear-gradient(135deg, var(--bg3), var(--bg4));
+      border: 1px solid var(--gold); border-radius: var(--radius);
+      padding: 2.5rem; margin: 3rem 0; position: relative; overflow: hidden;
+    }
+    .verdict-box::before {
+      content: '✦'; position: absolute; top: -1rem; right: 2rem;
+      font-size: 8rem; color: var(--gold); opacity: 0.04; line-height: 1;
+    }
+    .verdict-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .verdict-box h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; margin: 0 0 1.2rem; padding: 0; border: none; }
+    .verdict-box p { color: var(--text); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+    .verdict-box p:last-of-type { margin-bottom: 0; }
+
+    /* BUY SECTION */
+    .buy-section {
+      background: linear-gradient(135deg, var(--bg3), var(--bg4));
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 2.5rem; margin: 3rem 0; text-align: center;
+    }
+    .buy-section h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 0.5rem; border: none; padding: 0; }
+    .buy-section > p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .buy-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .buy-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .buy-card-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; margin-bottom: 0.2rem; }
+    .buy-card-brand { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .buy-card-avail { font-size: 0.75rem; color: var(--green-light); margin-bottom: 1rem; }
+    .buy-card-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
+    .buy-card.original-buy .buy-card-price { color: var(--gold); }
+    .buy-card.dupe-buy .buy-card-price { color: var(--green-light); }
+    .btn-amazon {
+      display: inline-block; width: 100%; padding: 0.75rem 1rem;
+      border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; text-align: center; letter-spacing: 0.04em; transition: all 0.2s;
+    }
+    .btn-amazon.gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #000; }
+    .btn-amazon.gold:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-amazon.green { background: linear-gradient(135deg, var(--green), var(--green-light)); color: #000; }
+    .btn-amazon.green:hover { opacity: 0.9; transform: translateY(-1px); }
+    .buy-disclaimer { font-size: 0.75rem; color: var(--text-dim); font-style: italic; }
+
+    /* FINDER CTA */
+    .finder-cta {
+      background: var(--gold-dim); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem; text-align: center; margin: 2.5rem 0;
+    }
+    .finder-cta h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem; }
+    .finder-cta p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
+    .btn-finder {
+      display: inline-block; padding: 0.75rem 2rem;
+      background: var(--gold); color: #000; border-radius: 8px;
+      font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .btn-finder:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* RELATED */
+    .related-section { padding: 3rem 0; border-top: 1px solid var(--border); }
+    .related-section h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #fff; margin-bottom: 1.5rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .related-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.5rem;
+      text-decoration: none; transition: all 0.2s; display: block;
+    }
+    .related-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .related-card-cat { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .related-card-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: #fff; line-height: 1.4; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); text-decoration: none; display: block; margin-bottom: 0.5rem; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .glance-grid, .score-grid, .who-grid, .buy-cards, .related-grid { grid-template-columns: 1fr; }
+      .note-header, .note-row { grid-template-columns: 80px 1fr; }
+      .note-header span:last-child, .note-row .note-list:last-child { display: none; }
+      .similarity-banner { flex-direction: column; gap: 1rem; }
+      .sim-divider { width: 60px; height: 1px; }
+      .sim-text { text-align: center; max-width: 100%; }
+      nav { padding: 0 1rem; }
+      .hero { padding: 60px 1rem 50px; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <img id="lb-img" src="" alt=""/>
-  <div class="lightbox-name" id="lb-name"></div>
-  <div class="lightbox-brand" id="lb-brand"></div>
-  <div class="lightbox-sub">✦ Fragrance illustration</div>
-  <a id="lb-link" href="#" target="_blank" rel="noopener noreferrer" class="lightbox-link">📖 View on Fragrantica</a>
-  <div class="lightbox-sub">Click anywhere to close</div>
-</div>
+  <!-- NAV -->
+  <nav>
+    <a href="https://decodedscents.com" class="nav-logo">✦ Decoded Scents</a>
+    <a href="https://decodedscents.com" class="nav-back">← Back to Dupe Finder</a>
+  </nav>
 
-<!-- HEADER -->
-<div style="text-align:center;margin-bottom:22px;padding-top:14px">
-  <div class="logo">✦ DECODED<span>SCENTS</span></div>
-  <div class="tagline">Every Scent, Decoded.</div>
-</div>
-
-<!-- SEARCH -->
-<div class="search-wrap">
-  <input class="search-input" id="search-input" type="text" placeholder="e.g. Creed Aventus, Dior Sauvage, Baccarat Rouge..."/>
-  <button class="search-btn" id="search-btn">FIND DUPES</button>
-</div>
-
-<!-- SUGGESTIONS -->
-<div class="suggestions" id="suggestions">
-  <span class="suggestion">Creed Aventus</span>
-  <span class="suggestion">Tom Ford Black Orchid</span>
-  <span class="suggestion">Baccarat Rouge 540</span>
-  <span class="suggestion">Dior Sauvage</span>
-  <span class="suggestion">Amouage Interlude</span>
-  <span class="suggestion">Parfums de Marly Layton</span>
-  <span class="suggestion">Xerjoff Naxos</span>
-  <span class="suggestion">Mind Games Queening</span>
-</div>
-
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="loader-icon">✦</div>
-  <div class="loader-text" id="loader-text">Searching fragrance communities...</div>
-  <div class="loader-sub">Scanning Reddit, Fragrantica, TikTok & Instagram...</div>
-</div>
-
-<!-- ERROR -->
-<div class="error-box" id="error-box"></div>
-
-<!-- RESULTS -->
-<div class="results" id="results"></div>
-
-<!-- THE SCENT JOURNAL -->
-<div id="scent-journal" style="max-width:780px;margin:60px auto 0;padding:0 0 40px">
-  <div style="text-align:center;margin-bottom:30px">
-    <div style="font-size:10px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px">✦ Featured Reading</div>
-    <div style="font-size:28px;font-weight:bold;color:var(--gold);letter-spacing:2px">The Scent Journal</div>
-    <div style="color:var(--muted);font-size:13px;margin-top:6px">Stories, guides and discoveries from the world of fragrance</div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-category">✦ Professional Comparison — Fragrance Decoded</div>
+    <h1>She Didn't Know It Wasn't the <em>$135 Bottle</em></h1>
+    <p class="hero-subtitle">
+      Dossier Gourmand Orange Blossom vs Lancôme La Vie Est Belle — the community's most accurate dupe, tested and decoded.
+    </p>
+    <div class="hero-meta">
+      <span>⏱ 8 min read</span>
+      <span>·</span>
+      <span>✦ Decoded Scents Editorial</span>
+      <span>·</span>
+      <span>🌸 Feminine · Floral Gourmand</span>
+    </div>
+    <div class="hero-divider"></div>
   </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:24px">
-    <button onclick="filterArticles('all')" class="cat-btn active" data-cat="all">All</button>
-    <button onclick="filterArticles('dupes')" class="cat-btn" data-cat="dupes">Dupes</button>
-    <button onclick="filterArticles('gifts')" class="cat-btn" data-cat="gifts">Gift Guides</button>
-    <button onclick="filterArticles('reviews')" class="cat-btn" data-cat="reviews">Reviews</button>
-    <button onclick="filterArticles('guides')" class="cat-btn" data-cat="guides">Buying Guides</button>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:16px" id="articles-list">
 
-    <!-- Article 1 — Creed Aventus -->
-    <div class="article-card" data-cat="dupes" onclick="window.location.href='Articles/creed-aventus-dupes.html'" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:24px;cursor:pointer" onmouseover="this.style.borderColor='rgba(212,175,55,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)';this.style.transform='translateY(0)'">
-      <span style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Dupes</span>
-      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px;line-height:1.3">The Aventus Code — 10 Affordable Dupes That Crack the $400 Bottle</div>
-      <p style="color:#bbb;font-size:13px;line-height:1.6;margin:0 0 16px">Creed Aventus costs up to $500 a bottle. We found 10 fragrances that smell almost identical — some for as little as $20. Community-verified with real similarity scores.</p>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <span style="color:var(--muted);font-size:11px">✦ 8 min read</span>
-        <span style="color:var(--muted);font-size:11px">✦ Updated 2025</span>
-        <a href="Articles/creed-aventus-dupes.html" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f;border:none;border-radius:8px;padding:8px 20px;font-size:12px;font-weight:bold;text-decoration:none;letter-spacing:1px;font-family:Georgia,serif">Read Article →</a>
+  <!-- ARTICLE -->
+  <div class="container">
+    <div class="article-body">
+
+      <p>It started with a compliment.</p>
+
+      <p>A woman at a dinner party leaned across the table and said, <em>"You smell incredible. Is that La Vie Est Belle?"</em> Her friend smiled, accepted the compliment gracefully, and said nothing. Because yes — it smelled exactly like La Vie Est Belle. That same warm sweetness, that same praline softness, that same way of filling a room with something that feels like joy in liquid form.</p>
+
+      <p>But it wasn't the $135 bottle. It was Dossier's Gourmand Orange Blossom. And it cost $29. Available at Walmart.</p>
+
+      <p>That story is at the heart of what we do at Decoded Scents. Not to deceive — but to decode. To ask the honest question that the fragrance industry hopes you'll never ask: when two perfumes smell this similar, what exactly are you paying for? Today we answer that question with the most thorough comparison we've ever written. We've done the research, tested both fragrances, and consulted the community. Here's the truth.</p>
+
+      <blockquote>
+        "The best fragrance is the one that makes you feel beautiful — regardless of what's written on the bottle."
+        <cite>— The Decoded Scents Philosophy</cite>
+      </blockquote>
+
+      <!-- WHY THIS DUPE -->
+      <h2>Why Dossier Gourmand Orange Blossom?</h2>
+
+      <div class="availability-badge">✦ Available at Walmart · Amazon · Dossier.com</div>
+
+      <p>Of all the La Vie Est Belle alternatives the fragrance community has tested over the years — and there are many — Dossier's Gourmand Orange Blossom consistently rises to the top. On Fragrantica forums, members describe it as "even better" than other budget alternatives. On Walmart's website it carries a 4.4-star rating across 445 reviews. On Lemon8 and TikTok, beauty creators regularly feature it as their go-to LVEB recommendation. Dossier themselves market it explicitly as being inspired by La Vie Est Belle — a transparency that the community respects.</p>
+
+      <p>The reason it works is structural. While other budget alternatives capture the <em>vibe</em> of La Vie Est Belle, Gourmand Orange Blossom captures its actual architecture — the same floral trio at the heart, the same praline-vanilla base, the same blackcurrant brightness at the opening. This isn't a fragrance that happens to smell vaguely similar. It was built to mirror the original from the ground up.</p>
+
+      <!-- AT A GLANCE -->
+      <h2>At a Glance</h2>
+
+      <div class="glance-grid">
+        <div class="glance-card original">
+          <div class="glance-card-label">✦ The Original</div>
+          <h4>La Vie Est Belle</h4>
+          <div class="brand">Lancôme · Paris, France · Est. 2012</div>
+          <div class="glance-price">$135</div>
+          <div class="glance-stat"><span class="glance-stat-label">Concentration</span><span class="glance-stat-value">Eau de Parfum</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Longevity</span><span class="glance-stat-value">8–12 hours</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Projection</span><span class="glance-stat-value">Moderate–Strong</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Scent Family</span><span class="glance-stat-value">Oriental Floral</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Best Season</span><span class="glance-stat-value">All seasons</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Where to Buy</span><span class="glance-stat-value">Sephora · Amazon · Dept stores</span></div>
+        </div>
+
+        <div class="glance-card dupe">
+          <div class="glance-card-label">✦ The Dupe</div>
+          <h4>Gourmand Orange Blossom</h4>
+          <div class="brand">Dossier · New York, USA · Est. 2022</div>
+          <div class="glance-price">$29</div>
+          <div class="glance-stat"><span class="glance-stat-label">Concentration</span><span class="glance-stat-value">Eau de Parfum</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Longevity</span><span class="glance-stat-value">3–5 hours</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Projection</span><span class="glance-stat-value">Intimate–Moderate</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Scent Family</span><span class="glance-stat-value">Floral Gourmand</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Best Season</span><span class="glance-stat-value">All seasons</span></div>
+          <div class="glance-stat"><span class="glance-stat-label">Where to Buy</span><span class="glance-stat-value">Walmart · Amazon · Dossier.com</span></div>
+        </div>
+      </div>
+
+      <!-- THE ORIGINAL -->
+      <h2>The Original: Lancôme La Vie Est Belle</h2>
+
+      <p>When Lancôme launched La Vie Est Belle in 2012 — French for "life is beautiful" — nobody anticipated what was coming. Within a few years it had become the world's best-selling feminine fragrance. A decade later, with Julia Roberts still its face, it holds that crown in markets across the globe. It is not merely a popular perfume. It is a cultural phenomenon.</p>
+
+      <p>The genius of its formula is a tension that shouldn't work but does: it is simultaneously sweet and sophisticated, gourmand and elegant, accessible and refined. The praline accord at its base — warm, caramelized, almost edible — is what made it iconic. No mainstream feminine fragrance had done this so boldly before. It opened a door, and an entire genre walked through it.</p>
+
+      <h3>The Scent Journey</h3>
+
+      <p><strong>Opening (0–30 minutes):</strong> A luminous burst of sweet blackcurrant and ripe pear, immediately warm and inviting. The iris appears almost at once — powdery, refined, cosmetic in the best possible sense — giving the opening an elegance that stops it from smelling like candy. This is a confident, beautiful first impression.</p>
+
+      <p><strong>Heart (30 minutes–3 hours):</strong> Jasmine, orange blossom, and iris deepen together. This is where La Vie Est Belle reveals its complexity — it blooms in layers, each one adding nuance. The sweetness remains but it is lifted, airy. There is a feeling of radiance here, of something genuinely joyful.</p>
+
+      <p><strong>Dry Down (3+ hours):</strong> The praline-vanilla base settles in like a cashmere blanket — warm, enveloping, intimate. Patchouli and sandalwood add just enough earthiness to keep it grounded. This is the stage people mean when they say La Vie Est Belle lasts all day. It does. And in that final form it is something genuinely special.</p>
+
+      <!-- THE DUPE -->
+      <h2>The Dupe: Dossier Gourmand Orange Blossom</h2>
+
+      <p>Dossier was founded on a simple and somewhat radical premise: luxury fragrance ingredients don't have to cost luxury prices. The company works directly with top perfumers, skips the celebrity campaigns and department store markups, and sells directly to consumers. The result is fragrances that smell genuinely expensive, at prices that don't require a second thought before spraying.</p>
+
+      <p>Gourmand Orange Blossom is their La Vie Est Belle tribute — and they're transparent about it. The inspiration is listed on the product page. The fragrance community noticed the accuracy immediately, and it has since built a devoted following across Fragrantica, Reddit, TikTok, and Walmart's own review section.</p>
+
+      <p>What makes it special isn't just that it smells similar — it's that it smells similar in the <em>right places</em>. The opening blackcurrant. The orange blossom and orris heart. The praline and vanilla base with patchouli depth. These are the exact moments that made La Vie Est Belle iconic, and Dossier has reproduced them with impressive accuracy at $29.</p>
+
+      <h3>The Scent Journey</h3>
+
+      <p><strong>Opening (0–30 minutes):</strong> A sweet, slightly fizzy blackcurrant opening with a hazelnut warmth underneath — immediately recognizable to anyone who knows La Vie Est Belle. The orris (iris) note is present but softer than the original, giving it a slightly more playful, less powdery quality in the opening minutes.</p>
+
+      <p><strong>Heart (30 minutes–2 hours):</strong> This is Gourmand Orange Blossom's finest hour. The jasmine, orange blossom, and orris trio blooms beautifully — warm, feminine, radiantly floral. At this stage, in a blind test, many people genuinely cannot distinguish it from the original. The similarity is that striking.</p>
+
+      <p><strong>Dry Down (2–5 hours):</strong> Praline, vanilla, and tonka bean settle into a warm, sweet finish with patchouli depth. The base is slightly softer and shorter-lived than La Vie Est Belle's iconic dry down — this is the most honest difference between them — but it is genuinely lovely and stays pleasant throughout its life on skin.</p>
+
+      <!-- HONEST BOX -->
+      <div class="honest-box">
+        <div class="honest-box-label">✦ The Honest Truth About Longevity</div>
+        <p>Dossier Gourmand Orange Blossom lasts 3–5 hours compared to La Vie Est Belle's 8–12. This is the single most meaningful real-world difference between them. If you wear fragrance for a full day without reapplication, the original wins comfortably here. The good news: at $29 for 50ml, you can spray more generously and still come out far ahead financially. Many users reapply once mid-day and still spend a fraction of what La Vie Est Belle costs annually.</p>
+      </div>
+
+      <!-- NOTE COMPARISON -->
+      <h2>Note-by-Note Breakdown</h2>
+      <p>Shared notes are highlighted in gold. These are the structural pillars that make these two fragrances smell like family.</p>
+
+      <div class="note-comparison">
+        <div class="note-header">
+          <span>Tier</span>
+          <span>La Vie Est Belle (Lancôme)</span>
+          <span>Gourmand Orange Blossom (Dossier)</span>
+        </div>
+        <div class="note-row">
+          <div class="note-tier">Top</div>
+          <div class="note-list"><span class="note-shared">Black Currant</span>, <span class="note-shared">Pear</span></div>
+          <div class="note-list"><span class="note-shared">Black Currant</span>, <span class="note-shared">Orange Blossom</span>, Hazelnut</div>
+        </div>
+        <div class="note-row">
+          <div class="note-tier">Heart</div>
+          <div class="note-list"><span class="note-shared">Iris / Orris</span>, <span class="note-shared">Jasmine</span>, <span class="note-shared">Orange Blossom</span></div>
+          <div class="note-list"><span class="note-shared">Orris</span>, <span class="note-shared">Jasmine Sambac</span>, <span class="note-shared">Patchouli</span></div>
+        </div>
+        <div class="note-row">
+          <div class="note-tier">Base</div>
+          <div class="note-list"><span class="note-shared">Praline</span>, <span class="note-shared">Vanilla</span>, <span class="note-shared">Patchouli</span>, Sandalwood</div>
+          <div class="note-list"><span class="note-shared">Praline</span>, <span class="note-shared">Vanilla</span>, Tonka Bean, <span class="note-shared">Patchouli</span></div>
+        </div>
+      </div>
+
+      <p>The overlap is remarkable — praline, vanilla, patchouli, iris/orris, jasmine, orange blossom, and blackcurrant are all shared. The key differences are La Vie Est Belle's pear (rounder, fruitier opening) versus Dossier's hazelnut (warmer, nuttier), and La Vie Est Belle's sandalwood base versus Dossier's tonka bean. Both differences are subtle in wear and unlikely to be noticed casually.</p>
+
+      <!-- PERFORMANCE -->
+      <h2>Performance Comparison</h2>
+
+      <div class="score-grid">
+        <div class="score-card original">
+          <h4>La Vie Est Belle — Lancôme</h4>
+          <div class="score-item">
+            <span class="score-label">Longevity</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+            <span class="score-num">9.2</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Projection</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+            <span class="score-num">8.2</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Complexity</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+            <span class="score-num">8.5</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Versatility</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+            <span class="score-num">9.5</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Value</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:58%"></div></div>
+            <span class="score-num">5.8</span>
+          </div>
+        </div>
+
+        <div class="score-card dupe">
+          <h4>Gourmand Orange Blossom — Dossier</h4>
+          <div class="score-item">
+            <span class="score-label">Longevity</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:45%"></div></div>
+            <span class="score-num">4.5</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Projection</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:65%"></div></div>
+            <span class="score-num">6.5</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Complexity</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:72%"></div></div>
+            <span class="score-num">7.2</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Versatility</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+            <span class="score-num">9.0</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Value</span>
+            <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+            <span class="score-num">10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMILARITY -->
+      <div class="similarity-banner">
+        <div>
+          <div class="sim-score">88%</div>
+          <div class="sim-label">Similarity Score</div>
+        </div>
+        <div class="sim-divider"></div>
+        <div class="sim-text">
+          Based on shared notes, scent family, accord structure, and community consensus from Fragrantica forums, Reddit r/fragrance, and Walmart verified reviews. An 88% match means the two fragrances are effectively indistinguishable in casual wear.
+        </div>
+      </div>
+
+      <!-- PULL QUOTE -->
+      <div class="pull-quote">
+        <p>At $29 versus $135, you could buy four bottles of Dossier and still have money left over. Four bottles. That's a year of smelling exactly like La Vie Est Belle.</p>
+        <span>— The Decoded Scents Math</span>
+      </div>
+
+      <!-- WHO IS IT FOR -->
+      <h2>Who Should Buy Each One</h2>
+
+      <div class="who-grid">
+        <div class="who-card">
+          <h4>Buy La Vie Est Belle if...</h4>
+          <ul>
+            <li>Longevity is your top priority — you need it to last all day without reapplying</li>
+            <li>You want the full complexity of the original iris-praline-sandalwood pyramid</li>
+            <li>You're gifting someone and the presentation and packaging matter</li>
+            <li>You wear fragrance as a deliberate luxury and appreciate the heritage</li>
+            <li>You've tried Dossier and want the next level up</li>
+            <li>You want the absolute best version of this scent family money can buy</li>
+          </ul>
+        </div>
+        <div class="who-card">
+          <h4>Buy Dossier Gourmand OB if...</h4>
+          <ul>
+            <li>You love the La Vie Est Belle DNA but can't justify $135 regularly</li>
+            <li>You want your everyday fragrance to feel special without the cost</li>
+            <li>You're new to fragrance and want to explore this genre first</li>
+            <li>You want a work or gym bag bottle you don't have to be precious with</li>
+            <li>You're building a fragrance wardrobe on a smart budget</li>
+            <li>You can reapply once mid-day and want maximum value for your money</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- HONEST TRUTH -->
+      <h2>The Honest Truth</h2>
+
+      <p>Here is what nobody in the fragrance industry wants you to know: in a casual setting — a dinner party, a morning at the office, an evening out — most people cannot tell the difference between Dossier Gourmand Orange Blossom and Lancôme La Vie Est Belle. The opening is nearly identical. The heart is beautifully similar. The base is a touch shorter-lived but genuinely lovely in its own right.</p>
+
+      <p>The real and honest difference is longevity. La Vie Est Belle at 8–12 hours is a set-and-forget fragrance. Dossier at 3–5 hours may need a refresh. That is a real-world gap and we won't minimize it. For some people — especially those who are at a desk all day and want their fragrance to still be present at dinner — this matters significantly. For others who reapply naturally throughout the day, it is a non-issue.</p>
+
+      <p>But here's the perspective that changes everything: at $29, you could buy the same volume of Dossier Gourmand Orange Blossom as La Vie Est Belle for one-fifth the price. Even if you spray twice as much and reapply once daily, you come out dramatically ahead. This isn't about settling for less. It's about being intelligent with your beauty budget.</p>
+
+      <!-- VERDICT -->
+      <div class="verdict-box">
+        <div class="verdict-label">✦ The Decoded Verdict</div>
+        <h2>Our Final Word</h2>
+        <p>Dossier Gourmand Orange Blossom is the most accurate, community-verified, widely available dupe for Lancôme La Vie Est Belle on the market today. At $29 from Walmart, Amazon, or Dossier.com, it delivers an 88% match to one of the world's most iconic feminine fragrances — including the praline, the orange blossom, the jasmine, and the blackcurrant that define the original.</p>
+        <p>Its one honest weakness is longevity — 3 to 5 hours versus La Vie Est Belle's all-day staying power. If you can live with a mid-day touch-up, or if you wear fragrance for evenings and shorter occasions, this weakness essentially disappears.</p>
+        <p>Our recommendation: start with Dossier. Spray it. Wear it. Receive compliments. Then decide whether you want to invest in the original for special occasions. At $29, it is not a risk — it is one of the smartest fragrance purchases available at any price point.</p>
+      </div>
+
+      <!-- BUY SECTION -->
+      <div class="buy-section">
+        <h2>Ready to Decide?</h2>
+        <p>Both are available on Amazon with fast shipping. Your purchase supports Decoded Scents at no extra cost to you.</p>
+        <div class="buy-cards">
+          <div class="buy-card dupe-buy">
+            <div class="buy-card-name">Gourmand Orange Blossom EDP</div>
+            <div class="buy-card-brand">Dossier · 50ml</div>
+            <div class="buy-card-avail">✦ Also at Walmart in-store</div>
+            <div class="buy-card-price">~$29</div>
+            <a href="https://www.amazon.com/s?k=Dossier+Gourmand+Orange+Blossom+perfume&tag=decodedscents-20"
+               target="_blank" rel="noopener" class="btn-amazon green">
+              🛒 Buy Dossier on Amazon
+            </a>
+          </div>
+          <div class="buy-card original-buy">
+            <div class="buy-card-name">La Vie Est Belle EDP</div>
+            <div class="buy-card-brand">Lancôme · 100ml</div>
+            <div class="buy-card-avail">✦ Also at Sephora &amp; department stores</div>
+            <div class="buy-card-price">~$135</div>
+            <a href="https://www.amazon.com/s?k=Lancome+La+Vie+Est+Belle+EDP+100ml&tag=decodedscents-20"
+               target="_blank" rel="noopener" class="btn-amazon gold">
+              🛒 Buy La Vie Est Belle on Amazon
+            </a>
+          </div>
+        </div>
+        <p class="buy-disclaimer">Prices may vary. As an Amazon Associate, Decoded Scents earns from qualifying purchases.</p>
+      </div>
+
+      <!-- FINDER CTA -->
+      <div class="finder-cta">
+        <h3>Looking for More Dupes?</h3>
+        <p>Search any luxury or niche fragrance and instantly find its top 10 most similar affordable alternatives — powered by real community research.</p>
+        <a href="https://decodedscents.com" class="btn-finder">✦ Try the Free Dupe Finder</a>
+      </div>
+
+    </div><!-- /article-body -->
+
+    <!-- RELATED -->
+    <div class="related-section">
+      <h2>More From The Scent Journal</h2>
+      <div class="related-grid">
+        <a href="https://decodedscents.com/Articles/creed-aventus-dupes.html" class="related-card">
+          <div class="related-card-cat">✦ Dupe Guide</div>
+          <div class="related-card-title">The Aventus Code — 10 Affordable Dupes That Crack the $400 Bottle</div>
+        </a>
+        <a href="https://decodedscents.com/Articles/baccarat-rouge-540-dupes.html" class="related-card">
+          <div class="related-card-cat">✦ Dupe Guide</div>
+          <div class="related-card-title">The Rouge Files — Decoding the $450 Fragrance Everyone Is Wearing</div>
+        </a>
+        <a href="https://decodedscents.com/Articles/dior-sauvage-dupes.html" class="related-card">
+          <div class="related-card-cat">✦ Dupe Guide</div>
+          <div class="related-card-title">The Wild Ones — 10 Affordable Dupes for the World's Best-Selling Cologne</div>
+        </a>
+        <a href="https://decodedscents.com/Articles/ysl-black-opium-dupes.html" class="related-card">
+          <div class="related-card-cat">✦ Dupe Guide</div>
+          <div class="related-card-title">Dark Obsession — Decoding YSL Black Opium's Most Seductive Alternatives</div>
+        </a>
       </div>
     </div>
 
-    <!-- Article 2 — Baccarat Rouge 540 -->
-    <div class="article-card" data-cat="dupes" onclick="window.location.href='Articles/baccarat-rouge-540-dupes.html'" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:24px;cursor:pointer" onmouseover="this.style.borderColor='rgba(212,175,55,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)';this.style.transform='translateY(0)'">
-      <span style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Dupes</span>
-      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px;line-height:1.3">The Rouge Files — Decoding the $450 Fragrance Everyone Is Wearing</div>
-      <p style="color:#bbb;font-size:13px;line-height:1.6;margin:0 0 16px">Baccarat Rouge 540 became the scent of a generation. We decoded its DNA and found 10 affordable alternatives the community swears by — some for as little as $15.</p>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <span style="color:var(--muted);font-size:11px">✦ 8 min read</span>
-        <span style="color:var(--muted);font-size:11px">✦ Updated 2025</span>
-        <a href="Articles/baccarat-rouge-540-dupes.html" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f;border:none;border-radius:8px;padding:8px 20px;font-size:12px;font-weight:bold;text-decoration:none;letter-spacing:1px;font-family:Georgia,serif">Read Article →</a>
-      </div>
-    </div>
+  </div><!-- /container -->
 
-    <!-- Article 3 — Dior Sauvage -->
-    <div class="article-card" data-cat="dupes" onclick="window.location.href='Articles/dior-sauvage-dupes.html'" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:24px;cursor:pointer" onmouseover="this.style.borderColor='rgba(212,175,55,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)';this.style.transform='translateY(0)'">
-      <span style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Dupes</span>
-      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px;line-height:1.3">The Wild Ones — 10 Affordable Dupes for the World's Best-Selling Cologne</div>
-      <p style="color:#bbb;font-size:13px;line-height:1.6;margin:0 0 16px">Dior Sauvage is the best-selling men's fragrance on the planet. We found 10 alternatives that capture its bold fresh-spicy DNA — some for as little as $15.</p>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <span style="color:var(--muted);font-size:11px">✦ 8 min read</span>
-        <span style="color:var(--muted);font-size:11px">✦ Updated 2025</span>
-        <a href="Articles/dior-sauvage-dupes.html" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f;border:none;border-radius:8px;padding:8px 20px;font-size:12px;font-weight:bold;text-decoration:none;letter-spacing:1px;font-family:Georgia,serif">Read Article →</a>
-      </div>
-    </div>
+  <!-- FOOTER -->
+  <footer>
+    <a href="https://decodedscents.com" class="footer-logo">✦ Decoded Scents</a>
+    <p class="footer-tagline">Every Scent, Decoded.</p>
+  </footer>
 
-    <!-- Article 4 — YSL Black Opium -->
-    <div class="article-card" data-cat="dupes" onclick="window.location.href='Articles/ysl-black-opium-dupes.html'" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:24px;cursor:pointer" onmouseover="this.style.borderColor='rgba(212,175,55,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)';this.style.transform='translateY(0)'">
-      <span style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);color:var(--gold);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Dupes</span>
-      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px;line-height:1.3">Dark Obsession — 10 Affordable Dupes for YSL Black Opium</div>
-      <p style="color:#bbb;font-size:13px;line-height:1.6;margin:0 0 16px">Bold, addictive and unmistakably feminine. YSL Black Opium costs up to $145 — we found 10 alternatives that capture its dark coffee-floral-vanilla magic for as little as $15.</p>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <span style="color:var(--muted);font-size:11px">✦ 8 min read</span>
-        <span style="color:var(--muted);font-size:11px">✦ Updated 2025</span>
-        <a href="Articles/ysl-black-opium-dupes.html" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f;border:none;border-radius:8px;padding:8px 20px;font-size:12px;font-weight:bold;text-decoration:none;letter-spacing:1px;font-family:Georgia,serif">Read Article →</a>
-      </div>
-    </div>
-
-    <!-- Article 5 — Coming Soon -->
-    <div class="article-card" data-cat="guides" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;opacity:0.6">
-      <span style="background:rgba(126,200,160,0.15);border:1px solid rgba(126,200,160,0.3);color:var(--green);border-radius:20px;padding:2px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">Coming Soon</span>
-      <div style="font-size:20px;font-weight:bold;color:#f0e8d0;margin:10px 0 8px">The Gift Whisperer — Finding the Perfect Fragrance for Someone You Love</div>
-      <p style="color:#888;font-size:13px;line-height:1.6;margin:0">Whether it's a birthday, anniversary or Valentine's Day — this guide helps you find the perfect scent for every person in your life, at every budget.</p>
-    </div>
-
-  </div>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <p>✦ Decoded Scents — AI-powered fragrance dupe finder</p>
-  <p style="margin-top:6px">
-    <a href="https://www.fragrantica.com" target="_blank">Fragrantica</a> &nbsp;·&nbsp;
-    <a href="https://www.fragrancenet.com" target="_blank">FragranceNet</a> &nbsp;·&nbsp;
-    <a href="https://www.amazon.com" target="_blank">Amazon</a>
-  </p>
-  <p style="margin-top:6px">© 2025 DecodedScents.com · We may earn affiliate commissions.</p>
-</div>
-
-<script>
-var WORKER_URL = "https://decodedscents.cfe1585.workers.dev";
-var AMZN_TAG = "decodedscents-20";
-
-var BRANDS = {
-  "dua brand":{p:["🌐 Dua Brand",function(n){return "https://theduabrand.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Dua Brand "+n)+"&tag="+AMZN_TAG;}]},
-  "dua":{p:["🌐 Dua Brand",function(n){return "https://theduabrand.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Dua Brand "+n)+"&tag="+AMZN_TAG;}]},
-  "riffs":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Riffs "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Riffs "+n);}]},
-  "afnan":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Afnan "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Afnan "+n);}]},
-  "lattafa":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Lattafa "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Lattafa "+n);}]},
-  "armaf":{p:["🌐 Armaf",function(n){return "https://armaf.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Armaf "+n)+"&tag="+AMZN_TAG;}]},
-  "al haramain":{p:["🌐 Al Haramain",function(n){return "https://alharamain.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Al Haramain "+n)+"&tag="+AMZN_TAG;}]},
-  "rasasi":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Rasasi "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Rasasi "+n);}]},
-  "arabiyat":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Arabiyat "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Arabiyat "+n);}]},
-  "dumont":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Dumont "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Dumont "+n);}]},
-  "french avenue":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("French Avenue "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("French Avenue "+n);}]},
-  "maison alhambra":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Maison Alhambra "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Maison Alhambra "+n);}]},
-  "pendora":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Pendora "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Pendora "+n);}]},
-  "zara":{p:["🌐 Zara",function(n){return "https://www.zara.com/us/en/search?searchTerm="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Zara "+n+" perfume")+"&tag="+AMZN_TAG;}]},
-  "khadlaj":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Khadlaj "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Khadlaj "+n);}]},
-  "ajmal":{p:["🌐 Ajmal",function(n){return "https://www.ajmalperfume.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Ajmal "+n)+"&tag="+AMZN_TAG;}]},
-  "swiss arabian":{p:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Swiss Arabian "+n)+"&tag="+AMZN_TAG;}],s:["🔎 Google Shop",function(n){return "https://www.google.com/search?tbm=shop&q="+enc("Swiss Arabian "+n);}]},
-  "creed":{p:["🌐 Creed",function(n){return "https://www.creedboutique.com/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/creed-cologne";}]},
-  "tom ford":{p:["🌐 Tom Ford",function(n){return "https://www.tomford.com/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/tom-ford-cologne";}]},
-  "dior":{p:["🌐 Dior",function(n){return "https://www.dior.com/en_us/search#q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/christian-dior-cologne";}]},
-  "chanel":{p:["🌐 Chanel",function(n){return "https://www.chanel.com/us/fragrance/search/?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/chanel-cologne";}]},
-  "amouage":{p:["🌐 Amouage",function(n){return "https://www.amouage.com/en-us/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/amouage-cologne";}]},
-  "xerjoff":{p:["🌐 Xerjoff",function(n){return "https://www.xerjoff.com/en/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/xerjoff-cologne";}]},
-  "parfums de marly":{p:["🌐 PDM",function(n){return "https://www.parfumsdemarly.com/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/parfums-de-marly-cologne";}]},
-  "kilian":{p:["🌐 By Kilian",function(n){return "https://www.bykilian.com/en-us/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/by-kilian-cologne";}]},
-  "mfk":{p:["🌐 MFK",function(n){return "https://www.mfk.com/en-us/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/maison-francis-kurkdjian-cologne";}]},
-  "maison francis":{p:["🌐 MFK",function(n){return "https://www.mfk.com/en-us/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/maison-francis-kurkdjian-cologne";}]},
-  "ysl":{p:["🌐 YSL",function(n){return "https://www.yslbeauty.com/us/en/fragrance/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/yves-saint-laurent-cologne";}]},
-  "guerlain":{p:["🌐 Guerlain",function(n){return "https://www.guerlain.com/us/en-us/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/guerlain-cologne";}]},
-  "versace":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/versace-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Versace "+n)+"&tag="+AMZN_TAG;}]},
-  "armani":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/giorgio-armani-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Armani "+n)+"&tag="+AMZN_TAG;}]},
-  "paco":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/paco-rabanne-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Paco Rabanne "+n)+"&tag="+AMZN_TAG;}]},
-  "burberry":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/burberry-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Burberry "+n)+"&tag="+AMZN_TAG;}]},
-  "hugo boss":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/hugo-boss-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Hugo Boss "+n)+"&tag="+AMZN_TAG;}]},
-  "mont blanc":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/mont-blanc-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Mont Blanc "+n)+"&tag="+AMZN_TAG;}]},
-  "ralph":{p:["🌐 Ralph Lauren",function(n){return "https://www.ralphlauren.com/search?q="+enc(n);}],s:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/ralph-lauren-cologne";}]},
-  "calvin klein":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/calvin-klein-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Calvin Klein "+n)+"&tag="+AMZN_TAG;}]},
-  "dolce":{p:["🛍 FragranceNet",function(){return "https://www.fragrancenet.com/dolce-gabbana-cologne";}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Dolce Gabbana "+n)+"&tag="+AMZN_TAG;}]},
-  "bath":{p:["🌐 Bath & Body",function(n){return "https://www.bathandbodyworks.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Bath Body Works "+n)+"&tag="+AMZN_TAG;}]},
-  "avon":{p:["🌐 Avon",function(n){return "https://www.avon.com/search?q="+enc(n);}],s:["🛒 Amazon",function(n){return "https://www.amazon.com/s?k="+enc("Avon "+n)+"&tag="+AMZN_TAG;}]}
-};
-
-function enc(s){return encodeURIComponent(s);}
-function enc2(s){return encodeURIComponent(s);}
-function getBrand(brand){
-  if(!brand) return null;
-  var b=brand.toLowerCase();
-  var keys=Object.keys(BRANDS);
-  for(var i=0;i<keys.length;i++){if(b.indexOf(keys[i])!==-1) return BRANDS[keys[i]];}
-  return null;
-}
-
-var imgCache={};
-var expandedIdx=null;
-var currentData=null;
-var loaderTimer=null;
-var loaderPhrase=0;
-var searchCache={};
-var loaderPhrases=["Searching fragrance communities...","Scanning Reddit & Fragrantica...","Checking TikTok & Instagram trends...","Compiling your perfect dupes...","Almost ready..."];
-
-function startLoader(){
-  loaderPhrase=0;
-  document.getElementById("loader-text").textContent=loaderPhrases[0];
-  document.getElementById("loader").classList.add("active");
-  loaderTimer=setInterval(function(){loaderPhrase=(loaderPhrase+1)%loaderPhrases.length;document.getElementById("loader-text").textContent=loaderPhrases[loaderPhrase];},1800);
-}
-function stopLoader(){clearInterval(loaderTimer);document.getElementById("loader").classList.remove("active");}
-function showError(msg){var b=document.getElementById("error-box");b.textContent=msg;b.classList.add("active");}
-function hideError(){document.getElementById("error-box").classList.remove("active");}
-function showResults(){document.getElementById("results").classList.add("active");}
-function hideResults(){document.getElementById("results").classList.remove("active");}
-function showSuggestions(){document.getElementById("suggestions").style.display="flex";}
-function hideSuggestions(){document.getElementById("suggestions").style.display="none";}
-function openLightbox(src,name,brand){document.getElementById("lb-img").src=src;document.getElementById("lb-name").textContent=name;document.getElementById("lb-brand").textContent=brand;document.getElementById("lb-link").href="https://www.fragrantica.com/search/?query="+enc2(name+" "+brand);document.getElementById("lightbox").classList.add("open");}
-function closeLightbox(){document.getElementById("lightbox").classList.remove("open");}
-
-function repairJSON(str){
-  var s=str.replace(/```json|```/g,"").trim();
-  var last=s.lastIndexOf('"}');
-  if(last!==-1){s=s.substring(0,last+2);var opens=(s.match(/\[/g)||[]).length-(s.match(/\]/g)||[]).length;var braces=(s.match(/\{/g)||[]).length-(s.match(/\}/g)||[]).length;for(var i=0;i<opens;i++)s+="]";for(var i=0;i<braces;i++)s+="}";}
-  return s;
-}
-
-function simColor(s){return s>=85?"#f0d060":s>=70?"#d4af37":"#b8860b";}
-function simGrad(s){return s>=85?"linear-gradient(90deg,#d4af37,#f5d060)":"linear-gradient(90deg,#8B6914,#d4af37)";}
-function noteTag(n,shared){return '<span class="note-tag'+(shared?" shared":"")+'">'+ n +'</span>';}
-
-function renderNotes(notes,shared){
-  if(!notes) return "";
-  shared=shared||[];
-  function row(label,arr){
-    if(!arr||!arr.length) return "";
-    var tags=arr.map(function(n){return noteTag(n,shared.indexOf(n)!==-1);}).join("");
-    return '<div class="notes-row"><span class="notes-label">'+label+': </span>'+tags+'</div>';
-  }
-  return row("Top",notes.top)+row("Heart",notes.middle)+row("Base",notes.base);
-}
-
-function renderBuyBtns(name,brand,fragranticaQuery,amazonSearch){
-  var r=getBrand(brand);
-  var googleShop="https://www.google.com/search?tbm=shop&q="+enc2((amazonSearch||name)+" perfume");
-  var amzDefault="https://www.amazon.com/s?k="+enc2((amazonSearch||name)+" perfume")+"&tag="+AMZN_TAG;
-  var fragrantica="https://www.fragrantica.com/search/?query="+enc2(fragranticaQuery||name);
-  var html='<div class="buy-btns">';
-  if(r){
-    var pl=r.p[0];var pu=r.p[1];
-    var isAmzP=pl.indexOf("Amazon")!==-1;
-    html+='<a href="'+pu(name)+'" target="_blank" rel="noopener noreferrer" class="buy-btn" style="background:'+(isAmzP?"linear-gradient(135deg,#ff9900,#e68a00)":"rgba(160,120,200,0.15)")+';color:'+(isAmzP?"#111":"#d4af37")+';border:1px solid '+(isAmzP?"rgba(255,153,0,0.4)":"rgba(212,175,55,0.4)")+'">'+pl+'</a>';
-  } else {
-    html+='<a href="'+amzDefault+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-amazon">🛒 Buy on Amazon</a>';
-  }
-  html+='<a href="https://www.google.com/search?tbm=shop&q='+enc2((amazonSearch||name)+" perfume")+'" target="_blank" rel="noopener noreferrer" class="buy-btn" style="flex:1;min-width:120px;background:rgba(66,133,244,0.1);border:1px solid rgba(66,133,244,0.3);color:#6fa8f5">🔎 Compare Prices</a>';
-  html+='<a href="'+fragrantica+'" target="_blank" rel="noopener noreferrer" class="buy-btn buy-btn-fragrantica">📖 Fragrantica</a>';
-  html+='</div>';
-  return html;
-}
-
-function renderBottleWrap(id,size){
-  var dim=size==="large"?114:70;
-  var radius=size==="large"?"14px":"10px";
-  var colors=["#d4af37","#7ec8a0","#a078c8","#6090c8","#c87050","#9090d0"];
-  var colorIdx=id.split("").reduce(function(a,c){return a+c.charCodeAt(0);},0)%colors.length;
-  var color=colors[colorIdx];
-  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+dim+'" height="'+dim+'" viewBox="0 0 100 100">'
-    +'<defs><linearGradient id="bg'+id+'" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.15"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0.05"/></linearGradient>'
-    +'<linearGradient id="btl'+id+'" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.9"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0.4"/></linearGradient>'
-    +'<linearGradient id="sh'+id+'" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="white" stop-opacity="0.3"/><stop offset="100%" stop-color="white" stop-opacity="0"/></linearGradient></defs>'
-    +'<rect width="100" height="100" fill="url(#bg'+id+')"/>'
-    +'<rect x="32" y="48" width="36" height="42" rx="5" fill="url(#btl'+id+')"/>'
-    +'<rect x="38" y="34" width="24" height="16" rx="3" fill="url(#btl'+id+')"/>'
-    +'<rect x="36" y="26" width="28" height="10" rx="4" fill="'+color+'"/>'
-    +'<rect x="42" y="20" width="16" height="8" rx="2" fill="'+color+'"/>'
-    +'<rect x="32" y="48" width="10" height="42" rx="5" fill="url(#sh'+id+')"/>'
-    +'<rect x="35" y="56" width="30" height="24" rx="2" fill="white" fill-opacity="0.07"/>'
-    +'</svg>';
-  return '<div class="bottle-wrap" id="'+id+'" style="width:'+dim+'px;height:'+dim+'px;border-radius:'+radius+';background:#0d1117;border:1px solid '+color+'44;overflow:hidden;cursor:default">'+svg+'</div>';
-}
-
-function renderOriginal(orig){
-  return '<div class="original-card">'
-    +'<div class="original-label">✦ Original Niche Fragrance</div>'
-    +'<div class="card-inner">'
-    +renderBottleWrap("bottle-orig","large")
-    +'<div class="card-info">'
-    +'<div class="card-header"><div><div class="frag-name">'+orig.name+'</div><div class="frag-brand">'+orig.brand+'</div></div>'
-    +'<div style="text-align:right"><div class="frag-price-orig">~'+orig.price+'*</div><span class="badge">'+orig.scentFamily+'</span></div></div>'
-    +'<p class="frag-desc">'+orig.description+'</p>'
-    +'<p style="color:#666;font-size:10px;margin-bottom:8px">*Prices vary. Always check retailer for current pricing.</p>'
-    +renderNotes(orig.notes,[])
-    +renderBuyBtns(orig.name,orig.brand,orig.fragranticaQuery,orig.name+" "+orig.brand+" perfume")
-    +'</div></div></div>';
-}
-
-function renderDupe(d,i){
-  var sc=simColor(d.similarity);
-  var sg=simGrad(d.similarity);
-  return '<div class="dupe-card" id="dupe-'+i+'">'
-    +'<div class="card-inner">'
-    +renderBottleWrap("bottle-dupe-"+i,"small")
-    +'<div class="card-info">'
-    +'<div class="card-header"><div>'
-    +'<div><span style="color:var(--gold);font-size:12px">#'+(i+1)+'</span> <span style="font-size:15px;font-weight:bold">'+d.name+'</span></div>'
-    +'<div style="color:var(--muted);font-size:12px">'+d.brand+'</div></div>'
-    +'<div style="text-align:right"><div class="frag-price-dupe">~'+d.price+'*</div><span class="badge">'+d.scentFamily+'</span></div></div>'
-    +'<div class="sim-wrap"><div class="sim-header"><span class="sim-label">Similarity</span><span style="color:'+sc+';font-weight:bold;font-size:13px">'+d.similarity+'%</span></div>'
-    +'<div class="sim-track"><div class="sim-fill" style="width:'+d.similarity+'%;background:'+sg+'"></div></div></div>'
-    +'</div></div>'
-    +'<div class="expanded-body" id="exp-'+i+'">'
-    +(d.communitySource?'<div class="community-badge">🌐 Community pick: '+d.communitySource+'</div>':'')
-    +'<div class="expanded-label" style="margin-top:10px">Shared Notes</div>'
-    +'<div style="margin-bottom:10px">'+(d.sharedNotes||[]).map(function(n){return noteTag(n,true);}).join("")+'</div>'
-    +renderNotes(d.notes,d.sharedNotes||[])
-    +'<div class="expanded-label" style="margin-top:10px">Why It Smells Similar</div>'
-    +'<p style="color:#bbb;font-size:13px;line-height:1.5;margin:0 0 4px">'+d.whySimilar+'</p>'
-    +'<p style="color:#666;font-size:10px;margin-bottom:4px">*Prices vary. Check retailer for current pricing.</p>'
-    +renderBuyBtns(d.name,d.brand,d.fragranticaQuery,d.amazonSearch)
-    +'</div>'
-    +'<div class="expand-hint" id="hint-'+i+'">▼ details & buy</div>'
-    +'</div>';
-}
-
-function toggleDupe(i){
-  var card=document.getElementById("dupe-"+i);
-  var body=document.getElementById("exp-"+i);
-  var hint=document.getElementById("hint-"+i);
-  var isOpen=expandedIdx===i;
-  if(expandedIdx!==null&&expandedIdx!==i){
-    var oc=document.getElementById("dupe-"+expandedIdx);
-    var ob=document.getElementById("exp-"+expandedIdx);
-    var oh=document.getElementById("hint-"+expandedIdx);
-    if(oc)oc.classList.remove("open");
-    if(ob)ob.classList.remove("open");
-    if(oh)oh.textContent="▼ details & buy";
-  }
-  if(isOpen){card.classList.remove("open");body.classList.remove("open");hint.textContent="▼ details & buy";expandedIdx=null;}
-  else{card.classList.add("open");body.classList.add("open");hint.textContent="▲ collapse";expandedIdx=i;}
-}
-
-function renderResults(data){
-  var el=document.getElementById("results");
-  var html='<div class="card-wrap">';
-  html+=renderOriginal(data.original);
-  html+='<div class="section-label">✦ Top 5 Closest Dupes — Tap to Expand & Buy ✦</div>';
-  html+='<div class="dupes-list" id="dupes-list-main">';
-  for(var i=0;i<5&&i<data.dupes.length;i++) html+=renderDupe(data.dupes[i],i);
-  html+='</div>';
-  if(data.dupes.length>5){
-    html+='<div style="text-align:center;margin:16px 0"><button class="new-search-btn" id="expand-btn" style="border-color:rgba(212,175,55,0.5);color:var(--gold);padding:12px 32px;font-size:13px">✦ Show More Results</button></div>';
-    html+='<div class="dupes-list" id="dupes-list-extra" style="display:none">';
-    for(var i=5;i<data.dupes.length;i++) html+=renderDupe(data.dupes[i],i);
-    html+='</div>';
-  }
-  html+='<button class="new-search-btn" id="new-search-btn">✦ NEW SEARCH</button>';
-  html+='</div>';
-  el.innerHTML=html;
-  showResults();
-  for(var j=0;j<data.dupes.length;j++){
-    (function(idx){var card=document.getElementById("dupe-"+idx);if(card)card.addEventListener("click",function(){toggleDupe(idx);});})(j);
-  }
-  var expandBtn=document.getElementById("expand-btn");
-  if(expandBtn){
-    expandBtn.addEventListener("click",function(){
-      var extra=document.getElementById("dupes-list-extra");
-      if(extra.style.display==="none"){extra.style.display="flex";expandBtn.textContent="✦ Show Less";}
-      else{extra.style.display="none";expandBtn.textContent="✦ Show More Results";}
-    });
-  }
-  document.getElementById("new-search-btn").addEventListener("click",resetSearch);
-  document.getElementById("lightbox").addEventListener("click",closeLightbox);
-}
-
-function resetSearch(){
-  hideResults();hideError();showSuggestions();
-  document.getElementById("results").innerHTML="";
-  document.getElementById("search-input").value="";
-  document.getElementById("search-input").focus();
-  currentData=null;expandedIdx=null;
-}
-
-async function doSearch(){
-  var query=document.getElementById("search-input").value.trim();
-  if(!query) return;
-  if(searchCache[query.toLowerCase()]){
-    hideSuggestions();hideError();stopLoader();
-    document.getElementById("search-btn").disabled=false;
-    renderResults(searchCache[query.toLowerCase()]);
-    return;
-  }
-  hideSuggestions();hideResults();hideError();
-  document.getElementById("results").innerHTML="";
-  startLoader();
-  document.getElementById("search-btn").disabled=true;
-  expandedIdx=null;
-  try{
-    var res=await fetch(WORKER_URL+"/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:query})});
-    var json=await res.json();
-    if(json.error) throw new Error(json.error);
-    var parsed;
-    try{parsed=JSON.parse(json.result);}
-    catch(e1){try{parsed=JSON.parse(repairJSON(json.result));}catch(e2){throw new Error("Could not parse results. Please try again.");}}
-    searchCache[query.toLowerCase()]=parsed;
-    currentData=parsed;
-    stopLoader();
-    renderResults(parsed);
-  }catch(e){
-    stopLoader();
-    var msg=e.message;
-    if(msg.indexOf("rate limit")!==-1){msg="⏳ We are getting lots of searches right now! Please wait 30 seconds and try again.";}
-    showError(msg);
-    showSuggestions();
-  }
-  document.getElementById("search-btn").disabled=false;
-}
-
-function filterArticles(cat){
-  document.querySelectorAll(".cat-btn").forEach(function(b){b.classList.remove("active");});
-  document.querySelector('[data-cat="'+cat+'"]').classList.add("active");
-  document.querySelectorAll(".article-card").forEach(function(card){
-    if(cat==="all"||card.getAttribute("data-cat")===cat){card.style.display="block";}
-    else{card.style.display="none";}
-  });
-}
-
-window.addEventListener("DOMContentLoaded",function(){
-  document.querySelectorAll(".suggestion").forEach(function(chip){
-    chip.addEventListener("click",function(){
-      document.getElementById("search-input").value=chip.textContent.trim();
-      doSearch();
-    });
-  });
-  document.getElementById("search-btn").addEventListener("click",doSearch);
-  document.getElementById("search-input").addEventListener("keydown",function(e){if(e.key==="Enter")doSearch();});
-});
-</script>
 </body>
 </html>
