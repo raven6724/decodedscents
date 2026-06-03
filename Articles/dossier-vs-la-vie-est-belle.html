@@ -361,6 +361,36 @@
       nav { padding: 0 1rem; }
       .hero { padding: 60px 1rem 50px; }
     }
+
+    /* SHARE */
+    .share-section {
+      text-align: center;
+      padding: 3rem 0 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    .share-label {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 1.2rem;
+    }
+    .share-buttons {
+      display: flex; justify-content: center;
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .share-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+    .copy-success { display: none; color: var(--green); font-size: 0.8rem; margin-top: 0.8rem; }
   </style>
 </head>
 <body>
@@ -702,7 +732,40 @@
 
   </div><!-- /container -->
 
-  <!-- FOOTER -->
+  
+<!-- SHARE -->
+<div class="container">
+  <div class="share-section">
+    <div class="share-label">✦ Share This Article</div>
+    <div class="share-buttons">
+      <a class="share-btn"
+         href="https://twitter.com/intent/tweet?text=She%20Didn%27t%20Know%20It%20Wasn%27t%20the%20%24135%20Bottle%20%E2%80%94%20Dossier%20vs%20La%20Vie%20Est%20Belle%20decoded%3A&url=https%3A%2F%2Fdecodedscents.com%2FArticles%2Fdossier-vs-la-vie-est-belle.html"
+         target="_blank" rel="noopener">𝕏 Share on X</a>
+      <a class="share-btn"
+         href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdecodedscents.com%2FArticles%2Fdossier-vs-la-vie-est-belle.html"
+         target="_blank" rel="noopener">📘 Facebook</a>
+      <a class="share-btn"
+         href="https://api.whatsapp.com/send?text=She%20Didn%27t%20Know%20It%20Wasn%27t%20the%20%24135%20Bottle%20%F0%9F%92%B8%20Dossier%20vs%20La%20Vie%20Est%20Belle%3A%20https%3A%2F%2Fdecodedscents.com%2FArticles%2Fdossier-vs-la-vie-est-belle.html"
+         target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a class="share-btn"
+         href="mailto:?subject=Is%20This%20%2429%20Perfume%20Better%20Than%20La%20Vie%20Est%20Belle%3F&body=Found%20this%20comparison%20article%20on%20Decoded%20Scents%20%E2%80%94%20Dossier%20vs%20La%20Vie%20Est%20Belle%3A%0A%0Ahttps%3A%2F%2Fdecodedscents.com%2FArticles%2Fdossier-vs-la-vie-est-belle.html">✉️ Email</a>
+      <button class="share-btn" onclick="copyLink2()">🔗 Copy Link</button>
+    </div>
+    <div class="copy-success" id="copySuccess2">✓ Link copied to clipboard!</div>
+  </div>
+</div>
+<script>
+function copyLink2() {
+  navigator.clipboard.writeText('https://decodedscents.com/Articles/dossier-vs-la-vie-est-belle.html')
+    .then(() => {
+      const msg = document.getElementById('copySuccess2');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 2500);
+    });
+}
+</script>
+
+<!-- FOOTER -->
   <footer>
     <a href="https://decodedscents.com" class="footer-logo">✦ Decoded Scents</a>
     <p class="footer-tagline">Every Scent, Decoded.</p>
