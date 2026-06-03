@@ -201,6 +201,8 @@
     .btn-fragrantica:hover { border-color:var(--gold); color:var(--gold); }
     .btn-google { background: var(--bg4); border:1px solid var(--border); color:var(--text-muted); }
     .btn-google:hover { border-color:var(--gold); color:var(--gold); }
+    .btn-perfumania { background: var(--bg4); border:1px solid rgba(201,168,76,0.4); color:var(--gold); }
+    .btn-perfumania:hover { background: var(--gold-dim); border-color:var(--gold); color:var(--gold-light); }
 
     /* ── SECTION HEADER ── */
     .section-header {
@@ -507,6 +509,18 @@
   <script>
     const WORKER_URL = "https://decodedscents.cfe1585.workers.dev";
     const AFFILIATE  = "decodedscents-20";
+    const PERFUMANIA_CJ = "https://www.tkqlhce.com/click-101769387-17283068?url=";
+
+    // Build a Perfumania deep link for any product search
+    function perfumaniaLink(name, brand) {
+      const searchUrl = "https://www.perfumania.com/search?q=" + encodeURIComponent(name + " " + brand);
+      return PERFUMANIA_CJ + encodeURIComponent(searchUrl);
+    }
+
+    // Build a Perfumania direct product deep link from a known URL
+    function perfumaniaDirectLink(productUrl) {
+      return PERFUMANIA_CJ + encodeURIComponent(productUrl);
+    }
 
     // ── SEARCH STATE ──
     let allDupes = [];
@@ -651,8 +665,8 @@
           </div>
           <div class="original-btns">
             <a href="${origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy on Amazon</a>
+            <a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Buy at Perfumania</a>
             <a href="https://www.fragrantica.com/search/?query=${fragQ}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
-            <a href="https://www.google.com/search?q=${encodeURIComponent(orig.name+" "+orig.brand+" perfume buy")}" target="_blank" rel="noopener" class="btn-sm btn-google">🔎 Compare Prices</a>
           </div>
         </div>
 
@@ -726,6 +740,7 @@
               <div class="dupe-btns">
                 <a href="${buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy Now</a>
                 <a href="${amazonLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">🛍 Amazon</a>
+                <a href="${perfumaniaLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>
                 <a href="${fragLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
               </div>
             </div>
