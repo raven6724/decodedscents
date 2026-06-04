@@ -643,6 +643,31 @@
       return `https://www.fragrantica.com/search/?query=${encodeURIComponent(q)}`;
     }
 
+    function renderStandaloneInfo(data) {
+      const html = `
+        <div class="original-card" style="border-color:rgba(201,168,76,0.3);">
+          <div class="original-label" style="color:var(--gold);">✦ Fragrance Information</div>
+          <div class="original-name">${data.name}</div>
+          <div class="original-brand">${data.brand}</div>
+
+          <div style="margin:1.5rem 0;padding:1.2rem;background:var(--bg3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;">
+            <div style="font-size:0.8rem;line-height:1.8;color:var(--text-muted);">${data.note}</div>
+          </div>
+
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;">
+            <button onclick="inputEl.value='';resultsEl.innerHTML='';inputEl.focus();" class="btn-sm btn-fragrantica" style="cursor:pointer;">← Search a Luxury Fragrance</button>
+          </div>
+        </div>
+        <button id="new-search-btn">← New Search</button>`;
+
+      resultsEl.innerHTML = html;
+      document.getElementById("new-search-btn").addEventListener("click", () => {
+        resultsEl.innerHTML = "";
+        inputEl.value = "";
+        inputEl.focus();
+      });
+    }
+
     function renderDupeInfo(data) {
       const sp    = data.searchedProduct || {};
       const orig  = data.original        || {};
@@ -897,7 +922,9 @@
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
-        if (parsed.isDupe) {
+        if (parsed.isStandalone) {
+          renderStandaloneInfo(parsed);
+        } else if (parsed.isDupe) {
           renderDupeInfo(parsed);
         } else {
           render(parsed);
