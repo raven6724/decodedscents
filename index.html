@@ -521,9 +521,8 @@
     const PERFUMANIA_CJ = "https://www.tkqlhce.com/click-101769387-17283068?url=";
     const SHOP_SIMON = "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=https%3A%2F%2Fshop.simon.com%2Fcollections%2Faccessories-health-beauty-fragrance";
     function shopSimonLink(name, brand) {
-      const searchTerm = encodeURIComponent(name + " " + brand);
-      const destUrl = "https://shop.simon.com/search-results?q=" + searchTerm;
-      return "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=" + encodeURIComponent(destUrl);
+      // Use the working fragrance collection URL - search is unreliable
+      return "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=https%3A%2F%2Fshop.simon.com%2Fcollections%2Faccessories-health-beauty-fragrance";
     }
 
     // Build a Perfumania deep link for any product search
@@ -812,7 +811,6 @@
           </div>
           <div class="original-btns">
             <a href="${origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy on Amazon</a>
-            <a href="${shopSimonLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>
             <a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>
             <a href="${shopSimonLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>
             <a href="https://www.fragrantica.com/search/?query=${fragQ}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
