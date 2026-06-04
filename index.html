@@ -203,6 +203,8 @@
     .btn-google:hover { border-color:var(--gold); color:var(--gold); }
     .btn-perfumania { background: var(--bg4); border:1px solid rgba(201,168,76,0.4); color:var(--gold); }
     .btn-perfumania:hover { background: var(--gold-dim); border-color:var(--gold); color:var(--gold-light); }
+    .btn-simon { background: var(--bg4); border:1px solid rgba(139,92,246,0.4); color:#a78bfa; }
+    .btn-simon:hover { background: rgba(139,92,246,0.1); border-color:#a78bfa; color:#c4b5fd; }
 
     /* ── SECTION HEADER ── */
     .section-header {
@@ -517,6 +519,11 @@
     const WORKER_URL = "https://decodedscents.cfe1585.workers.dev";
     const AFFILIATE  = "decodedscents-20";
     const PERFUMANIA_CJ = "https://www.tkqlhce.com/click-101769387-17283068?url=";
+    const SHOP_SIMON = "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=https%3A%2F%2Fshop.simon.com%2Fcollections%2Faccessories-health-beauty-fragrance";
+    function shopSimonLink(name, brand) {
+      const q = encodeURIComponent(name + " " + brand + " perfume");
+      return "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=" + encodeURIComponent("https://shop.simon.com/search-results?q=" + encodeURIComponent(name + " " + brand));
+    }
 
     // Build a Perfumania deep link for any product search
     function perfumaniaLink(name, brand) {
@@ -726,7 +733,8 @@
               <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${orig.brand}</div>
               <div style="font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:0.5rem;">${orig.price}</div>
               <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${orig.description||""}</div>
-              <a href="${origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;">🏪 Buy Original</a>
+              <a href="${perfumaniaLink(original.name, original.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 Perfumania</a>
+              <a href="${shopSimonLink(original.name, original.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon" style="display:block;text-align:center;">🛍️ Shop Simon</a>
             </div>
 
           </div>
@@ -803,7 +811,8 @@
           </div>
           <div class="original-btns">
             <a href="${origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy on Amazon</a>
-            <a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Buy at Perfumania</a>
+            <a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>
+            <a href="${shopSimonLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>
             <a href="https://www.fragrantica.com/search/?query=${fragQ}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
           </div>
         </div>
