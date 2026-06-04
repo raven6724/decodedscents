@@ -643,6 +643,112 @@
       return `https://www.fragrantica.com/search/?query=${encodeURIComponent(q)}`;
     }
 
+    function renderDupeInfo(data) {
+      const sp    = data.searchedProduct || {};
+      const orig  = data.original        || {};
+      const top3  = data.topDupes        || [];
+      const origKey = data.originalKey   || "";
+
+      const origAmazon = `https://www.amazon.com/s?k=${encodeURIComponent('"'+orig.name+'" '+orig.brand+' perfume')}&tag=${AFFILIATE}`;
+      const buyLink = buildBuyLink(sp.name, sp.brand, sp.duaSlug, sp.amazonSearch);
+      const fragLink = buildFragranticaLink(sp.fragranticaQuery, sp.name);
+      const origFragLink = `https://www.fragrantica.com/search/?query=${encodeURIComponent(orig.fragranticaQuery || orig.name)}`;
+
+      const pct = sp.similarity || 80;
+      const shared = (sp.sharedNotes||[]).map(n=>`<span class="shared-pill">${n}</span>`).join("");
+
+      const notesHTML = (tier, notes) => `
+        <div class="notes-group">
+          <div class="notes-label">${tier}</div>
+          <div class="notes-pills">${(notes||[]).map(n=>`<span class="note-pill">${n}</span>`).join("")}</div>
+        </div>`;
+
+      const top3HTML = top3.map((d,i) => `
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.7rem 0;border-bottom:1px solid rgba(201,168,76,0.1);">
+          <div style="font-size:0.75rem;color:var(--gold);font-weight:700;min-width:18px;">${i+1}</div>
+          <div style="flex:1;">
+            <div style="font-weight:600;color:var(--text);font-size:0.9rem;">${d.name}</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">${d.brand} · ${d.price}</div>
+          </div>
+          <div style="font-size:0.8rem;color:var(--green);font-weight:700;">${d.similarity}%</div>
+        </div>`).join("");
+
+      const html = `
+        <div class="original-card" style="border-color:rgba(201,168,76,0.4);background:linear-gradient(135deg,#111118,#0f0f1a);">
+          <div class="original-label" style="color:var(--green);">✦ You Searched a Community-Verified Alternative</div>
+          <div class="original-name">${sp.name}</div>
+          <div class="original-brand">${sp.brand} · ${sp.scentFamily||""}</div>
+          <div class="original-price" style="color:var(--green);">${sp.price}</div>
+          <div class="original-desc" style="color:var(--text-muted);">
+            This fragrance is a community-verified alternative to <strong style="color:var(--text);">${orig.name}</strong> by ${orig.brand} — 
+            rated <strong style="color:var(--gold);">${pct}% similar</strong> by the fragrance community.
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+
+            <div style="background:var(--bg3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:1.2rem;">
+              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:0.8rem;">✦ This Fragrance</div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;font-weight:600;">${sp.name}</div>
+              <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${sp.brand}</div>
+              <div style="font-size:1.3rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;">${sp.price}</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${sp.whySimilar||""}</div>
+              <a href="${buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;">🛒 Buy Now</a>
+            </div>
+
+            <div style="background:var(--bg3);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:1.2rem;">
+              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;">✦ The Original</div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;font-weight:600;">${orig.name}</div>
+              <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${orig.brand}</div>
+              <div style="font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:0.5rem;">${orig.price}</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${orig.description||""}</div>
+              <a href="${origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;">🏪 Buy Original</a>
+            </div>
+
+          </div>
+
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+            <div style="flex:1;height:1px;background:rgba(201,168,76,0.15);"></div>
+            <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;color:var(--gold);">SIMILARITY</div>
+            <div style="flex:1;height:1px;background:rgba(201,168,76,0.15);"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+            <div style="flex:1;background:var(--bg3);border-radius:50px;height:10px;overflow:hidden;">
+              <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:50px;"></div>
+            </div>
+            <div style="font-size:1.2rem;font-weight:700;color:var(--gold);min-width:40px;">${pct}%</div>
+          </div>
+
+          ${shared ? `
+          <div style="margin-bottom:1.5rem;">
+            <div class="shared-label">Shared Notes</div>
+            <div class="shared-pills">${shared}</div>
+          </div>` : ""}
+
+          <div class="community-badge" style="margin-bottom:1.5rem;">✦ ${sp.communitySource||"Community verified"}</div>
+
+          ${top3.length ? `
+          <div style="margin-bottom:1.2rem;">
+            <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem;">Other Top Alternatives to ${orig.name}</div>
+            ${top3HTML}
+          </div>` : ""}
+
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;">
+            <button onclick="doSearch('${orig.name} ${orig.brand}'.trim())" class="btn-sm btn-fragrantica" style="cursor:pointer;">🔍 Search "${orig.name}" for All Dupes</button>
+            <a href="${origFragLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Original on Fragrantica</a>
+            <a href="${fragLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 This on Fragrantica</a>
+          </div>
+        </div>
+
+        <button id="new-search-btn">← New Search</button>`;
+
+      resultsEl.innerHTML = html;
+      document.getElementById("new-search-btn").addEventListener("click", () => {
+        resultsEl.innerHTML = "";
+        inputEl.value = "";
+        inputEl.focus();
+      });
+    }
+
     function render(data) {
       const orig  = data.original || {};
       const dupes = data.dupes    || [];
@@ -791,7 +897,11 @@
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
-        render(parsed);
+        if (parsed.isDupe) {
+          renderDupeInfo(parsed);
+        } else {
+          render(parsed);
+        }
         resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
 
       } catch(e) {
