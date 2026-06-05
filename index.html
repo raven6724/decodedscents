@@ -521,8 +521,61 @@
     const PERFUMANIA_CJ = "https://www.tkqlhce.com/click-101769387-17283068?url=";
     const SHOP_SIMON = "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=https%3A%2F%2Fshop.simon.com%2Fcollections%2Faccessories-health-beauty-fragrance";
     function shopSimonLink(name, brand) {
-      // Use the working fragrance collection URL - search is unreliable
-      return "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=https%3A%2F%2Fshop.simon.com%2Fcollections%2Faccessories-health-beauty-fragrance";
+      const SIMON_BASE = "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=";
+      const SIMON_COLLECTION = "https://shop.simon.com/collections/accessories-health-beauty-fragrance";
+
+      // Map brand names to Shop Simon's Brand filter parameter
+      const brandMap = {
+        "Yves Saint Laurent": "yves+saint+laurent",
+        "Dior": "dior",
+        "Chanel": "chanel",
+        "Byredo": "byredo",
+        "Azzaro": "azzaro",
+        "Armaf": "armaf",
+        "Afnan": "afnan",
+        "Al Haramain": "al+haramain",
+        "Maison Alhambra": "maison+alhambra",
+        "Lattafa": "lattafa",
+        "Arabiyat Prestige": "arabiyat",
+        "Dossier": "dossier",
+        "Paco Rabanne": "paco+rabanne",
+        "Versace": "versace",
+        "Giorgio Armani": "giorgio+armani",
+        "Burberry": "burberry",
+        "Hugo Boss": "hugo+boss",
+        "Valentino": "valentino",
+        "Givenchy": "givenchy",
+        "Tom Ford": "tom+ford",
+        "Montblanc": "montblanc",
+        "Carolina Herrera": "carolina+herrera",
+        "Jean Paul Gaultier": "jean+paul+gaultier",
+        "Narciso Rodriguez": "narciso+rodriguez",
+        "Viktor & Rolf": "viktor+%26+rolf",
+        "Kilian": "kilian",
+        "Kilian Paris": "kilian",
+        "Mancera": "mancera",
+        "Maison Margiela": "maison+margiela",
+        "Mugler": "mugler",
+        "Lancome": "lancome",
+        "Dolce & Gabbana": "dolce+%26+gabbana",
+        "Hermes": "hermes",
+        "Montale": "montale",
+        "Zara": "zara",
+        "Rasasi": "rasasi",
+        "Fragrance World": "fragrance+world",
+        "Dua Fragrances": "dua+fragrances",
+        "Paris Corner": "paris+corner",
+        "Arabiyat": "arabiyat",
+      };
+
+      const simonBrand = brandMap[brand];
+      let destUrl;
+      if (simonBrand) {
+        destUrl = SIMON_COLLECTION + "?Brand=" + simonBrand;
+      } else {
+        destUrl = SIMON_COLLECTION;
+      }
+      return SIMON_BASE + encodeURIComponent(destUrl);
     }
 
     // Build a Perfumania deep link for any product search
