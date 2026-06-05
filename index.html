@@ -323,6 +323,42 @@
     }
     .cat-btn:hover, .cat-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
 
+    /* LANGUAGE BUTTONS — sit inside cat-filter row */
+    .lang-divider {
+      color: var(--border); font-size: 1rem;
+      margin: 0 0.25rem; user-select: none;
+    }
+    .lang-btn {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 50px;
+      padding: 0.35rem 1rem; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .lang-btn:hover, .lang-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+    /* ARTICLE SEARCH */
+    .article-search-wrap { position: relative; margin-bottom: 1.2rem; }
+    .article-search {
+      width: 100%; padding: 0.65rem 1rem 0.65rem 2.5rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 50px; color: var(--text);
+      font-size: 0.88rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+    .article-search::placeholder { color: var(--text-dim); }
+    .article-search:focus { border-color: var(--gold); }
+    .article-search-icon {
+      position: absolute; left: 0.9rem; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim); font-size: 0.85rem; pointer-events: none;
+    }
+    .no-results {
+      text-align: center; color: var(--text-muted);
+      font-size: 0.9rem; padding: 2rem; display: none;
+      grid-column: 1/-1;
+    }
+
     /* ── ARTICLE CARDS ── */
     .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
     .article-card {
@@ -440,18 +476,27 @@
       <div class="journal-subtitle">Expert guides &amp; comparisons</div>
     </div>
 
+    <div class="article-search-wrap">
+      <span class="article-search-icon">🔍</span>
+      <input type="text" class="article-search" id="article-search" placeholder="Search articles..." autocomplete="off" />
+    </div>
+
     <div class="cat-filter">
       <button class="cat-btn active" data-cat="all">All</button>
       <button class="cat-btn" data-cat="comparison">Comparisons</button>
       <button class="cat-btn" data-cat="dupes">Dupe Guides</button>
       <button class="cat-btn" data-cat="gifts">Gift Guides</button>
       <button class="cat-btn" data-cat="reviews">Reviews</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn active" data-lang="all">🇺🇸 English</button>
+      <button class="lang-btn" data-lang="es">🇪🇸 Español</button>
     </div>
 
     <div class="articles-grid" id="articles-grid">
+      <div class="no-results" id="no-results">No articles found. Try a different search.</div>
 
       <!-- ARTICLE 1 — Comparison -->
-      <a href="Articles/dossier-vs-la-vie-est-belle.html" class="article-card" data-cat="comparison">
+      <a href="Articles/dossier-vs-la-vie-est-belle.html" class="article-card" data-lang="en" data-cat="comparison">
         <div class="article-cat">✦ Professional Comparison</div>
         <div class="article-title">She Didn't Know It Wasn't the $135 Bottle</div>
         <div class="article-teaser">Dossier Gourmand Orange Blossom vs Lancôme La Vie Est Belle — note by note, hour by hour. The community's most accurate dupe, decoded.</div>
@@ -459,7 +504,7 @@
       </a>
 
       <!-- ARTICLE 2 — Creed Aventus -->
-      <a href="Articles/creed-aventus-dupes.html" class="article-card" data-cat="dupes">
+      <a href="Articles/creed-aventus-dupes.html" class="article-card" data-lang="en" data-cat="dupes">
         <div class="article-cat">✦ Dupe Guide</div>
         <div class="article-title">The Aventus Code — 10 Affordable Dupes That Crack the $400 Bottle</div>
         <div class="article-teaser">The community's definitive guide to Creed Aventus alternatives. From Armaf CDNI to Afnan Supremacy — ranked, decoded, and honestly reviewed.</div>
@@ -467,7 +512,7 @@
       </a>
 
       <!-- ARTICLE 3 — BR540 -->
-      <a href="Articles/baccarat-rouge-540-dupes.html" class="article-card" data-cat="dupes">
+      <a href="Articles/baccarat-rouge-540-dupes.html" class="article-card" data-lang="en" data-cat="dupes">
         <div class="article-cat">✦ Dupe Guide</div>
         <div class="article-title">The Rouge Files — Decoding the $450 Fragrance Everyone Is Wearing</div>
         <div class="article-teaser">Baccarat Rouge 540 is the most coveted fragrance of the decade. We found 10 alternatives that capture its amber-floral magic for a fraction of the price.</div>
@@ -475,7 +520,7 @@
       </a>
 
       <!-- ARTICLE 4 — Dior Sauvage -->
-      <a href="Articles/dior-sauvage-dupes.html" class="article-card" data-cat="dupes">
+      <a href="Articles/dior-sauvage-dupes.html" class="article-card" data-lang="en" data-cat="dupes">
         <div class="article-cat">✦ Dupe Guide</div>
         <div class="article-title">The Wild Ones — 10 Affordable Dupes for the World's Best-Selling Cologne</div>
         <div class="article-teaser">Dior Sauvage dominates men's fragrance globally. These 10 alternatives capture its bold fresh-spicy DNA — some for as little as $15.</div>
@@ -483,7 +528,7 @@
       </a>
 
       <!-- ARTICLE 5 — YSL Black Opium -->
-      <a href="Articles/ysl-black-opium-dupes.html" class="article-card" data-cat="dupes">
+      <a href="Articles/ysl-black-opium-dupes.html" class="article-card" data-lang="en" data-cat="dupes">
         <div class="article-cat">✦ Dupe Guide</div>
         <div class="article-title">Dark Obsession — Decoding YSL Black Opium's Most Seductive Alternatives</div>
         <div class="article-teaser">The addictive coffee-vanilla floral that conquered feminine fragrance. Here are 10 dupes that capture its dark, seductive character beautifully.</div>
@@ -491,7 +536,7 @@
       </a>
 
       <!-- ARTICLE 6 — Father's Day English -->
-      <a href="Articles/fathers-day-fragrance-gift-guide-2026.html" class="article-card" data-cat="gifts">
+      <a href="Articles/fathers-day-fragrance-gift-guide-2026.html" class="article-card" data-lang="en" data-cat="gifts">
         <div class="article-cat">✦ Gift Guide · Father's Day 2026</div>
         <div class="article-title">The Best Fragrance Gifts for Every Kind of Dad</div>
         <div class="article-teaser">From Bleu de Chanel to PDM Sedley — the perfect luxury scent for every dad type, plus the best affordable alternatives at every budget.</div>
@@ -499,7 +544,7 @@
       </a>
 
       <!-- ARTICLE 7 — Father's Day Spanish -->
-      <a href="Articles/guia-regalos-dia-del-padre-fragancias-2026.html" class="article-card" data-cat="gifts">
+      <a href="Articles/guia-regalos-dia-del-padre-fragancias-2026.html" class="article-card" data-lang="es" data-cat="gifts">
         <div class="article-cat">✦ Guía de Regalos · En Español</div>
         <div class="article-title">Los Mejores Perfumes para el Día del Padre 2026</div>
         <div class="article-teaser">Desde el caballero clásico hasta el aventurero explorador — la fragancia perfecta para cada papá, con cada presupuesto.</div>
@@ -507,7 +552,7 @@
       </a>
 
       <!-- ARTICLE 8 — Top 10 Dupes 2025 -->
-      <a href="Articles/top-10-fragrance-dupes-2025.html" class="article-card" data-cat="dupes">
+      <a href="Articles/top-10-fragrance-dupes-2025.html" class="article-card" data-lang="en" data-cat="dupes">
         <div class="article-cat">✦ Top 10 List · 2025</div>
         <div class="article-title">Top 10 Most-Searched Fragrance Dupes of 2025</div>
         <div class="article-teaser">Community-verified alternatives to Creed Aventus, BR540, Dior Sauvage, Tom Ford and more. All above 85% similarity. All under $80.</div>
@@ -515,7 +560,7 @@
       </a>
 
       <!-- ARTICLE 9 — Niche Hidden Gems -->
-      <a href="Articles/niche-fragrance-hidden-gems-dupes-2025.html" class="article-card" data-cat="dupes">
+      <a href="Articles/niche-fragrance-hidden-gems-dupes-2025.html" class="article-card" data-lang="en" data-cat="dupes">
         <div class="article-cat">✦ Hidden Gems · Niche Fragrances</div>
         <div class="article-title">7 Niche Fragrances Worth the Hype (And What to Wear Instead)</div>
         <div class="article-teaser">Xerjoff, PDM Layton, Kilian, Amouage, Penhaligon's, Byredo — the fragrances fragrance lovers obsess over, and the verified alternatives that smell just as extraordinary.</div>
@@ -523,7 +568,7 @@
       </a>
 
       <!-- ARTICLE 10 — Niche Hidden Gems Spanish -->
-      <a href="Articles/fragancias-nicho-gemas-ocultas-dupes-2025.html" class="article-card" data-cat="dupes">
+      <a href="Articles/fragancias-nicho-gemas-ocultas-dupes-2025.html" class="article-card" data-lang="es" data-cat="dupes">
         <div class="article-cat">✦ Gemas Ocultas · En Español</div>
         <div class="article-title">7 Fragancias Nicho que Debes Conocer (Y Qué Usar en su Lugar)</div>
         <div class="article-teaser">Xerjoff, PDM Layton, Kilian, Amouage, Penhaligon's, Byredo — las fragancias que obsesionan a los amantes del perfume, y las alternativas verificadas que huelen igual de extraordinario.</div>
@@ -1028,6 +1073,67 @@
     // ── EVENT LISTENERS ──
     document.getElementById("search-btn").addEventListener("click", () => doSearch(inputEl.value));
     inputEl.addEventListener("keydown", e => { if (e.key === "Enter") doSearch(inputEl.value); });
+
+    // ── ARTICLE SEARCH + LANGUAGE TABS + CATEGORY FILTER ──
+    const articleSearch = document.getElementById("article-search");
+    const articleGrid = document.getElementById("articles-grid");
+    const noResults = document.getElementById("no-results");
+    let activeLang = "all";
+    let activeCat = "all";
+
+    function filterArticles() {
+      const query = articleSearch.value.toLowerCase().trim();
+      const cards = articleGrid.querySelectorAll(".article-card");
+      let visible = 0;
+
+      cards.forEach(card => {
+        const lang = card.dataset.lang || "en";
+        const cat = card.dataset.cat || "all";
+        const text = card.innerText.toLowerCase();
+
+        const langMatch = activeLang === "all" || lang === activeLang;
+        const catMatch = activeCat === "all" || cat === activeCat;
+        const searchMatch = query === "" || text.includes(query);
+
+        if (langMatch && catMatch && searchMatch) {
+          card.style.display = "block";
+          visible++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      noResults.style.display = visible === 0 ? "block" : "none";
+    }
+
+    // Language tabs
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeLang = btn.dataset.lang;
+        // Update search placeholder
+        if (activeLang === "es") {
+          articleSearch.placeholder = "Buscar artículos...";
+        } else {
+          articleSearch.placeholder = "Search articles...";
+        }
+        filterArticles();
+      });
+    });
+
+    // Category filter — override existing to work with combined filter
+    document.querySelectorAll(".cat-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCat = btn.dataset.cat;
+        filterArticles();
+      });
+    });
+
+    // Search input
+    articleSearch.addEventListener("input", filterArticles);
     document.querySelectorAll(".chip").forEach(c => {
       c.addEventListener("click", () => {
         inputEl.value = c.dataset.query;
