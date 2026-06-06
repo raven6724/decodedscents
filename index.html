@@ -403,6 +403,65 @@
       border: none; border-top: 1px solid var(--border);
     }
 
+    /* ── SHARE SECTION ── */
+    .share-section {
+      background: linear-gradient(135deg, var(--bg2), var(--bg3));
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .share-inner { max-width: 600px; margin: 0 auto; }
+    .share-label-row {
+      display: flex; align-items: center;
+      gap: 1rem; margin-bottom: 0.75rem;
+    }
+    .share-line { flex: 1; height: 1px; background: var(--border); }
+    .share-label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--gold);
+      white-space: nowrap;
+    }
+    .share-tagline {
+      font-size: 0.92rem; color: var(--text-muted);
+      font-family: 'Playfair Display', serif;
+      font-style: italic; margin-bottom: 1.5rem;
+    }
+    .share-buttons {
+      display: flex; align-items: center;
+      justify-content: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .share-btn-main {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.4rem; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.2s; border: 1px solid var(--border);
+      background: var(--bg4); color: var(--gold);
+    }
+    .share-btn-main:hover {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      transform: translateY(-1px);
+    }
+    .share-btn-wa {
+      border-color: rgba(37,211,102,0.4);
+      color: #25d366;
+    }
+    .share-btn-wa:hover {
+      border-color: #25d366;
+      background: rgba(37,211,102,0.1);
+    }
+    .share-btn-x {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text-muted);
+    }
+    .share-btn-x:hover {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -599,6 +658,23 @@
         <div class="article-read">Leer Artículo →</div>
       </a>
 
+    </div>
+  </div>
+
+  <!-- SHARE BAR -->
+  <div class="share-section">
+    <div class="share-inner">
+      <div class="share-label-row">
+        <div class="share-line"></div>
+        <span class="share-label">✦ SHARE DECODED SCENTS ✦</span>
+        <div class="share-line"></div>
+      </div>
+      <p class="share-tagline">Know someone who loves fragrance? Send them here.</p>
+      <div class="share-buttons">
+        <button onclick="navigator.clipboard.writeText('https://decodedscents.com');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='📋 Copy Link',2000);" class="share-btn-main">📋 Copy Link</button>
+        <a href="https://wa.me/?text=Find%20affordable%20fragrance%20dupes%20for%20any%20luxury%20scent%20-%20community%20verified%20%F0%9F%96%A4%20https://decodedscents.com" target="_blank" rel="noopener" class="share-btn-main share-btn-wa">💬 WhatsApp</a>
+        <a href="https://twitter.com/intent/tweet?text=Find%20affordable%20fragrance%20dupes%20for%20any%20luxury%20scent%20%E2%80%94%20community%20verified%20%F0%9F%96%A4&url=https://decodedscents.com" target="_blank" rel="noopener" class="share-btn-main share-btn-x">🐦 X</a>
+      </div>
     </div>
   </div>
 
@@ -811,7 +887,13 @@
             <button onclick="inputEl.value='';resultsEl.innerHTML='';inputEl.focus();" class="btn-sm btn-fragrantica" style="cursor:pointer;">← Search a Luxury Fragrance</button>
           </div>
         </div>
-        <button id="new-search-btn">← New Search</button>`;
+        <div style="margin:1.5rem 0 1rem;padding-top:1.2rem;border-top:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+        <span style="font-size:0.78rem;color:var(--text-dim);letter-spacing:0.08em;">SHARE THIS DUPE</span>
+        <button onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copied!';setTimeout(()=>this.textContent='📋 Copy Link',2000);" class="btn-sm btn-fragrantica" style="cursor:pointer;">📋 Copy Link</button>
+        <a href="" id="share-whatsapp" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">💬 WhatsApp</a>
+        <a href="" id="share-twitter" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">🐦 X</a>
+      </div>
+      <button id="new-search-btn">← New Search</button>`;
 
       resultsEl.innerHTML = html;
       document.getElementById("new-search-btn").addEventListener("click", () => {
@@ -918,7 +1000,13 @@
           </div>
         </div>
 
-        <button id="new-search-btn">← New Search</button>`;
+        <div style="margin:1.5rem 0 1rem;padding-top:1.2rem;border-top:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+        <span style="font-size:0.78rem;color:var(--text-dim);letter-spacing:0.08em;">SHARE THIS DUPE</span>
+        <button onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copied!';setTimeout(()=>this.textContent='📋 Copy Link',2000);" class="btn-sm btn-fragrantica" style="cursor:pointer;">📋 Copy Link</button>
+        <a href="" id="share-whatsapp" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">💬 WhatsApp</a>
+        <a href="" id="share-twitter" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">🐦 X</a>
+      </div>
+      <button id="new-search-btn">← New Search</button>`;
 
       resultsEl.innerHTML = html;
       document.getElementById("new-search-btn").addEventListener("click", () => {
@@ -1086,6 +1174,14 @@
           render(parsed);
         }
         resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // Update share links with current search
+        const shareText = encodeURIComponent("Found this fragrance dupe on DecodedScents.com — " + q);
+        const shareUrl = encodeURIComponent(window.location.href);
+        const wa = document.getElementById("share-whatsapp");
+        const tw = document.getElementById("share-twitter");
+        if (wa) wa.href = "https://wa.me/?text=" + shareText + "%20" + shareUrl;
+        if (tw) tw.href = "https://twitter.com/intent/tweet?text=" + shareText + "&url=" + shareUrl;
 
       } catch(e) {
         statusEl.style.display = "none";
