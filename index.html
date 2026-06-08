@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Decoded Scents — Every Scent, Decoded</title>
+  <title>Decoded Scents | Luxury Perfume Dupes & Clone Finder</title>
   <meta name="description" content="Find affordable dupes for any luxury or niche fragrance. Community-verified research from Reddit, Fragrantica, and TikTok — decoded for you." />
   <meta name="keywords" content="fragrance dupe finder, perfume dupe, cheap perfume alternatives, niche fragrance dupes, affordable perfume" />
   <link rel="canonical" href="https://decodedscents.com" />
@@ -403,6 +403,48 @@
       border: none; border-top: 1px solid var(--border);
     }
 
+    /* ── SEO STATIC SECTION ── */
+    .seo-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem;
+    }
+    .seo-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .seo-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+    .seo-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 60px; height: 2px;
+      background: var(--gold);
+    }
+    .seo-body p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .seo-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .seo-body em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
     /* ── SHARE SECTION ── */
     .share-section {
       background: linear-gradient(135deg, var(--bg2), var(--bg3));
@@ -553,7 +595,59 @@
   <hr class="section-divider" />
 
   <!-- SCENT JOURNAL -->
-  <div class="journal-section" id="journal">
+  
+  <!-- SEO STATIC CONTENT SECTION -->
+  <section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3rem 2rem;">
+    <div style="max-width:860px;margin:0 auto;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:1rem;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;padding-bottom:0.75rem;border-bottom:2px solid var(--gold);">What Is a Fragrance Dupe?</h2>
+        <button id="seo-toggle" onclick="toggleSEO()" style="background:var(--bg4);border:1px solid var(--border);color:var(--gold);font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:600;padding:0.45rem 1.1rem;border-radius:50px;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;">Read More ↓</button>
+      </div>
+
+      <!-- PREVIEW — always visible -->
+      <p style="font-size:1rem;color:var(--text-muted);line-height:1.9;margin-bottom:0;">
+        A <strong style="color:var(--text);">fragrance dupe</strong> — also known as an <strong style="color:var(--text);">affordable perfume clone</strong> or
+        <strong style="color:var(--text);">luxury fragrance alternative</strong> — is a perfume that smells nearly identical to a
+        high-end designer or niche fragrance, but costs a fraction of the price. At Decoded Scents,
+        we define a true dupe as any fragrance that scores <strong style="color:var(--text);">85% or higher in community similarity testing</strong>
+        against its luxury counterpart. Anything below that threshold is simply "inspired by" — and we don't include those in our results.
+      </p>
+
+      <!-- EXPANDED — hidden by default, visible to Google -->
+      <div id="seo-expanded" style="overflow:hidden;max-height:0;transition:max-height 0.4s ease;opacity:0;transition:max-height 0.4s ease, opacity 0.3s ease;">
+        <p style="font-size:1rem;color:var(--text-muted);line-height:1.9;margin-top:1.2rem;margin-bottom:1.2rem;">
+          In our testing, we cross-reference thousands of fragrance community reviews from
+          <strong style="color:var(--text);">Reddit r/fragrance</strong>, <strong style="color:var(--text);">Fragrantica</strong>, <strong style="color:var(--text);">Basenotes</strong>,
+          <strong style="color:var(--text);">Parfumo</strong>, and verified purchase reviews on Amazon and Walmart. We noticed that
+          the most reliable similarity scores come from reviewers who own <em style="color:var(--gold);">both</em> the original and
+          the alternative — not just people who have smelled one in a store. That is the standard we hold
+          every entry in our database to.
+        </p>
+        <p style="font-size:1rem;color:var(--text-muted);line-height:1.9;margin-bottom:1.2rem;">
+          Our database currently covers <strong style="color:var(--text);">luxury perfume dupes</strong> for fragrances from Creed,
+          Tom Ford, Maison Francis Kurkdjian, Kilian Paris, Byredo, Amouage, Parfums de Marly,
+          Penhaligon's, Maison Margiela, and more. In our testing, brands like
+          <strong style="color:var(--text);">Lattafa</strong>, <strong style="color:var(--text);">Maison Alhambra</strong>, <strong style="color:var(--text);">Armaf</strong>,
+          <strong style="color:var(--text);">Dossier</strong>, and <strong style="color:var(--text);">Afnan</strong> consistently produce the most accurate
+          <strong style="color:var(--text);">affordable perfume clones</strong> — often achieving 88-95% similarity to originals
+          that cost 10 times more.
+        </p>
+        <p style="font-size:1rem;color:var(--text-muted);line-height:1.9;margin-bottom:0;">
+          Every result you see on Decoded Scents is backed by real community research. We noticed that
+          generic "inspired by" lists published across the web are filled with invented product names
+          and unverified claims. Our rule is simple: <strong style="color:var(--text);">if we cannot find verified community
+          confirmation of the similarity, it does not appear in our results.</strong> One honest result
+          is worth more than ten invented ones. Search any luxury or niche fragrance above and
+          instantly discover its best <strong style="color:var(--text);">luxury fragrance alternative</strong> — verified,
+          affordable, and real.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+<div class="journal-section" id="journal">
     <div class="journal-header">
       <div class="journal-title">The Scent <span>Journal</span></div>
       <div class="journal-subtitle">Expert guides &amp; comparisons</div>
@@ -1233,6 +1327,22 @@
     // ── EVENT LISTENERS ──
     document.getElementById("search-btn").addEventListener("click", () => doSearch(inputEl.value));
     inputEl.addEventListener("keydown", e => { if (e.key === "Enter") doSearch(inputEl.value); });
+
+    // SEO section toggle
+    function toggleSEO() {
+      const expanded = document.getElementById('seo-expanded');
+      const btn = document.getElementById('seo-toggle');
+      const isOpen = expanded.style.maxHeight && expanded.style.maxHeight !== '0px' && expanded.style.maxHeight !== '0';
+      if (isOpen) {
+        expanded.style.maxHeight = '0';
+        expanded.style.opacity = '0';
+        btn.textContent = 'Read More ↓';
+      } else {
+        expanded.style.maxHeight = expanded.scrollHeight + 'px';
+        expanded.style.opacity = '1';
+        btn.textContent = 'Read Less ↑';
+      }
+    }
 
     // ── ARTICLE SEARCH + LANGUAGE TABS + CATEGORY FILTER ──
     const articleSearch = document.getElementById("article-search");
