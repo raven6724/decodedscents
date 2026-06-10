@@ -200,6 +200,8 @@
     .btn-amazon:hover { opacity:0.88; transform:translateY(-1px); }
     .btn-fragrantica { background: var(--bg4); border:1px solid var(--border); color:var(--text-muted); }
     .btn-fragrantica:hover { border-color:var(--gold); color:var(--gold); }
+    .btn-fragrancenet { background: var(--bg4); border:1px solid rgba(76,175,125,0.4); color:var(--green); }
+    .btn-fragrancenet:hover { border-color:var(--green); background:rgba(76,175,125,0.08); }
     .btn-google { background: var(--bg4); border:1px solid var(--border); color:var(--text-muted); }
     .btn-google:hover { border-color:var(--gold); color:var(--gold); }
     .btn-perfumania { background: var(--bg4); border:1px solid rgba(201,168,76,0.4); color:var(--gold); }
@@ -1108,7 +1110,8 @@
               <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${sp.brand}</div>
               <div style="font-size:1.3rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;">${sp.price}</div>
               <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${sp.whySimilar||""}</div>
-              <a href="${buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;">🛒 Buy Now</a>
+              <a href="${sp.amazonLink || buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;margin-bottom:0.4rem;">🛒 Amazon</a>
+              ${sp.fragranceNetLink ? `<a href="${sp.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet" style="display:block;text-align:center;">🏪 FragranceNet</a>` : ""}
             </div>
 
             <div style="background:var(--bg3);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:1.2rem;">
@@ -1117,8 +1120,8 @@
               <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${orig.brand}</div>
               <div style="font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:0.5rem;">${orig.price}</div>
               <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${orig.description||""}</div>
-              <a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 Perfumania</a>
-              <a href="${shopSimonLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon" style="display:block;text-align:center;">🛍️ Shop Simon</a>
+              ${orig.fragranceNetLink ? `<a href="${orig.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 FragranceNet</a>` : `<a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 Perfumania</a>`}
+              <a href="${orig.amazonLink || origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;">🛒 Amazon</a>
             </div>
 
           </div>
@@ -1200,8 +1203,8 @@
             ${notesHTML("Base Notes", orig.notes?.base)}
           </div>
           <div class="original-btns">
-            <a href="${origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy on Amazon</a>
-            <a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>
+            <a href="${orig.amazonLink || origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Amazon</a>
+            ${orig.fragranceNetLink ? `<a href="${orig.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet">🏪 FragranceNet</a>` : `<a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>`}
             <a href="${shopSimonLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>
             <a href="https://www.fragrantica.com/search/?query=${fragQ}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
           </div>
@@ -1275,9 +1278,8 @@
               ${shared ? `<div class="shared-label">Shared Notes</div><div class="shared-pills">${shared}</div>` : ""}
               <div class="community-badge">✦ ${d.communitySource||"Community verified"}</div>
               <div class="dupe-btns">
-                <a href="${buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy Now</a>
-                <a href="${shopSimonLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>
-                <a href="${amazonLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">🛍 Amazon</a>
+                <a href="${d.amazonLink || buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Amazon</a>
+                ${d.fragranceNetLink ? `<a href="${d.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet">🏪 FragranceNet</a>` : `<a href="${shopSimonLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>`}
                 <a href="${perfumaniaLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>
                 <a href="${fragLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
               </div>
