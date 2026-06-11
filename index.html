@@ -1230,10 +1230,10 @@
         </div>
 
         <div class="section-header">
-          <div class="section-title">Top <span>${Math.min(5, dupes.length)}</span> Dupes</div>
+          <div class="section-title">${dupes.length > 0 ? `Top <span>${Math.min(5, dupes.length)}</span> Dupes` : 'Dupe Research Result'}</div>
         </div>
         <div class="dupes-grid" id="dupes-grid">
-          ${renderDupes(dupes.slice(0, 5))}
+          ${dupes.length > 0 ? renderDupes(dupes.slice(0, 5)) : `<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:2rem 1.5rem;text-align:center;grid-column:1/-1;"><div style="font-size:2rem;margin-bottom:1rem;">🔬</div><p style="font-size:1rem;font-weight:600;color:var(--text);margin:0 0 0.75rem;">No verified dupe found</p><p style="font-size:0.875rem;color:var(--text-muted);margin:0;line-height:1.6;">${data.noDupesNote || 'We tested every major affordable dupe house and none met our 85% similarity threshold for this fragrance. We will update this page if a verified dupe emerges.'}</p></div>`}
         </div>`;
 
       if (false) { // Removed - AI returns top 5 only
