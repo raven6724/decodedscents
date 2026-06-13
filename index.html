@@ -1299,9 +1299,10 @@
               ${shared ? `<div class="shared-label">Shared Notes</div><div class="shared-pills">${shared}</div>` : ""}
               <div class="community-badge">✦ ${d.communitySource||"Community verified"}</div>
               <div class="dupe-btns">
+                ${d.directLink ? `<a href="${d.directLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Buy from ${d.brand.replace(' Fragrances','').replace('Maison Alhambra','Alhambra')}</a>` : `
                 <a href="${d.amazonLink || buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Amazon</a>
                 ${d.fragranceNetLink ? `<a href="${d.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet">🏪 FragranceNet</a>` : `<a href="${shopSimonLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>`}
-                <a href="${perfumaniaLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>
+                <a href="${perfumaniaLink(d.name, d.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>`}
                 <a href="${fragLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
               </div>
             </div>
