@@ -3,7 +3,14 @@
 
   <url>
     <loc>https://decodedscents.com/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://decodedscents.com/Articles/best-prime-day-fragrance-dupe-deals-2026</loc>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
