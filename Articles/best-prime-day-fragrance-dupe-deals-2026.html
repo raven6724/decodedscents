@@ -672,6 +672,43 @@ a:hover { color: var(--navy); }
   font-size: 0.85rem;
 }
 
+/* Share Bar */
+.share-bar {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: white;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+}
+.share-label {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold-dark);
+  font-size: 1rem;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+.share-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.share-btn {
+  padding: 0.65rem 1.2rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 2px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.share-btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--gold);
+}
+
 @media (max-width: 768px) {
   .site-nav { display: none; }
   .card-header { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
@@ -1289,6 +1326,18 @@ a:hover { color: var(--navy); }
   <a href="/" class="hero-cta">Start Searching →</a>
 </section>
 
+<!-- Share Bar -->
+<section class="section section-tight">
+  <div class="share-bar">
+    <div class="share-label">Found this useful? Share the Prime Day deals before they're gone.</div>
+    <div class="share-btns">
+      <a href="#" class="share-btn" onclick="copyURL(event)">📋 Copy link</a>
+      <a class="share-btn" href="https://wa.me/?text=Best%20Prime%20Day%20Fragrance%20Dupe%20Deals%202026%20https%3A%2F%2Fdecodedscents.com%2FArticles%2Fbest-prime-day-fragrance-dupe-deals-2026" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=Best%20Prime%20Day%20Fragrance%20Dupe%20Deals%202026&url=https%3A%2F%2Fdecodedscents.com%2FArticles%2Fbest-prime-day-fragrance-dupe-deals-2026" target="_blank" rel="noopener">𝕏 Share</a>
+    </div>
+  </div>
+</section>
+
 <!-- Footer -->
 <footer class="site-footer">
   <div class="footer-logo">Decoded<span class="accent"> Scents</span></div>
@@ -1302,6 +1351,18 @@ a:hover { color: var(--navy); }
   </div>
   <p style="margin-top: 1.5rem; font-size: 0.8rem; color: rgba(245, 241, 232, 0.5);">© 2026 Decoded Scents. All product names, trademarks, and registered trademarks are property of their respective owners. As an Amazon Associate we earn from qualifying purchases.</p>
 </footer>
+
+<script>
+  function copyURL(e) {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = e.target;
+      const originalText = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = originalText; }, 1500);
+    });
+  }
+</script>
 
 </body>
 </html>
