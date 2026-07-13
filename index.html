@@ -231,6 +231,24 @@
     .btn-simon { background: var(--bg4); border:1px solid rgba(139,92,246,0.4); color:#a78bfa; }
     .btn-simon:hover { background: rgba(139,92,246,0.1); border-color:#a78bfa; color:#c4b5fd; }
 
+    /* ── VARIANT TABS ── */
+    .variant-tabs {
+      display:flex; gap:0.5rem; margin:0 0 1.3rem; flex-wrap:wrap;
+      padding-bottom:1.2rem; border-bottom:1px solid rgba(201,168,76,0.15);
+    }
+    .variant-tab {
+      background:var(--bg4); border:1px solid var(--border); border-radius:8px;
+      padding:0.6rem 1.1rem; font-size:0.82rem; color:var(--text-muted);
+      cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.18s;
+      display:flex; flex-direction:column; align-items:flex-start; gap:0.15rem;
+      min-width:96px;
+    }
+    .variant-tab:hover { border-color:rgba(201,168,76,0.5); color:var(--text); }
+    .variant-tab.active { background:var(--gold-dim); border-color:var(--gold); color:var(--gold-light); }
+    .variant-tab .v-label { font-size:0.82rem; font-weight:600; letter-spacing:0.02em; }
+    .variant-tab .v-sub { font-size:0.68rem; color:var(--text-dim); font-weight:400; letter-spacing:0.02em; }
+    .variant-tab.active .v-sub { color:var(--gold); }
+
     /* ── SECTION HEADER ── */
     .section-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -1275,11 +1293,22 @@
           <div class="notes-pills">${(notes||[]).map(n=>`<span class="note-pill">${n}</span>`).join("")}</div>
         </div>`;
 
+      // Render variant tabs if this entry belongs to a family (2+ variants)
+      const variantTabsHTML = (data.family && data.family.variants && data.family.variants.length >= 2)
+        ? `<div class="variant-tabs">${
+            data.family.variants.map(v => {
+              const isActive = (v.key === data.matchedKey);
+              return `<div class="variant-tab${isActive?' active':''}" data-variant-key="${v.key}"><span class="v-label">${v.label}</span></div>`;
+            }).join("")
+          }</div>`
+        : "";
+
       let html = `
         <div class="original-card">
           <div class="original-label">✦ Original Fragrance</div>
           <div class="original-name">${orig.name||""}</div>
           <div class="original-brand">${orig.brand||""} · ${orig.scentFamily||""}</div>
+          ${variantTabsHTML}
           <div class="original-price">${orig.price||""}</div>
           <div class="original-desc">${orig.description||""}</div>
           <div class="notes-row">
@@ -1326,6 +1355,15 @@
         resultsEl.innerHTML = "";
         inputEl.value = "";
         inputEl.focus();
+      });
+
+      // Variant tab clicks: re-search using the variant key (which is also the DB key)
+      document.querySelectorAll(".variant-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          if (tab.classList.contains("active")) return;
+          const variantKey = tab.dataset.variantKey;
+          if (variantKey) doSearch(variantKey);
+        });
       });
 
       attachCardListeners();
