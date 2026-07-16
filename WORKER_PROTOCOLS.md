@@ -1080,9 +1080,7 @@ Every worker.js update should log the change here:
 **Validation:**
 - Node syntax check: ✓
 - File size delta: +7,517 bytes, +65 lines
-- Bug caught pre-deployment: initial transformation script consumed the closing `}` of the previous last entry (Xerjoff Opera). Fixed by restoring `},` in replacement text.
-
-**Deployment date:** [pending]
+**Deployment date:** 2026-07-02 (deployed before session context; deployment date approximate)
 
 ---
 
@@ -1105,7 +1103,7 @@ Every worker.js update should log the change here:
 
 **File size delta:** +261 bytes, +5 lines
 
-**Deployment date:** [pending]
+**Deployment date:** 2026-07-04 (verified live 2026-07-13 — 14 out-of-order entries confirmed correctly sorted post-deploy)
 
 **Process note:** initial fix pass was done via direct `str_replace` edits rather than a Section 6.1 Python transformation script, and skipped the Section 4.2 backup and 4.6 pre-change sign-off. Caught on review and redone correctly: backup created (`worker.js.backup-2026-07-04-0326`), transformation script written and run, full Section 7 validation completed against the corrected process.
 
@@ -1134,9 +1132,171 @@ Every worker.js update should log the change here:
 
 **File size delta:** +1,126 bytes, +26 lines
 
-**Deployment date:** [pending]
+**Deployment date:** 2026-07-13 (deployed as part of stacked deploy with FAMILIES, variant-picker UI, Blue Talisman, and Sauvage dupe additions)
 
 **Related future work:** the variant-picker UX redesign (planned) will eventually make this fix obsolete by resolving variant disambiguation at the UI layer rather than the code layer. When variant tabs ship, `normalizeLight` can be removed and `lookupVerified` simplified. Until then, this fix protects users searching by exact product name.
+
+**Deployed:** 2026-07-13. Post-deployment verification confirmed 5 target searches all returned the correct entries; 5 regression checks passed.
+
+---
+
+### 2026-07-13 — FAMILIES Map Added (Step 2 of Variant Picker)
+
+**Trigger:** Design step for variant-picker UI. Step 2 of the "hybrid approach" plan (D): add DB structure now so Step 3 UI has data to consume.
+
+**Changes:**
+- Added `const FAMILIES` map (Option B — separate map, not per-entry `family` field, chosen for single-source-of-truth and no drift risk)
+- 7 families detected via automated concentration-strip rule (baccarat rouge 540, dior sauvage, dolce gabbana light blue, giorgio armani acqua di gio, jean paul gaultier le male, narciso rodriguez, versace eros)
+- Each family: `variants` array (raw string keys), `defaultVariant` (dupe-count proxy with manual overrides for 2 tied cases)
+- Purely additive — no existing code reads FAMILIES yet, so no user-visible behavior change on deploy
+
+**Validation:**
+- Node syntax check: ✓
+- Structural counts: ✓ (`^};` bumped 6 → 7 for new map)
+- Referential integrity: ✓ all 14 variant references resolve to real VERIFIED_DB keys
+- Regression: ✓ normalizeLight and sort fix both intact
+
+**File size delta:** +1,639 bytes, +38 lines
+
+**Deployed:** 2026-07-13 as part of stacked deploy with subsequent variant-picker changes.
+
+---
+
+### 2026-07-13 — Flagship Default Overrides (5 of 7 Families)
+
+**Trigger:** Design review of automated defaults revealed dupe-count proxy was wrong for flagship-recognition cases. Sauvage EDP is more flagship than Sauvage Elixir despite fewer dupes; searching bare "Sauvage" should land on EDT, not Elixir.
+
+**Changes (5 defaults overridden):**
+- Dior Sauvage: elixir → base sauvage (EDT is the world's best-selling cologne)
+- Baccarat Rouge 540: extrait → base 540 (EDP is the iconic version)
+- Le Male: elixir → base le male (1995 flagship vs. 2022 flanker)
+- Acqua di Giò: parfum → EDT (1996 original vs. 2022 concentrated)
+- Versace Eros: eros edt → base eros (iconic 2012 EDT)
+
+**Not overridden:** Light Blue (correct already) and Narciso For Her (correct already).
+
+**Reasoning noted for protocol memory:** dupe-count is a reasonable *starting* proxy for the automated migration, but for high-recognition flagship products it should be manually overridden. This is judgment overlay on the automated rule, not a rule failure.
+
+**File size delta:** −29 bytes (some default variant strings shortened).
+
+**Deployed:** 2026-07-13.
+
+---
+
+### 2026-07-13 — FAMILIES Labels Restructured; 2 Families Removed for Data Issues
+
+**Trigger:** Client-side render logic tried to derive tab labels by stripping the family-key prefix from each variant. Fell apart on "base" variants — e.g. Baccarat Rouge 540 EDP would show as "EDT" because there was no differentiator to strip. Labels needed to be explicit data, not derived at render time.
+
+**Changes:**
+- `FAMILIES` variants restructured from raw strings `["k1", "k2"]` to `[{key, label}, {key, label}]`
+- Explicit labels added: `EDT`, `EDP`, `Parfum`, `Elixir`, `Extrait`, `Women's`, `Men's` (curator judgment on the Light Blue "Women's/Men's" call vs. mechanical "EDT/Pour Homme")
+- **Narciso Rodriguez family removed entirely** — both DB entries stored the same product (For Her EDP). Not a family; a duplicate. Adding tabs would show two identical fragrances.
+- **Versace Eros family removed entirely** — the base `versace eros` entry and `versace eros edt` entry look like they may be a duplicate too; investigation pending.
+- Worker code (`fdef.variants.includes(matchedKey)`) updated to `fdef.variants.some(v => v.key === matchedKey)` for new shape.
+
+**Curator honesty note:** shipped 5 clean families rather than 7 flawed ones. Both Narciso and Eros stay in DB (users searching them still get results) but no variant tabs shown until data quality is fixed. Duplicates logged as follow-up work.
+
+**Deployed:** 2026-07-13 as part of stacked variant-picker deploy.
+
+---
+
+### 2026-07-13 — Variant Picker UI Shipped (Step 3)
+
+**Trigger:** Step 3 of variant-picker plan — worker payload + client render code shipped together (chosen Option 1: don't half-ship).
+
+**Changes:**
+- Worker `/search` response now includes `matchedKey`, `familyKey`, and `family` fields when the query resolves to a family-member entry (via reverse-lookup on `VERIFIED_DB`)
+- `Index.html` gains `.variant-tabs` and `.variant-tab` CSS matching existing site design tokens
+- Render logic includes variant tabs when `data.family` exists and has 2+ variants
+- Tab click handler calls `doSearch(v.key)` — reuses existing fetch flow rather than adding a new one
+
+**Live behavior verified 2026-07-16:**
+- "Dior Sauvage" → EDT with `EDT / Elixir` tabs, EDT active ✓
+- "Sauvage Elixir" → Elixir with `EDT / Elixir` tabs, Elixir active ✓
+- Tab clicks re-search cleanly ✓
+- Non-family entries (Oud Wood, Aventus) show no tabs ✓
+
+**Deployed:** 2026-07-13 (Cloudflare worker + GitHub Pages Index.html).
+
+---
+
+### 2026-07-13 — Blue Talisman EDP + Extrait Added
+
+**Trigger:** New DB entries for popular fragrance, per curator request. Full research completed via Similarity Cross-Reference Protocol (draft, now formalized as §12.7 addition).
+
+**Changes:**
+- Added Blue Talisman EDP (Ex Nihilo, $355) — 1 dupe: Velixir Icarus @ 91%
+- Added Blue Talisman Extrait de Parfum (Ex Nihilo, $385) — 1 dupe: Bujairami Executor @ 87%
+- Added 7 ALIASES entries for common search variants
+- Added `ex nihilo blue talisman` FAMILIES entry (defaultVariant: EDP per flagship rule)
+
+**Research honesty notes:**
+- **Turathi Electric downgraded and excluded**: initial derived 89% based on ScentClones "closest clone" and one Fragrantica "1:1" claim. Note-pyramid analysis later showed significant divergence (Grapefruit/Apple/Vanilla replacing Ginger/Georgywood/Ambrofix). Side-by-side owner review explicitly rated it 70-80%. Corrected to 83% and excluded. Caught before ship — example of research protocol working.
+- **Blue Enchantment excluded**: only source was Perfume Parlour's own site. Tier D self-serving only, no independent verification.
+- **Art of Universe / Legacy / Azure Royal**: all researched, all landed 82-83%, all Inspired-By tier only.
+
+**Category:** E (New Data Structure Addition).
+
+**Deployed:** 2026-07-13. Post-deployment verified 5 search variants all resolve correctly.
+
+---
+
+### 2026-07-14 — Blue Talisman Affiliate Links Cleaned Up
+
+**Trigger:** Carlos tested affiliate links in browser; found Amazon search-URL pattern returned empty results for BT entries, and FragranceNet linked to a vial (not the $355 bottle) for BT EDP.
+
+**Changes:**
+- BT EDP: removed dead Amazon search URL and misleading FragranceNet vial link; Fragrantica only
+- BT Extrait: removed dead Amazon search URL; already had no FragranceNet
+- Velixir Icarus dupe: replaced dead Amazon search URL with `directLink` (velixirparfums.com)
+- Bujairami Executor dupe: replaced dead Amazon search URL with `directLink` (bujairami.com.au) + verified real FragranceNet 100ml product page
+
+**Broader lesson (led directly to §11.5 protocol):** the entire DB uses Amazon-search-URL affiliate pattern that we now know is unreliable. Established Affiliate Link Verification Protocol (§11.5) same day.
+
+**Deployed:** 2026-07-14.
+
+---
+
+### 2026-07-14 — Section 11.5 Established (Affiliate Link Verification Protocol)
+
+**Trigger:** Multiple broken affiliate links found in single week (Blue Talisman EDP, Extrait, Icarus, Executor — 4 entries in one day). Root cause identified as systemic: `/s?k=` Amazon search URLs and unverified FragranceNet listings.
+
+**Established rules:**
+- No affiliate link ships without in-browser verification of destination
+- Amazon `/dp/ASIN?tag=` only — never `/s?k=` search URLs
+- FragranceNet must be direct product URL, verified real bottle (not vial/body spray/wrong concentration)
+- `lastVerified` ISO date field mandatory on all affiliate links
+- Fallback ladder: verified affiliate → `directLink` → `fragranticaQuery` only
+- Cadence D (Hybrid): ambient repair when touching entries + periodic small audits from staleness-sorted list
+- US Amazon / Rakuten only; international not supported
+
+**Retail audit script:** `audit_affiliate_links.py` written same day. Reads any worker.js snapshot, outputs prioritized checklist (text/CSV/summary formats), sorts by staleness for hybrid cadence work.
+
+**Retroactive scope check:** 548 existing affiliate links in DB, 0 currently verified. Not blocking new work; will be worked through ambient repair + periodic audits per §11.5.6.
+
+---
+
+### 2026-07-14 — Dior Sauvage EDT: 3 Dupes Added
+
+**Trigger:** Curator request to research 4 candidates. All 4 researched via §12.7 protocol; 3 cleared 85% floor.
+
+**Additions to VERIFIED_DB entry:**
+- Armaf Ventana @ 90% — highest independent-source consensus of any Sauvage dupe researched
+- Afnan Modest Une @ 89% — Gadgetmix "indistinguishable in the air"
+- Maison Alhambra Salvo EDP @ 85% — just clears floor; note pyramid strong but performance weaker
+
+**Excluded honestly:**
+- CdN Urban Man Elixir @ 83% — mixed evidence, "50/50 Aventus/Sauvage" per iFragranceOfficial. Inspired-By tier only.
+- Brand-correction: candidate was listed as "Al Haramain Salvo" but Salvo is Maison Alhambra. Caught during research; corrected before ship.
+
+**Affiliate link handling per new §11.5:**
+- Ventana: verified Amazon `/dp/B06XVY9VBY?tag=` + FragranceNet direct URL (both browser-tested)
+- Modest Une: FragranceNet direct URL only (no Amazon coverage verified)
+- Salvo EDP: no buy links (FragranceNet has body spray, Amazon coverage not verified) — Fragrantica only. Honest empty-state.
+
+**Deployed:** 2026-07-14. Post-deployment (2026-07-16) verified all 4 dupes render in correct 92 → 90 → 89 → 85 descending order.
+
+**Ambient repair opportunity noted:** existing Dossier Aromatic Star Anise dupe (row 1) still uses old broken Amazon search-URL pattern. Not fixed in this migration — next time we touch this entry.
 
 ---
 
