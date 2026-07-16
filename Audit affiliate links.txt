@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""
+audit_affiliate_links.py — DecodedScents affiliate-link audit tool.
+
+Reads VERIFIED_DB from worker.js and outputs a prioritized checklist of every
+affiliate URL, grouped by fragrance, sorted by staleness (missing lastVerified
+first, then oldest date first). Per WORKER_PROTOCOLS.md §11.5.7.
+
+Output formats:
+  --format=text     Human-readable checklist (default)
+  --format=csv      Spreadsheet-friendly CSV
+  --format=summary  Just the counts
+
+Usage:
+  python3 audit_affiliate_links.py [path/to/worker.js] [--format=text|csv|summary]
+  python3 audit_affiliate_links.py                     # defaults to ./worker.js
+"""
+import sys
+import json
+import subprocess
+import argparse
+from datetime import datetime, date
+from pathlib import Path
+
+
+def extract_verified_db(worker_path: str) -> dict:
+    """Extract VERIFIED_DB object from worker.js via node.
+
+    We use node rather than parsing JS in Python because the DB uses full
+    JS object-literal syntax (unquoted keys, template strings, comments),
+    which is a pain to parse but trivial for node's eval.
+    """
+    node_script = f'''
+const fs = require('fs');
+let src = fs.readFileSync({json.dumps(worker_path)}, 'utf8');
+const startIdx = src.indexOf('const VERIFIED_DB = {{');
+if (startIdx === -1) {{ process.stderr.write('VERIFIED_DB not found in file'); process.exit(1); }}
+const afterConst = src.indexOf('{{', startIdx);
+let depth = 0, end = -1;
+for (let i = afterConst; i < src.length; i++) {{
+  if (src[i] === '{{') depth++;
+  else if (src[i] === '}}') {{ depth--; if (depth === 0) {{ end = i; break; }} }}
+}}
+if (end === -1) {{ process.stderr.write('End of VERIFIED_DB not found'); process.exit(1); }}
+const obj = eval('(' + src.slice(afterConst, end + 1) + ')');
+process.stdout.write(JSON.stringify(obj));
+'''
+    result = subprocess.run(
+        ['node', '-e', node_script],
+        capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        print(f"ERROR extracting DB: {result.stderr}", file=sys.stderr)
+        sys.exit(1)
+    return json.loads(result.stdout)
+
+
+def days_since(iso_date: str) -> int:
+    """Return days between iso_date and today. Returns very large number if invalid."""
+    if not iso_date:
+        return 99999
+    try:
+        d = datetime.strptime(iso_date, '%Y-%m-%d').date()
+        return (date.today() - d).days
+    except (ValueError, TypeError):
+        return 99999
+
+
+def collect_links(db: dict) -> list[dict]:
+    """Walk VERIFIED_DB and emit one row per affiliate link found."""
+    LINK_FIELDS = ['amazonLink', 'fragranceNetLink', 'directLink']
+    rows = []
+
+    for db_key, entry in db.items():
+        # Original fragrance's own links
+        orig = entry.get('original') or {}
+        for field in LINK_FIELDS:
+            url = orig.get(field)
+            if url:
+                rows.append({
+                    'fragrance': orig.get('name', db_key),
+                    'brand': orig.get('brand', ''),
+                    'role': 'original',
+                    'link_type': field,
+                    'url': url,
+                    'lastVerified': orig.get('lastVerified', ''),
+                    'db_key': db_key,
+                })
+
+        # Dupes' links
+        for i, dupe in enumerate(entry.get('dupes') or []):
+            for field in LINK_FIELDS:
+                url = dupe.get(field)
+                if url:
+                    rows.append({
+                        'fragrance': f"{dupe.get('brand','')} {dupe.get('name','')}".strip(),
+                        'brand': dupe.get('brand', ''),
+                        'role': f'dupe of {orig.get("name", db_key)}',
+                        'link_type': field,
+                        'url': url,
+                        'lastVerified': dupe.get('lastVerified', ''),
+                        'db_key': db_key,
+                    })
+
+    return rows
+
+
+def sort_by_staleness(rows: list[dict]) -> list[dict]:
+    """Missing lastVerified first, then oldest date first."""
+    return sorted(rows, key=lambda r: -days_since(r['lastVerified']))
+
+
+def format_text(rows: list[dict]) -> str:
+    lines = []
+    lines.append(f"DecodedScents affiliate-link audit — {date.today().isoformat()}")
+    lines.append("=" * 78)
+    lines.append(f"Total affiliate links: {len(rows)}")
+    unverified = sum(1 for r in rows if not r['lastVerified'])
+    lines.append(f"Never verified: {unverified}")
+    lines.append("")
+    lines.append("Prioritized by staleness (unverified first, then oldest lastVerified):")
+    lines.append("")
+
+    for i, r in enumerate(rows, 1):
+        stale = r['lastVerified'] or '(never)'
+        days = days_since(r['lastVerified'])
+        age = f"{days}d ago" if days < 99999 else "never"
+        lines.append(f"[{i:3d}] {r['fragrance']} ({r['brand']})")
+        lines.append(f"      role: {r['role']}")
+        lines.append(f"      type: {r['link_type']}   lastVerified: {stale} ({age})")
+        lines.append(f"      URL:  {r['url']}")
+        lines.append(f"      ☐ verified ok    ☐ remove    ☐ replace with: __________")
+        lines.append("")
+    return '\n'.join(lines)
+
+
+def format_csv(rows: list[dict]) -> str:
+    import csv, io
+    buf = io.StringIO()
+    writer = csv.DictWriter(buf, fieldnames=[
+        'fragrance', 'brand', 'role', 'link_type', 'url',
+        'lastVerified', 'days_stale', 'action', 'replacement', 'db_key'
+    ])
+    writer.writeheader()
+    for r in rows:
+        writer.writerow({
+            'fragrance': r['fragrance'],
+            'brand': r['brand'],
+            'role': r['role'],
+            'link_type': r['link_type'],
+            'url': r['url'],
+            'lastVerified': r['lastVerified'],
+            'days_stale': days_since(r['lastVerified']),
+            'action': '',        # you fill: keep / remove / replace
+            'replacement': '',   # you fill: new URL if action=replace
+            'db_key': r['db_key'],
+        })
+    return buf.getvalue()
+
+
+def format_summary(rows: list[dict]) -> str:
+    from collections import Counter
+    types = Counter(r['link_type'] for r in rows)
+    unverified = sum(1 for r in rows if not r['lastVerified'])
+    over_90d = sum(1 for r in rows if 90 <= days_since(r['lastVerified']) < 99999)
+
+    lines = [
+        f"Affiliate-link audit summary — {date.today().isoformat()}",
+        f"Total links: {len(rows)}",
+        f"  amazonLink:       {types.get('amazonLink', 0)}",
+        f"  fragranceNetLink: {types.get('fragranceNetLink', 0)}",
+        f"  directLink:       {types.get('directLink', 0)}",
+        f"Never verified:   {unverified}",
+        f"Verified >90 days ago: {over_90d}",
+        f"Action items (verify these): {unverified + over_90d}",
+    ]
+    return '\n'.join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('worker_path', nargs='?', default='./worker.js',
+                        help='Path to worker.js (default: ./worker.js)')
+    parser.add_argument('--format', choices=['text', 'csv', 'summary'],
+                        default='text', help='Output format (default: text)')
+    args = parser.parse_args()
+
+    if not Path(args.worker_path).is_file():
+        print(f"ERROR: {args.worker_path} not found", file=sys.stderr)
+        sys.exit(1)
+
+    db = extract_verified_db(args.worker_path)
+    rows = collect_links(db)
+    rows = sort_by_staleness(rows)
+
+    if args.format == 'text':
+        print(format_text(rows))
+    elif args.format == 'csv':
+        print(format_csv(rows))
+    elif args.format == 'summary':
+        print(format_summary(rows))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except BrokenPipeError:
+        # stdout was closed early (e.g. piped to `head`) — not an error worth reporting
+        sys.stderr.close()  # avoid a second BrokenPipe warning on exit
+        sys.exit(0)
