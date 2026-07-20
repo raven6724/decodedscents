@@ -230,6 +230,8 @@
     .btn-perfumania:hover { background: var(--gold-dim); border-color:var(--gold); color:var(--gold-light); }
     .btn-simon { background: var(--bg4); border:1px solid rgba(139,92,246,0.4); color:#a78bfa; }
     .btn-simon:hover { background: rgba(139,92,246,0.1); border-color:#a78bfa; color:#c4b5fd; }
+    .btn-direct { background: var(--bg4); border:1px solid rgba(201,168,76,0.4); color: var(--gold); }
+    .btn-direct:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); color: var(--gold-light); }
 
     /* ── VARIANT TABS ── */
     .variant-tabs {
@@ -1213,7 +1215,8 @@
               <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${sp.brand}</div>
               <div style="font-size:1.3rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;">${sp.price}</div>
               <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${sp.whySimilar||""}</div>
-              <a href="${sp.amazonLink || buyLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;margin-bottom:0.4rem;">🛒 Amazon</a>
+              ${sp.directLink ? `<a href="${sp.directLink}" target="_blank" rel="noopener" class="btn-sm btn-direct" style="display:block;text-align:center;margin-bottom:0.4rem;">🌐 Buy at ${sp.brand}</a>` : ""}
+              ${sp.amazonLink ? `<a href="${sp.amazonLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;margin-bottom:0.4rem;">🛒 Amazon</a>` : ""}
               ${sp.fragranceNetLink ? `<a href="${sp.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet" style="display:block;text-align:center;">🏪 FragranceNet</a>` : ""}
             </div>
 
@@ -1223,8 +1226,11 @@
               <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">${orig.brand}</div>
               <div style="font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:0.5rem;">${orig.price}</div>
               <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-bottom:1rem;">${orig.description||""}</div>
-              ${orig.fragranceNetLink ? `<a href="${orig.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 FragranceNet</a>` : `<a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 Perfumania</a>`}
-              <a href="${orig.amazonLink || origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;">🛒 Amazon</a>
+              ${orig.directLink ? `<a href="${orig.directLink}" target="_blank" rel="noopener" class="btn-sm btn-direct" style="display:block;text-align:center;margin-bottom:0.4rem;">🌐 Buy at ${orig.brand}</a>` : ""}
+              ${orig.amazonLink ? `<a href="${orig.amazonLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon" style="display:block;text-align:center;margin-bottom:0.4rem;">🛒 Amazon</a>` : ""}
+              ${orig.fragranceNetLink ? `<a href="${orig.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 FragranceNet</a>` : ""}
+              ${orig.perfumaniaLink ? `<a href="${perfumaniaDirectLink(orig.perfumaniaLink)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania" style="display:block;text-align:center;margin-bottom:0.4rem;">🏪 Perfumania</a>` : ""}
+              ${orig.shopSimonLink ? `<a href="${orig.shopSimonLink}" target="_blank" rel="noopener" class="btn-sm btn-simon" style="display:block;text-align:center;">🛍️ Shop Simon</a>` : ""}
             </div>
 
           </div>
@@ -1317,9 +1323,11 @@
             ${notesHTML("Base Notes", orig.notes?.base)}
           </div>
           <div class="original-btns">
-            <a href="${orig.amazonLink || origAmazon}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Amazon</a>
-            ${orig.fragranceNetLink ? `<a href="${orig.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet">🏪 FragranceNet</a>` : `<a href="${perfumaniaLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>`}
-            <a href="${shopSimonLink(orig.name, orig.brand)}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>
+            ${orig.directLink ? `<a href="${orig.directLink}" target="_blank" rel="noopener" class="btn-sm btn-direct">🌐 Buy at ${orig.brand}</a>` : ""}
+            ${orig.amazonLink ? `<a href="${orig.amazonLink}" target="_blank" rel="noopener" class="btn-sm btn-amazon">🛒 Amazon</a>` : ""}
+            ${orig.fragranceNetLink ? `<a href="${orig.fragranceNetLink}" target="_blank" rel="noopener" class="btn-sm btn-fragrancenet">🏪 FragranceNet</a>` : ""}
+            ${orig.perfumaniaLink ? `<a href="${perfumaniaDirectLink(orig.perfumaniaLink)}" target="_blank" rel="noopener" class="btn-sm btn-perfumania">🏪 Perfumania</a>` : ""}
+            ${orig.shopSimonLink ? `<a href="${orig.shopSimonLink}" target="_blank" rel="noopener" class="btn-sm btn-simon">🛍️ Shop Simon</a>` : ""}
             <a href="https://www.fragrantica.com/search/?query=${fragQ}" target="_blank" rel="noopener" class="btn-sm btn-fragrantica">📖 Fragrantica</a>
           </div>
         </div>
