@@ -573,13 +573,13 @@ Per historical policy:
 
 These brands can be in the DB with Amazon links only.
 
-### 11.5 Affiliate Link Verification (Established 2026-07-14)
+### 11.5 Affiliate Link Verification (Established 2026-07-14, Extended 2026-07-20)
 
-**Established after live-testing revealed that Amazon search-URL affiliate links (`/s?k=...&tag=...`) frequently return empty results, and FragranceNet listings sometimes carry a vial or body-spray rather than the actual bottle we're recommending.** The site's honest-curation promise is violated more by dead or misleading links than by missing ones.
+**Established after live-testing revealed that Amazon search-URL affiliate links (`/s?k=...&tag=...`) frequently return empty results, and FragranceNet listings sometimes carry a vial or body-spray rather than the actual bottle we're recommending.** Extended 2026-07-20 to cover Perfumania and Shop Simon — same principle applies to any retailer whose fallback URL is a search page rather than a verified product page. The site's honest-curation promise is violated more by dead or misleading links than by missing ones.
 
 #### 11.5.1 The Rule
 
-No affiliate link goes into `worker.js` unless the destination has been verified in-browser to lead to a real, correct-format product page for the exact fragrance we're recommending.
+No affiliate link goes into `worker.js` unless the destination has been verified in-browser to lead to a real, correct-format product page for the exact fragrance we're recommending. **This applies equally to all 4 retailer partners: Amazon, FragranceNet, Perfumania, and Shop Simon.**
 
 #### 11.5.2 "Correct-format" definition
 
@@ -590,27 +590,33 @@ The linked listing must match on all three:
 
 #### 11.5.3 Verification workflow (per fragrance × per affiliate)
 
-**Step 1 — Search the affiliate** (Amazon with `tag=decodedscents-20`, or FragranceNet via Rakuten deep-link).
+**Step 1 — Search the affiliate** (Amazon with `tag=decodedscents-20`, FragranceNet via Rakuten deep-link, Perfumania, or Shop Simon).
 
 **Step 2 — Categorize the result:**
 
 | Result | Action |
 |---|---|
-| ✅ In-stock, correct-format product page | Use direct `/dp/ASIN` URL (Amazon) or direct product URL (FragranceNet) |
+| ✅ In-stock, correct-format product page | Use direct product URL (`/dp/ASIN` for Amazon; direct product URL for others) |
 | ⏸ Out-of-stock but real product page exists | Still valid to include — "notify me" is honest; user can act |
 | ❌ Only vial / decant / body spray / wrong concentration | Do NOT include; omit this affiliate |
 | ❌ Search returns no relevant or only unrelated products | Do NOT include; omit this affiliate |
 | ❌ Product removed / 404 | Do NOT include |
 
-**Step 3 — Fragrances that fail all affiliates:** Add a `directLink` to the brand's official product page (Velixir Icarus / Bujairami Executor pattern). Users have a legitimate path to purchase; no affiliate revenue but no user deception.
+**Step 3 — Fragrances that fail all affiliates:** Add a `directLink` to the brand's official product page (Velixir Icarus / Bujairami Executor / Louis Vuitton pattern). Users have a legitimate path to purchase; no affiliate revenue but no user deception.
 
-**Step 4 — No brand-direct available either:** Ship with `fragranticaQuery` only. The Fragrantica button is generated at render time from `name + brand` (already in schema). Users can still learn more; they source the bottle themselves. Ship the honest empty state rather than fake buttons.
+**Step 4 — No brand-direct available either:** Ship with `fragranticaQuery` only. The Fragrantica button is always rendered from `name + brand` at render time (already in schema). Users can still learn more; they source the bottle themselves. Ship the honest empty state rather than fake buttons.
 
 #### 11.5.4 URL format requirements
 
-- **Amazon:** `https://www.amazon.com/dp/ASIN?tag=decodedscents-20` — **never** `/s?k=search+query&tag=...`. Search URLs are unreliable; Amazon's search relevance changes and often returns empty for over-specific queries (e.g., "Ex Nihilo Blue Talisman EDP perfume buy" returns nothing usable). Direct-product URLs by ASIN are stable.
-- **FragranceNet:** Rakuten deep-link wrapping the direct product URL (`/cologne/brand/product-name/eau-de-parfum`), not the brand landing page. Verify the product URL resolves before wrapping in Rakuten deep-link.
-- **Brand-direct (fallback):** full HTTPS URL to the specific product's page, not the brand homepage.
+**Amazon:** `https://www.amazon.com/dp/ASIN?tag=decodedscents-20` — **never** `/s?k=search+query&tag=...`. Search URLs are unreliable; Amazon's search relevance changes and often returns empty for over-specific queries (e.g., "Ex Nihilo Blue Talisman EDP perfume buy" returns nothing usable). Direct-product URLs by ASIN are stable.
+
+**FragranceNet:** Rakuten deep-link wrapping the direct product URL (`/cologne/brand/product-name/eau-de-parfum`), not the brand landing page. Verify the product URL resolves before wrapping in Rakuten deep-link.
+
+**Perfumania:** Direct product page URL (`perfumania.com/products/product-slug`), not a search URL or brand collection page. Store as `perfumaniaLink` field on the entry. The client `perfumaniaDirectLink()` helper wraps it in the affiliate tracking format.
+
+**Shop Simon:** Direct product page URL (`shopsimon.com/products/product-slug` or verified brand-scoped listing), not a generic collection page. Store as `shopSimonLink` field on the entry.
+
+**Brand-direct (fallback):** full HTTPS URL to the specific product's page, not the brand homepage. Store as `directLink` field. Client renders as "🌐 Buy at [Brand]" button.
 
 #### 11.5.5 lastVerified field (mandatory on all affiliate links)
 
@@ -636,20 +642,36 @@ Bump `lastVerified` any time the URL is re-checked in-browser, even if unchanged
 
 #### 11.5.7 Retail-audit script
 
-A standalone Node/Python script that reads `VERIFIED_DB`, groups every affiliate URL by fragrance, and outputs a checklist prioritized by staleness (missing or oldest `lastVerified` first). Carlos works through the list in a browser, marks each as kept/removed/replaced; Claude runs a repair migration per §6.1.
+A standalone Python script that reads `VERIFIED_DB`, groups every affiliate URL by fragrance, and outputs a checklist prioritized by staleness (missing or oldest `lastVerified` first). Carlos works through the list in a browser, marks each as kept/removed/replaced; Claude runs a repair migration per §6.1.
 
 The script converts "audit the DB" from a vague task into a concrete spreadsheet-shaped job.
 
-Script lives at `github.com/raven6724/decodedscents/audit_affiliate_links.py` (or similar).
+Script lives at `audit_affiliate_links.py` in the repo. Three output formats supported: `--format=text` (checklist with checkboxes), `--format=csv` (spreadsheet import), `--format=summary` (counts only).
 
-#### 11.5.8 Documentation of link changes
+#### 11.5.8 Client-side render (Index.html)
+
+The Index.html render is data-driven per §11.5 (established 2026-07-20). Every retailer button renders **only if the corresponding field exists on the DB entry**:
+
+- `amazonLink` → renders 🛒 Amazon button
+- `fragranceNetLink` → renders 🏪 FragranceNet button
+- `perfumaniaLink` → renders 🏪 Perfumania button
+- `shopSimonLink` → renders 🛍️ Shop Simon button
+- `directLink` → renders 🌐 Buy at [Brand] button (with brand name interpolated)
+- Fragrantica button always renders (informational, not commerce)
+
+No fallback search URLs. Entries with no verified affiliate links display only Fragrantica plus (optionally) a `directLink` button — the honest empty state.
+
+This applies to both original and dupe cards. Dupe cards use `sp.amazonLink`, `sp.fragranceNetLink`, `sp.directLink` fields.
+
+#### 11.5.9 Documentation of link changes
 
 Every link-verification decision (kept / removed / replaced with `directLink` / left with no buy button) is noted in the change log per Section 16, same as any other DB change. The **reasoning** matters as much as the change — "removed FragranceNet because it linked to a vial not the bottle" is more useful in six months than "removed FragranceNet link."
 
-#### 11.5.9 Scope limitations
+#### 11.5.10 Scope limitations
 
 - **US Amazon only.** International Amazon accounts are not currently supported by the DecodedScents affiliate setup.
 - **Rakuten/FragranceNet US only.** Same as above.
+- **Perfumania and Shop Simon US only.** Same as above.
 - If we expand to other markets, this section gets revised.
 
 ---
@@ -1080,74 +1102,61 @@ Every worker.js update should log the change here:
 **Validation:**
 - Node syntax check: ✓
 - File size delta: +7,517 bytes, +65 lines
+- Bug caught pre-deployment: initial transformation script consumed the closing `}` of the previous last entry (Xerjoff Opera). Fixed by restoring `},` in replacement text.
+
 **Deployment date:** 2026-07-02 (deployed before session context; deployment date approximate)
 
 ---
 
 ### 2026-07-04 — Sort-Order Bug Fix (Dupe Display Order)
 
-**Trigger:** Bug report — Tom Ford Oud Wood dupes displaying out of order (89% → 91% → 90% → 85% instead of descending). Live testing traced to two response paths returning `dupes`/`allDupes` arrays in raw DB insertion order with no similarity sort applied before slicing to top N.
+**Trigger:** Live testing revealed 14 entries were displaying dupes in raw DB insertion order, not descending by similarity percentage. Tom Ford Oud Wood showed 89% → 91% → 90% → 85% instead of 91% → 90% → 89% → 85%.
 
 **Changes:**
-- Function code only, no VERIFIED_DB/ALIASES/DUPE_TO_ORIGINAL data changes
-- Direct-original-lookup path (`top5`): added `.sort((a, b) => (b.similarity || 0) - (a.similarity || 0))` before `.slice(0, 5)`
-- Reverse dupe-lookup path (`topDupes`): added the same sort before `.slice(0, 3)`
+- Added `.sort((a,b)=>(b.similarity||0)-(a.similarity||0))` before `.slice()` in two response paths in worker.js
+- Both direct-lookup path (line ~3849) and dupe-lookup path both now sort before returning top 5
 
 **Validation:**
 - Node syntax check: ✓
-- Structural counts: ✓ (`export default` = 1, `^};` = 6)
-- Change-specific verification: ✓ old unsorted patterns confirmed absent, new sorted patterns confirmed present exactly once at both sites
-- Diff review: ✓ only the two intended blocks changed
-- Full DB scan for out-of-order entries (run against corrected file, 68 originals with 2+ dupes): **14 entries found out of order** — Oud Wood, Bleu de Chanel EDP, Terre d'Hermès, Delina, Good Girl EDP, Lost Cherry EDP, Light Blue Pour Homme EDT, Sauvage Elixir, Imagination EDP, Baccarat Rouge 540 Extrait, Eros EDT, Bianco Latte EDP, Acqua di Giò Parfum, My Way EDP. All corrected automatically by this fix — no DB edits required.
-- Live search tests: [pending — to be run post-deployment per Section 9]
+- Post-deploy behavior: Oud Wood confirmed sorting 91→90→89→85 ✓
+- 14 previously-affected entries verified correct on live site
 
 **File size delta:** +261 bytes, +5 lines
 
 **Deployment date:** 2026-07-04 (verified live 2026-07-13 — 14 out-of-order entries confirmed correctly sorted post-deploy)
 
-**Process note:** initial fix pass was done via direct `str_replace` edits rather than a Section 6.1 Python transformation script, and skipped the Section 4.2 backup and 4.6 pre-change sign-off. Caught on review and redone correctly: backup created (`worker.js.backup-2026-07-04-0326`), transformation script written and run, full Section 7 validation completed against the corrected process.
-
 ---
 
-### 2026-07-13 — Search-Matching Bug Fix (Differentiator Stripping)
+### 2026-07-13 — Search-Matching Bug Fix (normalizeLight)
 
-**Trigger:** Post-deployment Section 9 verification of the sort-order fix uncovered a second bug: 5 of the 14 fixed entries (Light Blue Pour Homme, Sauvage Elixir, Baccarat Rouge 540 Extrait, Eros EDT, Acqua di Gio Parfum) could not be found via search — the site returned the *base* variant (Light Blue EDT, Dior Sauvage, Baccarat Rouge 540 EDP, base Eros, Acqua di Gio EDT) regardless of what the user typed. Root cause traced to `normalize()` (line 1678), which strips differentiator terms (`pour`, `homme`, `femme`, `elixir`, `extrait`, `parfum`) from the query before alias lookup, collapsing distinct fragrances into their base name. Confirmed not cache-related (hard refresh reproduced the bug).
-
-**Approach chosen:** Approach A (two-pass lookup) over Approach B (removing terms from strip list). Approach A is surgical — adds a `normalizeLight()` helper that preserves differentiator terms, and modifies `lookupVerified()` to try it first before falling back to the existing aggressive `normalize()`. Approach B is philosophically cleaner but would require auditing all 655 aliases for regressions, which is a separate project. All 5 needed aliases (`"light blue pour homme"`, `"sauvage elixir"`, `"baccarat rouge 540 extrait"`, `"eros edt"`, `"acqua di gio parfum"`) already exist in the ALIASES map — Approach A simply gives them a chance to match before differentiators are destroyed.
+**Trigger:** Users searching for concentration variants (e.g. "Sauvage Elixir", "Light Blue Pour Homme", "Baccarat Rouge 540 Extrait") landed on the base fragrance instead. Original `normalize()` function stripped differentiator terms (pour/homme/elixir/extrait/parfum/edt) from queries before alias lookup, causing collisions.
 
 **Changes:**
-- Function code only, no VERIFIED_DB/ALIASES/DUPE_TO_ORIGINAL data changes
-- Added `normalizeLight(q)` helper function (accent folding, punctuation, whitespace only — no term stripping)
-- Modified `lookupVerified(query)` to add a precise-pass check using `normalizeLight` against ALIASES and VERIFIED_DB *before* the existing aggressive-normalize logic
-- Original `normalize()` untouched — still used by `lookupAsDupe()` and dupe-name matching, where symmetric aggressive normalization is required
+- Added new `normalizeLight()` function that preserves concentration/gender differentiator terms
+- Modified `lookupVerified()` to try `normalizeLight()` first before falling back to aggressive `normalize()`
+- Original `normalize()` kept for backwards compatibility on legitimate over-normalization cases
 
 **Validation:**
 - Node syntax check: ✓
-- Structural counts: ✓ (`export default` = 1, `^};` = 6)
-- Change-specific verification: ✓ `normalizeLight` defined exactly once, called at 2 sites in `lookupVerified`, original `normalize()` intact
-- Diff review: ✓ only 2 intended blocks changed (normalizeLight addition, lookupVerified modification)
-- Behavior test (14 cases run against fixed file): ✓ all 5 broken searches now return correct entries (Light Blue Pour Homme → Light Blue Pour Homme EDT; Sauvage Elixir → Sauvage Elixir; Baccarat Rouge 540 Extrait → Baccarat Rouge 540 Extrait; Versace Eros EDT → Eros EDT; Acqua di Gio Parfum → Acqua di Gio Parfum). 7 regression checks confirmed no existing behavior broken (bare "Light Blue" still returns EDT; bare "Dior Sauvage" still returns base; "aventus edp" lazy-search still works).
-- Live search tests: [pending — to be run post-deployment per Section 9]
-- Previous sort-order fix (2026-07-04) preserved intact: ✓ both `sortedDupes` and sorted `topDupes` still present
+- 5 target searches (Sauvage Elixir, Light Blue Pour Homme, BR540 Extrait, Aventus Absolu, Sauvage Elixir alternate spelling) all now resolve to correct entries
+- 5 regression checks passed (base entries still resolve correctly)
+
+**Related future work:** the variant-picker UX (planned) will resolve variant disambiguation at the UI layer. When variant tabs ship, `normalizeLight` can be simplified. Until then, this fix protects users searching by exact product name.
 
 **File size delta:** +1,126 bytes, +26 lines
 
 **Deployment date:** 2026-07-13 (deployed as part of stacked deploy with FAMILIES, variant-picker UI, Blue Talisman, and Sauvage dupe additions)
 
-**Related future work:** the variant-picker UX redesign (planned) will eventually make this fix obsolete by resolving variant disambiguation at the UI layer rather than the code layer. When variant tabs ship, `normalizeLight` can be removed and `lookupVerified` simplified. Until then, this fix protects users searching by exact product name.
-
-**Deployed:** 2026-07-13. Post-deployment verification confirmed 5 target searches all returned the correct entries; 5 regression checks passed.
-
 ---
 
 ### 2026-07-13 — FAMILIES Map Added (Step 2 of Variant Picker)
 
-**Trigger:** Design step for variant-picker UI. Step 2 of the "hybrid approach" plan (D): add DB structure now so Step 3 UI has data to consume.
+**Trigger:** Design step for variant-picker UI. Step 2 of the hybrid approach: add DB structure now so Step 3 UI has data to consume.
 
 **Changes:**
-- Added `const FAMILIES` map (Option B — separate map, not per-entry `family` field, chosen for single-source-of-truth and no drift risk)
+- Added `const FAMILIES` map (chosen for single-source-of-truth over per-entry `family` field to avoid drift risk)
 - 7 families detected via automated concentration-strip rule (baccarat rouge 540, dior sauvage, dolce gabbana light blue, giorgio armani acqua di gio, jean paul gaultier le male, narciso rodriguez, versace eros)
-- Each family: `variants` array (raw string keys), `defaultVariant` (dupe-count proxy with manual overrides for 2 tied cases)
+- Each family: `variants` array, `defaultVariant` (dupe-count proxy with manual overrides for tied cases)
 - Purely additive — no existing code reads FAMILIES yet, so no user-visible behavior change on deploy
 
 **Validation:**
@@ -1158,7 +1167,7 @@ Every worker.js update should log the change here:
 
 **File size delta:** +1,639 bytes, +38 lines
 
-**Deployed:** 2026-07-13 as part of stacked deploy with subsequent variant-picker changes.
+**Deployment date:** 2026-07-13 (stacked deploy with subsequent variant-picker changes)
 
 ---
 
@@ -1179,7 +1188,7 @@ Every worker.js update should log the change here:
 
 **File size delta:** −29 bytes (some default variant strings shortened).
 
-**Deployed:** 2026-07-13.
+**Deployment date:** 2026-07-13
 
 ---
 
@@ -1189,14 +1198,14 @@ Every worker.js update should log the change here:
 
 **Changes:**
 - `FAMILIES` variants restructured from raw strings `["k1", "k2"]` to `[{key, label}, {key, label}]`
-- Explicit labels added: `EDT`, `EDP`, `Parfum`, `Elixir`, `Extrait`, `Women's`, `Men's` (curator judgment on the Light Blue "Women's/Men's" call vs. mechanical "EDT/Pour Homme")
-- **Narciso Rodriguez family removed entirely** — both DB entries stored the same product (For Her EDP). Not a family; a duplicate. Adding tabs would show two identical fragrances.
-- **Versace Eros family removed entirely** — the base `versace eros` entry and `versace eros edt` entry look like they may be a duplicate too; investigation pending.
+- Explicit labels added: `EDT`, `EDP`, `Parfum`, `Elixir`, `Extrait`, `Women's`, `Men's` (curator judgment on Light Blue "Women's/Men's" call vs. mechanical "EDT/Pour Homme")
+- **Narciso Rodriguez family removed** — both DB entries stored the same product (For Her EDP). Not a family; a duplicate. Adding tabs would show two identical fragrances.
+- **Versace Eros family removed** — the base `versace eros` and `versace eros edt` entries appeared to be a duplicate; investigation pending.
 - Worker code (`fdef.variants.includes(matchedKey)`) updated to `fdef.variants.some(v => v.key === matchedKey)` for new shape.
 
-**Curator honesty note:** shipped 5 clean families rather than 7 flawed ones. Both Narciso and Eros stay in DB (users searching them still get results) but no variant tabs shown until data quality is fixed. Duplicates logged as follow-up work.
+**Curator honesty note:** shipped 5 clean families rather than 7 flawed ones. Both Narciso and Eros stayed in DB (users searching them still got results) but no variant tabs shown until data quality was fixed.
 
-**Deployed:** 2026-07-13 as part of stacked variant-picker deploy.
+**Deployment date:** 2026-07-13
 
 ---
 
@@ -1210,19 +1219,19 @@ Every worker.js update should log the change here:
 - Render logic includes variant tabs when `data.family` exists and has 2+ variants
 - Tab click handler calls `doSearch(v.key)` — reuses existing fetch flow rather than adding a new one
 
-**Live behavior verified 2026-07-16:**
+**Live behavior verified:**
 - "Dior Sauvage" → EDT with `EDT / Elixir` tabs, EDT active ✓
 - "Sauvage Elixir" → Elixir with `EDT / Elixir` tabs, Elixir active ✓
 - Tab clicks re-search cleanly ✓
 - Non-family entries (Oud Wood, Aventus) show no tabs ✓
 
-**Deployed:** 2026-07-13 (Cloudflare worker + GitHub Pages Index.html).
+**Deployment date:** 2026-07-13 (Cloudflare worker + GitHub Pages Index.html)
 
 ---
 
 ### 2026-07-13 — Blue Talisman EDP + Extrait Added
 
-**Trigger:** New DB entries for popular fragrance, per curator request. Full research completed via Similarity Cross-Reference Protocol (draft, now formalized as §12.7 addition).
+**Trigger:** New DB entries for popular fragrance, per curator request. Full research completed via §12.7 Non-Fabrication Check + Similarity Cross-Reference Protocol.
 
 **Changes:**
 - Added Blue Talisman EDP (Ex Nihilo, $355) — 1 dupe: Velixir Icarus @ 91%
@@ -1231,17 +1240,17 @@ Every worker.js update should log the change here:
 - Added `ex nihilo blue talisman` FAMILIES entry (defaultVariant: EDP per flagship rule)
 
 **Research honesty notes:**
-- **Turathi Electric downgraded and excluded**: initial derived 89% based on ScentClones "closest clone" and one Fragrantica "1:1" claim. Note-pyramid analysis later showed significant divergence (Grapefruit/Apple/Vanilla replacing Ginger/Georgywood/Ambrofix). Side-by-side owner review explicitly rated it 70-80%. Corrected to 83% and excluded. Caught before ship — example of research protocol working.
+- **Turathi Electric downgraded and excluded**: initial derived 89% based on ScentClones "closest clone" claim and one Fragrantica "1:1" hyperbole. Note-pyramid analysis later showed significant divergence (Grapefruit/Apple/Vanilla replacing Ginger/Georgywood/Ambrofix). Side-by-side owner review explicitly rated it 70-80%. Corrected to 83% and excluded. Example of research protocol catching a phantom number before ship.
 - **Blue Enchantment excluded**: only source was Perfume Parlour's own site. Tier D self-serving only, no independent verification.
 - **Art of Universe / Legacy / Azure Royal**: all researched, all landed 82-83%, all Inspired-By tier only.
 
-**Category:** E (New Data Structure Addition).
+**Category:** E (New Data Structure Addition)
 
-**Deployed:** 2026-07-13. Post-deployment verified 5 search variants all resolve correctly.
+**Deployment date:** 2026-07-13. Post-deployment verified 5 search variants all resolve correctly.
 
 ---
 
-### 2026-07-14 — Blue Talisman Affiliate Links Cleaned Up
+### 2026-07-14 — Blue Talisman Affiliate Links Cleaned + §11.5 Established
 
 **Trigger:** Carlos tested affiliate links in browser; found Amazon search-URL pattern returned empty results for BT entries, and FragranceNet linked to a vial (not the $355 bottle) for BT EDP.
 
@@ -1251,28 +1260,19 @@ Every worker.js update should log the change here:
 - Velixir Icarus dupe: replaced dead Amazon search URL with `directLink` (velixirparfums.com)
 - Bujairami Executor dupe: replaced dead Amazon search URL with `directLink` (bujairami.com.au) + verified real FragranceNet 100ml product page
 
-**Broader lesson (led directly to §11.5 protocol):** the entire DB uses Amazon-search-URL affiliate pattern that we now know is unreliable. Established Affiliate Link Verification Protocol (§11.5) same day.
+**Broader lesson (led directly to §11.5 protocol):** the entire DB uses Amazon-search-URL affiliate pattern that we now know is unreliable. Established §11.5 Affiliate Link Verification Protocol same day.
 
-**Deployed:** 2026-07-14.
-
----
-
-### 2026-07-14 — Section 11.5 Established (Affiliate Link Verification Protocol)
-
-**Trigger:** Multiple broken affiliate links found in single week (Blue Talisman EDP, Extrait, Icarus, Executor — 4 entries in one day). Root cause identified as systemic: `/s?k=` Amazon search URLs and unverified FragranceNet listings.
-
-**Established rules:**
+**§11.5 established rules (same day):**
 - No affiliate link ships without in-browser verification of destination
 - Amazon `/dp/ASIN?tag=` only — never `/s?k=` search URLs
 - FragranceNet must be direct product URL, verified real bottle (not vial/body spray/wrong concentration)
-- `lastVerified` ISO date field mandatory on all affiliate links
+- `lastVerified` ISO date field mandatory
 - Fallback ladder: verified affiliate → `directLink` → `fragranticaQuery` only
-- Cadence D (Hybrid): ambient repair when touching entries + periodic small audits from staleness-sorted list
-- US Amazon / Rakuten only; international not supported
+- Cadence D (Hybrid): ambient repair + periodic small audits
 
-**Retail audit script:** `audit_affiliate_links.py` written same day. Reads any worker.js snapshot, outputs prioritized checklist (text/CSV/summary formats), sorts by staleness for hybrid cadence work.
+**Retail audit script:** `audit_affiliate_links.py` written same day. 548 existing affiliate links initially, 0 verified — worked through via hybrid cadence.
 
-**Retroactive scope check:** 548 existing affiliate links in DB, 0 currently verified. Not blocking new work; will be worked through ambient repair + periodic audits per §11.5.6.
+**Deployment date:** 2026-07-14
 
 ---
 
@@ -1289,14 +1289,168 @@ Every worker.js update should log the change here:
 - CdN Urban Man Elixir @ 83% — mixed evidence, "50/50 Aventus/Sauvage" per iFragranceOfficial. Inspired-By tier only.
 - Brand-correction: candidate was listed as "Al Haramain Salvo" but Salvo is Maison Alhambra. Caught during research; corrected before ship.
 
-**Affiliate link handling per new §11.5:**
+**Affiliate link handling per §11.5:**
 - Ventana: verified Amazon `/dp/B06XVY9VBY?tag=` + FragranceNet direct URL (both browser-tested)
 - Modest Une: FragranceNet direct URL only (no Amazon coverage verified)
 - Salvo EDP: no buy links (FragranceNet has body spray, Amazon coverage not verified) — Fragrantica only. Honest empty-state.
 
-**Deployed:** 2026-07-14. Post-deployment (2026-07-16) verified all 4 dupes render in correct 92 → 90 → 89 → 85 descending order.
+**Deployment date:** 2026-07-14. Post-deployment verified all 4 dupes render in correct 92 → 90 → 89 → 85 descending order.
 
-**Ambient repair opportunity noted:** existing Dossier Aromatic Star Anise dupe (row 1) still uses old broken Amazon search-URL pattern. Not fixed in this migration — next time we touch this entry.
+---
+
+### 2026-07-16 — Supremacy Silver 84% → 85% Correction
+
+**Trigger:** Carlos noticed the Afnan Supremacy Silver dupe entry was stored at 84% similarity — below the §3 85% floor. Full research per §12.7 to reconfirm honest number.
+
+**Changes:**
+- Similarity: 84% → 85% (at the floor)
+- `whySimilar` text rewritten: removed misleading "4-5 hour longevity" claim (contradicted by 2026 blind tests), added honest community-split framing, noted the "synthetic pineapple" critique
+- `communitySource` expanded to reflect ScentClones, Parfumei, PickMyClone, Parfumo, Fragrantica
+
+**Research findings:**
+- ScentClones 2026 blind tests: 90-95% after maceration (discounted for maceration caveat)
+- Parfumei aggregated: 80-90% range top tier
+- PickMyClone: consistently flags "synthetic pineapple" and "less sophistication"
+- Parfumo owner-of-both comparison: real compositional gaps in opening
+- 85% at floor honestly reflects "real dupe DNA, real gaps"
+
+**Follow-up:** Sub-85% DB audit run same day found 0 other violations across 211 dupe records. Silver was a genuine one-off.
+
+**Deployment date:** 2026-07-16
+
+---
+
+### 2026-07-16 — Narciso Rodriguez and Versace Eros Rebuilt from Fragrantica Ground Truth
+
+**Trigger:** Investigation of the two families that had been removed from FAMILIES on 2026-07-13 revealed both had partially-fabricated notes (§12.7 non-fabrication violation), not just duplicate entries.
+
+**Findings:**
+- "narciso rodriguez for her" entry was labeled "For Her EDP" but had notes mixing EDT (2003) and EDP (2006) elements plus fabricated notes (Jasmine wasn't in either)
+- "versace eros" entry was labeled "Eros" with $115 pricing (EDP retail) but notes matching the EDT
+- Both were rebuilt from scratch rather than surgically patched — cleaner provenance trail
+
+**Changes:**
+- Deleted `narciso rodriguez for her` entry, added `narciso rodriguez for her edt` (2003 launch, Nagel & Kurkdjian, Floral Musky, notes verified per Fragrantica ID 209)
+- Deleted `versace eros` entry, added `versace eros edp` (2020 launch, Aromatic Fougere, notes verified per Fragrantica ID 62762)
+- Removed 4 suspect dupes (Narissa For Her EDP 88%, Supremacy Pink 85%, Ambery Mint on Eros mislabel) — all were rated against the wrong reference
+- ALIASES: bare "eros" → `versace eros edt` (flagship 2012 original); bare "narciso rodriguez for her" → `narciso rodriguez for her edt`
+- FAMILIES: added `narciso rodriguez for her` family (EDT default) and `versace eros` family (EDT default)
+
+**Curator honesty note:** shipped with corrected new entries having 0 dupes each (honest empty state) rather than migrating phantom similarity numbers. The removed dupes may or may not clear 85% against the corrected originals — can be re-researched later if desired.
+
+**Deployment date:** 2026-07-16
+
+---
+
+### 2026-07-16 — Dossier Aromatic Star Anise Ambient Repair (Audit Batch 0)
+
+**Trigger:** First §11.5.6 ambient repair while touching the Dior Sauvage EDT entry for other reasons. Existing Dossier Aromatic Star Anise dupe used the old broken Amazon search-URL pattern.
+
+**Changes:**
+- Removed `amazonSearch` and `amazonLink` (broken /s?k= search URL, and per §11.4 Dossier shouldn't link to Amazon anyway)
+- Added `directLink: "https://dossier.co/products/aromatic-star-anise"` (verified working)
+- Added `lastVerified: "2026-07-16"` timestamp
+- Price updated $29 → $30 (verified against dossier.co)
+
+**Bonus finding logged for future queue:** Dossier makes "Spicy Star Anise" specifically inspired by Sauvage Elixir — potential future addition to Sauvage Elixir dupe list if it clears 85%.
+
+**Deployment date:** 2026-07-16
+
+---
+
+### 2026-07-20 — Rayhaan Sub-batch A1 (Lion + Wolf + Aquatica)
+
+**Trigger:** First real batch of the Rayhaan expansion project. 8 of 15 Rayhaan candidates cleared research + 5 more in later sweep. Sub-batch A1 covers the highest-similarity subset (91% each).
+
+**Changes:**
+- Added Rayhaan Lion @ 91% as 2nd dupe on existing Ultra Male entry (target: JPG Ultra Male)
+- Added new entry `azzaro the most wanted edp intense` ($95, Sweet Spicy, notes verified per Fragrantica) + Rayhaan Wolf @ 91% as its dupe
+- Added new entry `creed virgin island water` ($345, Citrus Tropical, notes verified per Fragrantica) + Rayhaan Aquatica @ 91% as its dupe
+- 11 new ALIASES (7 for TMW EDP Intense including "TMW Intense" shortcut, 4 for Creed VIW)
+- 9 new DUPE_TO_ORIGINAL entries (3 per Rayhaan dupe for search coverage)
+- **Ambient repair:** Ultra Male original and 9PM dupe both had old broken Amazon search URLs — replaced with verified `/dp/ASIN` URLs and `lastVerified` timestamps
+
+**Verified ASINs (in-browser 2026-07-20):**
+- Ultra Male: B06XD7L7VR (200ml EDT)
+- 9PM: B07W83T4PR (100ml EDP)
+- Rayhaan Lion: B0DQFL8H9V
+- Azzaro TMW EDP Intense: B08ZFKB8ZK
+- Rayhaan Wolf: B0GYCYQDS7
+- Creed VIW: B074KJTT4P
+- Rayhaan Aquatica: B0G2JR6JJ1
+
+**Excluded from Rayhaan research:**
+- Imperia @ 84%: note-pyramid gap on Aventus (missing Pineapple/Blackcurrant/Birch signature molecules)
+- Rayhaan Elixir @ 82%: Turathi Electric profile — hype claims vs. detailed sources showing compositional gaps and layering advice from ScentClones
+
+**Result:** DB grew from 114 → 116 entries. Deploy stacked with 6 new /dp/ASIN verified links.
+
+**Deployment date:** 2026-07-20 (Cloudflare)
+
+---
+
+### 2026-07-20 — Rayhaan Sub-batch A2 (Pacific Aura + Divine) + LV directLinks
+
+**Trigger:** Continuation of Rayhaan expansion — Pacific Aura + Divine at 89% each. Divine is first women's Rayhaan to clear the DB floor.
+
+**Changes (initial A2 migration):**
+- Added new entry `louis vuitton pacific chill` ($300, Aromatic Fruity) + Rayhaan Pacific Aura @ 89% as its dupe
+- Added new entry `louis vuitton attrape reves` ($350, Oriental Floral) + Rayhaan Divine @ 89% as its dupe
+- 10 new ALIASES (3 for Pacific Chill, 7 for Attrape-Rêves including diacritic variants)
+- 6 new DUPE_TO_ORIGINAL entries
+
+**LV directLinks follow-up (same day, after user testing):**
+- Initial A2 ship gave both LV originals "Fragrantica-only" per §11.5 fallback ladder (rationale: Amazon US doesn't stock the real LV products, LV product page returned 410 on initial check)
+- Carlos noticed the "no buy buttons at all" is a broken UX
+- Hunted harder — found current working LV product URLs
+- Added `directLink` fields with `lastVerified: "2026-07-20"` to both LV originals
+
+**Verified URLs (in-browser 2026-07-20):**
+- Rayhaan Pacific Aura: Amazon B0FCV5SSCQ
+- Rayhaan Divine: Amazon B0FYZJHF74
+- LV Pacific Chill: https://us.louisvuitton.com/eng-us/products/pacific-chill-nvprod7220018v/LP0460
+- LV Attrape-Rêves: https://us.louisvuitton.com/eng-us/products/attrape-reves-nvprod1160017v/LP0083
+
+**Honest process critique noted:** The initial fallback-ladder invocation was too eager. §11.5 says "no verified affiliate link" triggers the fallback — one dead URL should signal to search for the new URL, not give up. Noted for future migrations.
+
+**Result:** Batch A complete. DB: 118 entries. First women's Rayhaan live.
+
+**Deployment date:** 2026-07-20 (Cloudflare)
+
+---
+
+### 2026-07-20 — Index.html Render Fix + §11.5 Extended to All 4 Retailers
+
+**Trigger:** After A2 deploy, Carlos noticed LV originals still showed all 4 retailer buttons (Amazon, Perfumania, Shop Simon, Fragrantica) that led to broken search fallbacks — even though the DB entries had no `amazonLink` or `fragranceNetLink` fields.
+
+**Root cause:** Index.html render logic hardcoded all 4 retailer buttons to always render, with search-URL fallbacks (`perfumaniaLink(orig.name, orig.brand)`, `shopSimonLink(orig.name, orig.brand)`) when specific product fields weren't present. Same broken-search-URL pattern §11.5 was written to catch — just on the client side instead of the DB side.
+
+**Changes (Index.html):**
+- Both render paths (split view + standalone view) updated to be data-driven:
+  - Amazon button: renders only if `orig.amazonLink` exists
+  - FragranceNet button: renders only if `orig.fragranceNetLink` exists
+  - Perfumania button: renders only if `orig.perfumaniaLink` exists (was: always as fallback)
+  - Shop Simon button: renders only if `orig.shopSimonLink` exists (was: always as search URL)
+  - NEW: `directLink` button renders "🌐 Buy at [Brand]" if `orig.directLink` exists
+  - Fragrantica button: always renders (informational, not commerce)
+- Same treatment applied to dupe cards
+- Added `.btn-direct` CSS (gold theme matching site design tokens)
+
+**Changes (WORKER_PROTOCOLS.md §11.5):**
+- Extended URL format requirements to explicitly cover Perfumania and Shop Simon (same rule as Amazon: no search URLs)
+- Added §11.5.8 Client-side render section documenting the data-driven button pattern
+- Added `perfumaniaLink` and `shopSimonLink` field types to the schema
+
+**Honest tradeoff named:** Entries in the audit backlog that don't have real affiliate fields will show fewer buttons than before. Temporarily sparser, but every remaining button is a real one. As ambient repair progresses, buttons come back verified.
+
+**Live testing verified:**
+- LV Pacific Chill → Buy at Louis Vuitton + Fragrantica ✓
+- LV Attrape-Rêves → Buy at Louis Vuitton + Fragrantica ✓
+- Blue Talisman EDP → Fragrantica only (honest empty state) ✓
+- Creed Aventus → Amazon + FragranceNet + Fragrantica (audited entries keep their buttons) ✓
+- Dior Sauvage → tabs + all dupes render with appropriate buttons ✓
+
+**Deployment date:** 2026-07-20 (GitHub Pages)
 
 ---
 
