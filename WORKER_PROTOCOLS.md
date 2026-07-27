@@ -826,7 +826,7 @@ After every proofread pass:
 Historical failure modes in worker.js content:
 
 1. **Fabricated perfumer credits** — never add a perfumer to a `whySimilar` unless independently verified (this was the Saramito pattern)
-2. **Fabricated note pyramids** — retailer descriptions (especially Perfume.com, some Amazon listings) can be AI-generated or wrong. Only use Fragrantica or official brand sources.
+2. **Fabricated note pyramids** — retailer descriptions (especially Perfume.com, some Amazon listings) can be AI-generated or wrong. Only use Fragrantica or official brand sources. Fabricated pyramids arrive in three recognisable shapes — see §12.8 for the detection patterns.
 3. **Fabricated community quotes** — every quote in `whySimilar` must be traceable to a real reviewer, forum post, or article
 4. **Optimistic match percentages** — don't inflate `similarity` beyond what community consensus supports
 5. **Stale reformulation information** — some entries reference "excellent longevity" when the current batch has been reformulated with weaker performance (this happened with Mirsaal With Love)
@@ -838,8 +838,70 @@ Before deploying any new entry, ask:
 - Can I trace the note pyramid to the official brand source?
 - Is the match percentage defensible against multiple community sources, not just one enthusiastic reviewer?
 - If a perfumer is credited, was that verified in a source we trust?
+- **Which concentration is each source actually talking about?** (§12.9)
+- **Does this dupe already appear elsewhere in the DB, and do the two pyramids agree?** (§12.8)
 
 **If any answer is uncertain, revise before deploying.**
+
+### 12.8 Fabrication Shapes — Detection Patterns
+
+Established across the July 2026 audits (Narciso, Eros, Khamrah, Azzaro TMW, Bleu de Chanel). Fabricated note data is not random; it arrives in three shapes, each with a mechanical tell that does not require domain intuition to spot.
+
+#### Shape 1 — Dupe notes copied from the original
+
+The dupe's pyramid is identical or near-identical to the original's own pyramid, and `sharedNotes` lists essentially everything.
+
+- **Caught:** Maison Alhambra Carlton on the corrupted Azzaro TMW Intense entry — byte-identical notes, all seven listed as shared. Khamrah on Armani Stronger With You Intensely — the dupe slot carried SWYI's own notes (Cognac, Rum top; Praline, Sandalwood base).
+- **Tell:** `sharedNotes.length` equals the dupe's total note count, or the two pyramids match position for position. Real dupes never match molecule for molecule; if they did they would be counterfeits, not dupes.
+
+#### Shape 2 — Dupe notes reshaped toward the target
+
+The same dupe appears elsewhere in the DB carrying its real pyramid. The instance on the suspect entry has been edited to sit closer to its target.
+
+- **Caught:** Lattafa Raghba. On Mugler Angel it carries its genuine Fragrantica notes — Cassia, Cinnamon / Honey, Vanilla / Patchouli, Oud, Tonka Bean, Amber. On the corrupted TMW entry it carried Cardamom, Cinnamon / Toffee, Tobacco / Amberwood, Vanilla, Tonka Bean. Same fragrance, two pyramids, one of them invented.
+- **Tell:** cross-DB comparison. A single fragrance can only have one note pyramid. Two different ones means one is fabricated.
+
+#### Shape 3 — Original notes copied from a clone
+
+The inverse of Shape 1, and the hardest to see: the **original's** pyramid is actually a clone's pyramid.
+
+- **Caught:** the duplicate `chanel bleu de chanel edp` entry carried Maison Alhambra Maître de Blue's pyramid. Iso E Super, Vetiver and White Musk are all in Maître de Blue and none are in Chanel's EDP, and the entry omitted the EDP's signature Incense / Amber / Amberwood base entirely.
+- **Tell:** the original's notes fail to match Fragrantica ground truth *and* match a known clone's. Always verify originals against Fragrantica, not only dupes — an original is the reference every similarity number on that entry is measured against, so a corrupted original silently corrupts every dupe beneath it.
+
+#### Standing detection routine
+
+**When any entry looks suspicious, audit every appearance of that name across the whole DB before changing anything.** The Khamrah audit began as one questionable entry on Naxos and surfaced five appearances, four of them phantom. The TMW audit began as a duplicate-key cleanup and surfaced a corrupted entry hosting three bad dupes. Scope the audit to the name, not to the entry that raised the flag.
+
+### 12.9 Flanker Conflation Trap
+
+**When an original has multiple flankers, the dupe market targets the flankers, and community sources blur the names.** A dupe claim is not usable until it is pinned to a specific concentration.
+
+Worked examples:
+
+- **Azzaro The Most Wanted** is three distinct fragrances: EDP Intense (2021, Cardamom / Toffee Caramel / Amberwood), Parfum (2022, Ginger / Woodsy Notes / Bourbon Vanilla), and an EDT Intense (2024, Bergamot / Lavender / Liquor, Moss). SEO articles blur them freely — one titled "Asad by Lattafa" had a body entirely about Asad Bourbon, and another called Lattafa Asad "king of the Most Wanted dupe world" when Asad is in fact a Sauvage Elixir dupe (and is correctly placed as one in our DB at 89%).
+- **Stronger With You** is five: the base, Intensely, Absolutely, Leather, and Parfum. Fragrance World Proud of You Absolute clones *Absolutely*. Rayhaan Corium clones *Leather*. Al Wataniah Eternal Fayyad clones the *Parfum*. After two full research passes, Stronger With You **Intensely** has zero verifiable dupes — the entire market targets its siblings. It ships with an honest empty state.
+- **Bleu de Chanel** is four: EDT, EDP, Parfum, L'Exclusif. Maître de Blue's target is disputed across the first three by different reviewers, which is why it entered at 86% with the dispute stated plainly in `whySimilar`.
+
+**Rule:** before assigning a similarity number, establish which concentration each source is describing. If a source does not say, the claim is not evidence. A flanker-rich brand is a signal to slow down, not to trust the volume of hits.
+
+### 12.10 Source Quality Register
+
+Sources that have been tested against our own research and either earned trust or failed it. Add to this list as new sources are encountered.
+
+**Trusted (Tier A/B)** — used repeatedly and held up:
+- Fragrantica reviews, especially owner-of-both side-by-side comparisons. The strongest single evidence type we have.
+- Parfumo dedicated reviews — consistently structured, honest about gaps.
+- ScentClones — dedicated dupe lists and blind tests.
+- Melissa Jane Lee brand dupe lists — comprehensive and community-vetted.
+- PickMyClone, Parfumei — aggregated community scoring.
+- Decant retailers that stock **both** the original and the alternative — they have no incentive to overstate, and they rank against each other (this is how Nusuk Ateeq was ranked above Voux Elegante).
+
+**Failed (Tier D) — do not cite:**
+- **Fragrenza.** Sells its own house fragrances under dupe-adjacent names (Divino, Selvaggio, Adeline, Empress, Pretty Girl). Their "one of the closest alternatives available" claims are self-serving marketing, not evidence. Failed twice: the Divino/Bleu de Chanel claim that put a wrong-brand entry in our DB, and a Stronger With You alternatives list composed entirely of their own products with internal template text left in the published page.
+- **Skinsort.** Matches on ingredient lists and product attributes, not scent. Produced Juliette Has A Gun's Juliette at a "99% ingredient match" for Azzaro TMW, Britney Spears Circus Fantasy at 89%, and Maison Margiela Replica Jazz Club at 93% for Bleu de Chanel EDT (partly on the grounds that both contain SPF). Structurally incapable of assessing similarity. Not evidence in any form.
+- **Retailer marketing copy generally.** "Some retailers even suggest it replicates up to 98% of the original" is not a source. Cross-reference §12.6 item 2 for Perfume.com and AI-generated Amazon listing descriptions.
+
+**The general principle:** a source that profits from the claim it is making is Tier D regardless of how confident it sounds. This is the same rule that excluded Perfume Parlour's Blue Enchantment claim during the Blue Talisman research (2026-07-13).
 
 ---
 
@@ -993,7 +1055,7 @@ If the site catastrophically fails and Cloudflare version history is unavailable
 
 **If a deployment breaks the site, roll back immediately.**
 
-### 12.1 Cloudflare Version History
+### 14.1 Cloudflare Version History
 
 Cloudflare Workers maintains automatic version history:
 1. Cloudflare Dashboard → Workers & Pages → decodedscents
@@ -1001,13 +1063,13 @@ Cloudflare Workers maintains automatic version history:
 3. Find the last known good version (before the bad deployment)
 4. Click "Rollback" or "Promote" that version to production
 
-### 12.2 Manual Backup Restoration
+### 14.2 Manual Backup Restoration
 
 If Cloudflare version history isn't accessible:
 1. Locate the local backup file (from Pre-Change Protocol step 4.2)
 2. Follow the Deployment Protocol in Section 8 to redeploy the backup
 
-### 12.3 Post-Rollback Diagnosis
+### 14.3 Post-Rollback Diagnosis
 
 Do not attempt another deployment until the failure is understood:
 - Compare the failed worker.js against the good backup
@@ -1451,6 +1513,135 @@ Every worker.js update should log the change here:
 - Dior Sauvage → tabs + all dupes render with appropriate buttons ✓
 
 **Deployment date:** 2026-07-20 (GitHub Pages)
+
+---
+
+### 2026-07-22 — Rayhaan Batch B1 (Nocturno) + First Three-Variant Family
+
+**Trigger:** Batch B of the Rayhaan expansion. Planned as Nocturno + Obsidian; Obsidian was dropped during research.
+
+**Changes:**
+- Added new entry `dior sauvage edp` ($140, Amber Fougere, François Demachy 2018, notes verified against Fragrantica) with Rayhaan Nocturno @ 87%
+- Extended the `dior sauvage` FAMILIES entry from two variants to three: EDT (default) / EDP / Elixir — **the first three-variant family on the site**, and a good validation of the variant-picker architecture shipped 2026-07-13
+- 4 new ALIASES, 3 new DUPE_TO_ORIGINAL entries
+
+**Obsidian shelved (curator decision):** Rayhaan Obsidian researched at 87% against Dior Homme Parfum 2014 (Demachy), but that formulation is discontinued and the 2025 Kurkdjian reformulation is compositionally different — iris/amber/patchouli/vetiver, with no leather, rose or cedar. Obsidian would not clear the floor against the live product. Not added. Revisit only if the reformulation develops its own dupe conversation, or if a "discontinued originals" tier is adopted.
+
+**Affiliate links (verified in-browser 2026-07-22):** Dior Sauvage EDP got Amazon `/dp/B079TQS99Q` plus a FragranceNet product URL. Rayhaan Nocturno is not stocked on Amazon US, so it shipped with a Jomashop `directLink` per §11.4 and the §11.5.3 fallback ladder.
+
+**Result:** DB 118 → 119.
+
+**Deployment date:** 2026-07-22 (Cloudflare)
+
+---
+
+### 2026-07-24 — Rayhaan Batch B2+B3 (Italia, Nocturno Elixir) + lookupAsDupe Fix
+
+**Trigger:** Completion of Batch B. Planning uncovered that two of the four planned targets were already in the DB.
+
+**Planning discoveries:**
+- **Xerjoff Naxos already existed** — Italia became a dupe insertion rather than a new entry
+- **Penhaligon's Halfeti already existed with Tiger at 88%** — Tiger required no work. Re-research derived 87%, but that sits inside research margin and changing it would invite drift for no user benefit. Left at 88%.
+- **Bleu de Chanel EDP had two entries** — flagged for dedicated investigation rather than fixed mid-migration (resolved 2026-07-26)
+
+**Changes:**
+- Rayhaan Italia @ 87% added as third dupe on Xerjoff Naxos
+- New entry `bleu de chanel l'exclusif` ($275, Woody Aromatic, Olivier Polge 2025) with Rayhaan Nocturno Elixir @ 86%
+- 8 new ALIASES, 6 new DUPE_TO_ORIGINAL entries
+
+**Bug caught in §7.5 behaviour testing, before deploy:** searches for "Rayhaan Nocturno Elixir" resolved to Dior Sauvage EDP. Cause: `lookupAsDupe()` used the aggressive `normalize()`, which strips "elixir", collapsing the query to "nocturno" and matching the Batch B1 mapping. Fixed by extending the normalizeLight-first pattern established for `lookupVerified()` on 2026-07-13 to `lookupAsDupe()` as well, with the aggressive form retained as fallback. Normalized-form aliases were also added for apostrophe stripping (`bdc l exclusif` alongside `bdc l'exclusif`).
+
+**Lesson recorded:** a migration can pass syntax and structural validation and still be functionally broken. §7.5 behaviour testing is what caught this; without it the batch would have shipped a broken search path.
+
+**Result:** DB 119 → 120. Batch B complete (Nocturno B1, Italia and Nocturno Elixir B2+B3, Tiger already present, Obsidian shelved).
+
+**Deployment date:** 2026-07-24 (Cloudflare)
+
+---
+
+### 2026-07-24 — Khamrah Phantom Audit, Part 1
+
+**Trigger:** Curator flagged Khamrah @ 85% on Xerjoff Naxos as implausible immediately after B2+B3 shipped. The instinct was correct.
+
+**Audit method (now standardised as §12.8):** rather than examine the flagged entry alone, every appearance of Khamrah across the DB was pulled. Five were found.
+
+| Original | Was | Verdict |
+|---|---|---|
+| Kilian Angel's Share | 89% | **Kept** — the real, community-validated target |
+| Xerjoff Naxos | 85% | **Removed** — wrong fragrance family |
+| Armani Stronger With You Intensely | 88% | **Removed** — fabricated notes |
+| Azzaro TMW Intense | 91% | Flagged, removed 2026-07-26 |
+| Viktor & Rolf Spicebomb Extreme | 86% | Flagged, removed 2026-07-26 |
+
+**Naxos removal reasoning:** Khamrah is cardamom/cinnamon/cognac/oud; Naxos is bergamot/lavender/lemon with jasmine and labdanum. Four shared base notes against two entirely different openings and hearts. Khamrah appears in zero Naxos-dupe roundups across ScentClones, Fragrenza, Fragranzo and the TikTok "Naxos Audit" — all of which name Voux Elegante, Nusuk Ateeq, Rayhaan Italia and others instead. Derived ~72-78%. Fails the floor.
+
+**SWYI removal reasoning:** the notes on that dupe record (Cognac, Rum / Praline, Sandalwood) are Stronger With You Intensely's own notes, not Khamrah's — Shape 1 fabrication per §12.8, the same pattern caught on Narciso For Her in July. SWYI ships with zero dupes rather than a fabricated one.
+
+**Deployment date:** 2026-07-24 (Cloudflare)
+
+---
+
+### 2026-07-26 — Azzaro TMW Duplicate Merge + Khamrah Part 2 + Ansaam Silver
+
+**Trigger:** Research into the flagged Khamrah @ 91% on Azzaro TMW Intense revealed that the DB held two entries for the same product, one of them corrupted.
+
+**Ground truth established:** Azzaro markets three distinct Most Wanted fragrances — EDP Intense (2021: Cardamom / Toffee Caramel / Amberwood), Parfum (2022: Ginger / Woodsy Notes / Bourbon Vanilla), and an EDT Intense (2024: Bergamot / Lavender / Liquor, Moss). See §12.9.
+
+**The two entries:**
+- `azzaro the most wanted edp intense` (added Sub-batch A1, 2026-07-20) — notes match Fragrantica exactly, ASIN B08ZFKB8ZK verified as the real EDP Intense page. **Correct. Survives.**
+- `azzaro the most wanted intense` (pre-existing) — notes were Cardamom, Ginger / Toffee, Licorice / Amberwood, Cedarwood, Fir Balsam: the EDP Intense core with Ginger borrowed from the Parfum and Licorice, Cedarwood and Fir Balsam appearing in none of the three official pyramids. **Corrupted. Deleted.**
+
+**Process note, recorded honestly:** the duplicate was created by this project. Sub-batch A1 added a new TMW entry without first checking whether one existed under a different key. The equivalent check was run during B2+B3 planning and correctly caught Naxos and Halfeti already existing. **Searching for an existing entry before creating a new one is now a standing pre-migration step.**
+
+**Dupes dropped with the corrupted entry:**
+- Khamrah @ 91% — ~74%. Melissa Jane Lee's Lattafa list maps TMW to Ansaam Silver and Asad Bourbon, not Khamrah. Two shared notes.
+- Raghba @ 88% — Shape 2 fabrication per §12.8: appears on Mugler Angel with its real pyramid and here with a reshaped one. Confirmed by follow-up research to appear in zero TMW roundups.
+- Carlton @ 87% — Shape 1 fabrication: notes byte-identical to the corrupted original, all seven listed as shared. Also absent from every TMW roundup.
+
+**Khamrah part 2:** Khamrah @ 86% removed from Spicebomb Extreme — absent from ScentClones' dedicated Spicebomb Extreme list, two to three shared notes, structurally different compositions (Spicebomb is peppery-tobacco-vetiver, Khamrah is cardamom-cognac-praline-oud). Derived ~76-80%. Spicebomb Extreme retains Al Awsaaf @ 89%, which *is* on that list. **Khamrah now appears exactly once in the DB, on Angel's Share. Audit closed.**
+
+**Addition — Lattafa Ansaam Silver @ 87%** on the surviving TMW EDP Intense entry. Matches two of three signature molecules including the defining cardamom, with a vanilla-caramel base in the toffee register. Decisive source is a Fragrantica owner-of-both who had already rejected Asad Bourbon: "this on the other hand is very close, from the outset you get the notes associated with TMW especially cardamon." Independently corroborated by The Scent File, whose grid describes the same pyramid and reports the Fragrantica consensus as "very close, very little between them side-by-side — minus the toffee" — the exact gap the 87% accounts for. Docked for a synthetic note two reviewers attribute to davana, and added bergamot and lavender not in TMW. Amazon B0BGW4HJJR verified in-browser.
+
+**Excluded:** Lattafa Asad Bourbon ~80% (only shared note is amber; Fragplace finds no shared notes; The Scent File's own score is 80%). Lattafa Asad — wrong target entirely, it is a Sauvage Elixir dupe and is already correctly placed as one in our DB at 89%.
+
+**Result:** DB 120 → 119.
+
+**Deployment date:** 2026-07-26 (Cloudflare)
+
+---
+
+### 2026-07-26 — Bleu de Chanel Duplicate Cleanup + Two Additions + Dupe-Card Render Completion
+
+**Trigger:** The duplicate BdC EDP pair flagged during B2+B3 planning, investigated properly.
+
+**Ground truth (Fragrantica, BdC EDP 2014, Jacques Polge):** Top — Grapefruit, Lemon, Mint, Bergamot, Pink Pepper, Aldehydes, Coriander. Middle — Ginger, Jasmine, Nutmeg, Melon. Base — Incense, Amber, Cedar, Sandalwood, Amberwood, Patchouli, Labdanum.
+
+- `bleu de chanel` (Entry A) — notes were a clean subset of ground truth: accurate but incomplete. **Survives**, and was enriched to the full pyramid.
+- `chanel bleu de chanel edp` (Entry B) — contained Iso E Super, Vetiver and White Musk, none of which are in the EDP, and omitted the entire signature Incense / Amber / Amberwood base. **Deleted.**
+
+**Root cause — a third fabrication shape (now §12.8 Shape 3):** Entry B's original pyramid is Maison Alhambra Maître de Blue's pyramid. A *clone's* notes had been pasted into the *original's* slot. This is the inverse of the Carlton pattern and materially worse, because a corrupted original silently corrupts every similarity number measured against it.
+
+**Dupes dropped with Entry B:**
+- Divino @ 89% — three separate faults. Wrong brand: Divino is Fragrenza's own house fragrance, not Maison Alhambra's (Maison Alhambra's BdC clone is Maître de Blue). Notes byte-identical to Entry B's original minus White Musk. And the sole similarity claim came from Fragrenza's own product page — Tier D self-serving, see §12.10.
+- Club de Nuit Intense Man @ 86% — phantom. Its notes on that entry (Pineapple, Bergamot, Lemon / Jasmine, Rose, Black Currant / Birch, Patchouli, Ambergris, Musk, Vanilla) are Creed Aventus DNA. CdNIM is the most famous Aventus dupe in existence and was already correctly placed at 94% on Aventus.
+
+**Additions:**
+- **Maître de Blue @ 86%** on BdC EDP. Twelve shared molecules — the highest note-level overlap of any BdC alternative researched. A Fragrantica reviewer running an explicit EDP side-by-side found it "very, very similar," noting that without a direct A/B comparison they doubt they could tell them apart in the wild. Docked hard for a genuinely disputed target: several independent reviewers insist it matches the EDT, one calls it a Parfum clone, the missing coriander is reported to cost it warmth, and longevity reports scatter from one hour to nine. **The dispute is stated plainly in `whySimilar`** rather than hidden — users are told to pick Club de Nuit Iconic if they specifically want the EDP.
+- **Nusuk Ateeq @ 89%** on Xerjoff Naxos, becoming the top Naxos dupe. Same honey-tobacco-lavender skeleton. Decisive source is a Parfumo owner-of-both: subtle differences are detectable on skin, but "Ateeq is hardly distinguishable from Naxos in the air. For outsiders, the similarity is absolutely striking." Corroborated by a decant retailer stocking both that ranks it above Voux Elegante. Docked for a complexity gap, a darker smokier tobacco against Naxos's greener one, and added cinnamon.
+
+**Alias and DTO repair — thirteen references to the deleted key, handled three ways:** two re-pointed to the surviving BdC entry; two Club de Nuit Iconic mappings re-pointed to it as well (these were **already wrong before this migration** — Entry A is the entry holding that dupe); four Club de Nuit Intense Man mappings re-pointed to Creed Aventus; five Divino mappings removed outright.
+
+**Flagship routing fix caught in testing:** bare "BDC" was resolving to Bleu de Chanel L'Exclusif rather than the flagship EDP, via fuzzy match against the `bdc l'exclusif` alias added in B3. Explicit `bdc` and `bdc edp` aliases added. Same flagship-default principle applied to FAMILIES defaults on 2026-07-13.
+
+**Ambient repair (§11.5.6):** Entry A carried a broken `/s?k=` Amazon search URL. Removed rather than replaced — no verified BdC EDP ASIN in hand, and the entry retains a real FragranceNet product URL, so the purchase path survives.
+
+**Index.html — dupe-card render completed.** The 2026-07-20 render fix made *original* cards data-driven across all five link types but wired only three for *dupe* cards; `perfumaniaLink` and `shopSimonLink` were never added. Any verified Perfumania or Shop Simon link on a dupe was therefore dead data — stored in the DB, invisible on the page. Surfaced when Voux Elegante's verified Shop Simon affiliate link went onto a dupe record. Dupes now check the same five fields as originals, in the same order.
+
+**Affiliate links verified in-browser 2026-07-26:** Nusuk Ateeq (Amazon B0FN4NVWGJ + FragranceNet), Maître de Blue (Amazon B09CPTV1F6 + FragranceNet), Voux Elegante (Shop Simon via Rakuten, 3.4 oz variant pinned — the first dupe-card Shop Simon link in the DB). Voux Elegante's unconfirmed ASIN B0B295BDTV was deliberately not used.
+
+**Result:** DB 119 → 118. 215 dupe records, 0 sub-85 violations, 0 missing similarity values.
+
+**Deployment date:** 2026-07-26 (Cloudflare + GitHub Pages)
 
 ---
 
