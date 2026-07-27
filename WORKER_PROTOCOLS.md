@@ -597,7 +597,8 @@ The linked listing must match on all three:
 | Result | Action |
 |---|---|
 | ✅ In-stock, correct-format product page | Use direct product URL (`/dp/ASIN` for Amazon; direct product URL for others) |
-| ⏸ Out-of-stock but real product page exists | Still valid to include — "notify me" is honest; user can act |
+| ⏸ Out-of-stock, **original** | Valid to include — someone considering a $475 Amouage will plausibly use "notify me" and wait |
+| ❌ Out-of-stock, **dupe** | Do NOT include. The entire appeal of a $30 clone is buying it cheap right now; a sold-out page wastes the click and the user leaves. Same page state, opposite user value. |
 | ❌ Only vial / decant / body spray / wrong concentration | Do NOT include; omit this affiliate |
 | ❌ Search returns no relevant or only unrelated products | Do NOT include; omit this affiliate |
 | ❌ Product removed / 404 | Do NOT include |
@@ -902,6 +903,48 @@ Sources that have been tested against our own research and either earned trust o
 - **Retailer marketing copy generally.** "Some retailers even suggest it replicates up to 98% of the original" is not a source. Cross-reference §12.6 item 2 for Perfume.com and AI-generated Amazon listing descriptions.
 
 **The general principle:** a source that profits from the claim it is making is Tier D regardless of how confident it sounds. This is the same rule that excluded Perfume Parlour's Blue Enchantment claim during the Blue Talisman research (2026-07-13).
+
+### 12.11 Fabrication Shape 4 — Flanker Contamination of an Original
+
+The three shapes in §12.8 all involve a dupe and its target. This fourth one involves an original and its **sibling flanker**, and it is the hardest of the four to see, because the contaminating notes are entirely plausible and the two products are genuinely related.
+
+**Caught:** the Armani Stronger With You Intensely entry carried Rum, Chestnut and Cedarwood — all three belonging to Stronger With You **Absolutely** — while missing Intensely's own signature Juniper, Violet, Toffee and Suede. Fragplace states the split directly: Absolutely "uniquely features Bergamot, Cedarwood, Chestnut", Intensely "distinctively includes Amberwood, Cinnamon, Juniper".
+
+**Why it is dangerous beyond the entry itself.** A corrupted original silently corrupts every similarity number measured against it, and here it did so in both directions:
+- The Khamrah dupe removed from this entry had been rated against the confused reference.
+- Rayhaan Corium was excluded partly because chestnut marks it as an Absolutely/Leather clone — correct against real ground truth, but our own entry also had chestnut, so matching Corium against the DB rather than against research would have let it in.
+
+**Tell:** verify an original against its own Fragrantica page **and** against its siblings' pages. If a note appears that a sibling "uniquely features", the entry is contaminated. Flanker-rich lines (§12.9) are where this occurs.
+
+### 12.12 Matching Note Pyramids Are Weak Evidence
+
+**A dupe publishing a near-identical note list to its target proves very little.** Published notes are marketing descriptors, not formulas. A clone house can list the target's notes without matching its materials or their grade, and third-party databases are frequently populated by transcribing the original's list onto the clone's entry.
+
+**Worked case:** Rayhaan Terra's published pyramid matches Amouage Outlands on 25 of 26 notes — the heart identical across all nine, the base identical across all eleven. That looked like grounds for a high number. It was not, for two reasons:
+1. Sources disagree on Terra's own pyramid (BeautyHouse lists Ambroxan and Resins where Fragrantica lists Ambergris and Opoponax), suggesting transcription rather than analysis.
+2. If the compositions were genuinely 25/26 identical they would smell alike, and every reviewer who owns both reports the opposite — flatter, less complex, "very flat dry down".
+
+**Rule:** weight owner-of-both testimony above pyramid overlap. A pyramid match with no corroborating side-by-side is a starting point for research, not a result. Terra shipped at 85%, the floor, despite the near-perfect match on paper.
+
+### 12.13 Reformulation Invalidates Similarity Scores
+
+**When an original is reformulated, every similarity number on that entry becomes suspect** and must be re-derived against the current bottle. A dupe rated in 2021 against a 2019 formulation was measured against a fragrance that no longer exists.
+
+This is the Obsidian failure with one variable changed. Obsidian was shelved because its target was **discontinued** and the replacement was compositionally different (§17, 2026-07-22). A reformulation is the same problem with the product still on shelves — which makes it harder to notice, because nothing visibly breaks.
+
+**Signals to watch:** reviewers reporting that current bottles smell different from older ones; a brand's own listing disagreeing with an established third-party pyramid; a dupe house stating it modelled a "vintage" or year-specific formulation (Dua's Greatness is explicitly built on the vintage 2012 Eros).
+
+**Handling.** Describe the **current** bottle, since the site's job is telling someone what they will actually smell if they buy today. Record the reformulation in the entry description as prose. Do **not** build a dual-pyramid schema off a single case — the FAMILIES map had to be rebuilt the same day it shipped because it was designed from too few examples (§17, 2026-07-13). Revisit the display question at three or four confirmed cases.
+
+### 12.14 Audit Priority — Sort by Dupe Count Ascending
+
+**Researching a dupe incidentally audits its original**, because deriving a similarity number forces a molecule-by-molecule comparison against the original's pyramid. Entries that have never had dupe research have never had that check.
+
+**Evidence:** the six entries carrying zero dupes were audited on 2026-07-27 and **three of six failed** — Spicebomb EDT (missing Pink Pepper and Paprika, Tobacco duplicated), Prada Candy ("Benzyl Salicylate", a raw material, listed as a note), and Stronger With You Intensely (flanker contamination). A 50% failure rate on a group selected purely by dupe count.
+
+**Rule:** sort `VERIFIED_DB` by dupe count ascending to produce a ranked audit queue. Zero-dupe entries first, then single-dupe entries, and so on. Entries with four or five well-researched dupes are the most cross-checked in the database and the lowest priority.
+
+**Corollary for new entries:** audit the original **before** researching dupes for it, never after. Dupes rated against an unverified original inherit its errors — this is how the Khamrah, Carlton and Divino phantoms entered.
 
 ---
 
