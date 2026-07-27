@@ -251,6 +251,30 @@
     .variant-tab .v-sub { font-size:0.68rem; color:var(--text-dim); font-weight:400; letter-spacing:0.02em; }
     .variant-tab.active .v-sub { color:var(--gold); }
 
+    /* -- Brand results pages -- */
+    .brand-header { margin-bottom:1.4rem; }
+    .brand-eyebrow { color:var(--gold); font-size:0.68rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; }
+    .brand-title { font-size:1.9rem; margin:0.25rem 0 0.15rem; }
+    .brand-sub { color:var(--text-dim); font-size:0.85rem; }
+    .brand-section-label { color:var(--gold); font-size:0.7rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin:1.6rem 0 0.7rem; }
+    .brand-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:0.7rem; }
+    .brand-card { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:0.85rem 0.9rem; cursor:pointer; transition:border-color .15s, background .15s; }
+    .brand-card:hover { border-color:var(--gold); background:var(--bg4); }
+    .brand-card-name { font-size:0.95rem; font-weight:600; margin-bottom:0.2rem; }
+    .brand-card-meta { color:var(--text-dim); font-size:0.74rem; margin-bottom:0.5rem; }
+    .brand-card-foot { display:flex; justify-content:space-between; align-items:center; gap:0.5rem; }
+    .brand-card-price { color:var(--gold); font-size:0.82rem; font-weight:600; }
+    .brand-card-stat { color:var(--text-dim); font-size:0.7rem; }
+    .brand-card-pct { background:var(--gold-dim); border:1px solid rgba(201,168,76,0.35); color:var(--gold-light); border-radius:20px; padding:0.1rem 0.5rem; font-size:0.72rem; font-weight:600; }
+    .brand-card-empty { color:var(--text-dim); font-size:0.7rem; font-style:italic; }
+    .brand-note { color:var(--text-dim); font-size:0.75rem; margin-top:0.8rem; }
+    .sibling-box { margin-top:1.2rem; padding-top:1.1rem; border-top:1px solid var(--border); text-align:left; }
+    .sibling-label { color:var(--gold); font-size:0.68rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.6rem; }
+    .sibling-row { display:flex; align-items:center; justify-content:space-between; gap:0.6rem; background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:0.6rem 0.75rem; margin-bottom:0.4rem; cursor:pointer; transition:border-color .15s; }
+    .sibling-row:hover { border-color:var(--gold); }
+    .sibling-name { font-size:0.88rem; font-weight:600; }
+    .sibling-stat { color:var(--text-dim); font-size:0.72rem; white-space:nowrap; }
+
     /* ── SECTION HEADER ── */
     .section-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -1311,6 +1335,9 @@
           }</div>`
         : "";
 
+      const sibs = data.siblings || [];
+      const siblingHTML = sibs.length ? `<div class="sibling-box"><div class="sibling-label">Dupes exist for these instead</div>${sibs.map(s => `<div class="sibling-row" data-sibling-key="${s.key}"><span class="sibling-name">${s.name}</span><span class="sibling-stat">${s.dupeCount} dupe${s.dupeCount===1?"":"s"} \u00b7 best ${s.topSimilarity}%</span></div>`).join("")}</div>` : "";
+
       let html = `
         <div class="original-card">
           <div class="original-label">✦ Original Fragrance</div>
@@ -1338,7 +1365,7 @@
           <div class="section-title">${dupes.length > 0 ? `Top <span>${Math.min(5, dupes.length)}</span> Dupes` : 'Dupe Research Result'}</div>
         </div>
         <div class="dupes-grid" id="dupes-grid">
-          ${dupes.length > 0 ? renderDupes(dupes.slice(0, 5)) : `<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:2rem 1.5rem;text-align:center;grid-column:1/-1;"><div style="font-size:2rem;margin-bottom:1rem;">🔬</div><p style="font-size:1rem;font-weight:600;color:var(--text);margin:0 0 0.75rem;">No verified dupe found</p><p style="font-size:0.875rem;color:var(--text-muted);margin:0;line-height:1.6;">${data.noDupesNote || 'We tested every major affordable dupe house and none met our 85% similarity threshold for this fragrance. We will update this page if a verified dupe emerges.'}</p></div>`}
+          ${dupes.length > 0 ? renderDupes(dupes.slice(0, 5)) : `<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:2rem 1.5rem;text-align:center;grid-column:1/-1;"><div style="font-size:2rem;margin-bottom:1rem;">🔬</div><p style="font-size:1rem;font-weight:600;color:var(--text);margin:0 0 0.75rem;">No verified dupe found</p><p style="font-size:0.875rem;color:var(--text-muted);margin:0;line-height:1.6;">${data.noDupesNote || 'We tested every major affordable dupe house and none met our 85% similarity threshold for this fragrance. We will update this page if a verified dupe emerges.'}</p>${siblingHTML}</div>`}
         </div>`;
 
       if (false) { // Removed - AI returns top 5 only
@@ -1367,6 +1394,14 @@
         inputEl.focus();
       });
 
+      // Sibling pointer clicks: jump to the related variant that has dupes
+      document.querySelectorAll(".sibling-row").forEach(row => {
+        row.addEventListener("click", () => {
+          const k = row.dataset.siblingKey;
+          if (k) doSearch(k);
+        });
+      });
+
       // Variant tab clicks: re-search using the variant key (which is also the DB key)
       document.querySelectorAll(".variant-tab").forEach(tab => {
         tab.addEventListener("click", () => {
@@ -1377,6 +1412,62 @@
       });
 
       attachCardListeners();
+    }
+
+    function renderBrand(data) {
+      const originals = data.originals || [];
+      const dupes = data.dupes || [];
+      const DUPE_CAP = 40;
+
+      const bits = [];
+      const total = originals.length + dupes.length;
+      bits.push(`
+        <div class="brand-header">
+          <div class="brand-eyebrow">\u2726 Brand</div>
+          <div class="brand-title">${data.brand || ""}</div>
+          <div class="brand-sub">${total} fragrance${total === 1 ? "" : "s"} in our database</div>
+        </div>`);
+
+      if (originals.length) {
+        bits.push(`<div class="brand-section-label">Fragrances by ${data.brand}</div>`);
+        bits.push(`<div class="brand-grid">${originals.map(o => `
+          <div class="brand-card" data-brand-key="${o.key}">
+            <div class="brand-card-name">${o.name || ""}</div>
+            <div class="brand-card-meta">${o.scentFamily || ""}</div>
+            <div class="brand-card-foot">
+              <span class="brand-card-price">${o.price || ""}</span>
+              ${o.dupeCount
+                ? `<span class="brand-card-stat">${o.dupeCount} dupe${o.dupeCount === 1 ? "" : "s"} \u00b7 best ${o.topSimilarity}%</span>`
+                : `<span class="brand-card-empty">no dupes yet</span>`}
+            </div>
+          </div>`).join("")}</div>`);
+      }
+
+      if (dupes.length) {
+        const shown = dupes.slice(0, DUPE_CAP);
+        bits.push(`<div class="brand-section-label">${data.brand} dupes \u2014 and what they clone</div>`);
+        bits.push(`<div class="brand-grid">${shown.map(d => `
+          <div class="brand-card" data-brand-key="${d.originalKey}">
+            <div class="brand-card-name">${d.name || ""}</div>
+            <div class="brand-card-meta">clones ${d.originalBrand || ""} ${d.originalName || ""}</div>
+            <div class="brand-card-foot">
+              <span class="brand-card-price">${d.price || ""}</span>
+              <span class="brand-card-pct">${d.similarity}%</span>
+            </div>
+          </div>`).join("")}</div>`);
+        if (dupes.length > DUPE_CAP) {
+          bits.push(`<div class="brand-note">Showing the ${DUPE_CAP} closest matches of ${dupes.length}. Search a specific fragrance to see the rest.</div>`);
+        }
+      }
+
+      resultsEl.innerHTML = bits.join("");
+
+      document.querySelectorAll(".brand-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const k = card.dataset.brandKey;
+          if (k) doSearch(k);
+        });
+      });
     }
 
     function renderDupes(list) {
@@ -1459,7 +1550,9 @@
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
-        if (parsed.isStandalone) {
+        if (parsed.isBrand) {
+          renderBrand(parsed);
+        } else if (parsed.isStandalone) {
           renderStandaloneInfo(parsed);
         } else if (parsed.isDupe) {
           renderDupeInfo(parsed);
