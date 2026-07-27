@@ -1688,6 +1688,96 @@ Every worker.js update should log the change here:
 
 ---
 
+### 2026-07-27 — Rayhaan Batch C (Terra, Adonis Icarus, Crimson) — Expansion Closed
+
+**Trigger:** Final batch of the Rayhaan expansion. Three new originals required, one dupe each.
+
+**Pre-migration existence check** (standing step since the TMW duplicate) found two benign name collisions, both resolved rather than discovered in testing:
+- **"Terra EDP" was already claimed** by an Armaf dupe on Terre d'Hermès @ 87%. Rayhaan Terra therefore ships with brand-qualified aliases only.
+- **"Icarus EDP" already existed** as a Velixir dupe on Blue Talisman @ 91%. Bare "icarus" is **deliberately left unclaimed** — both brands have an equal claim and picking a winner would be arbitrary.
+
+**Additions:**
+
+| Dupe | Target | % | Note |
+|---|---|---|---|
+| Terra | Amouage Outlands ($475) | 85% | At the floor |
+| Adonis Icarus | LV Afternoon Swim ($360) | 87% | |
+| Crimson | Creed Centaurus ($560) | 85% | **Downgraded from 86%** |
+
+**Terra @ 85% — the pyramid trap.** Terra's published notes match Outlands on 25 of 26. That was deliberately *not* treated as raising the number, and the reasoning is now §12.12. Sources disagree on Terra's own pyramid (BeautyHouse lists Ambroxan and Resins where Fragrantica lists Ambergris and Opoponax), suggesting transcription rather than analysis; and if the compositions were genuinely near-identical they would smell alike, while every owner-of-both reports otherwise — "very flat dry down. After half an hour, I just smell cumin and light incense." What holds it at the floor rather than below: every criticism is about quality and depth, not identity. Same shape as the Supremacy Silver call.
+
+**Crimson downgraded 86% → 85%.** Seven shared molecules including Centaurus's complete base, but Crimson has **no tobacco** — the note Creed's own copy leads with ("plumes of incandescent tobacco") — and drops the entire floral heart. A Parfumo reviewer closes the gap by *layering* tobacco and honey from another fragrance, and layering advice is a documented downgrade trigger (it excluded Rayhaan Elixir at 82% and downgraded Turathi Electric from 89% to 83%). Missing the original's lead note is a heavier deduction than missing complexity.
+
+**Prices verified by fetching brand pages rather than reasoning**, which caught an error: LV Afternoon Swim was estimated at $295 by extrapolating from the rest of Les Colognes (Imagination $295, L'Immensité $295, Pacific Chill $300). It is **$360**. The derivation was reasonable and still wrong. Outlands ($475) and Centaurus ($560) were taken brand-direct along with their note pyramids.
+
+**Result:** DB 118 → 121. Rayhaan expansion complete: 15 candidates researched, 12 in the DB, 3 excluded on merit (Imperia 84%, Rayhaan Elixir 82%, Obsidian shelved for a discontinued target).
+
+**Deployment date:** 2026-07-27 (Cloudflare)
+
+---
+
+### 2026-07-27 — Dead-End Audit: Three Corrupted Originals + Two Dupe Additions
+
+**Trigger:** Six entries carried zero dupes. Before researching dupes for them, the **originals were audited first** — on the principle established during the Bleu de Chanel cleanup that a corrupted original silently corrupts every similarity number measured against it.
+
+**Three of six failed.** All three failures were zero-dupe entries, which is not coincidence and is now §12.14: researching a dupe incidentally audits its original, because deriving a similarity number forces a molecule-by-molecule pyramid comparison. Entries that never had dupe research never had that check.
+
+| Entry | Verdict |
+|---|---|
+| Versace Eros EDP | Pass — rebuilt from Fragrantica 2026-07-16 |
+| Narciso For Her EDT | Pass — rebuilt 2026-07-16 |
+| Prada Luna Rossa Black | Pass |
+| **Spicebomb EDT** | **Fail** — missing Pink Pepper and Paprika; Tobacco duplicated across heart and base |
+| **Prada Candy** | **Fail** — "Benzyl Salicylate" (an IFRA raw material) listed as a note; Musk and White Musk duplicated |
+| **Stronger With You Intensely** | **Fail** — flanker contamination |
+
+**SWYI — fourth fabrication shape, now §12.11.** The entry carried Rum, Chestnut and Cedarwood, all belonging to Stronger With You **Absolutely**, while missing Intensely's own Juniper, Violet, Toffee and Suede. Not a clone's pyramid pasted into an original (Shape 3) but a **sibling flanker's** — the hardest of the four to spot, because the notes are plausible and the products are genuinely related.
+
+Consequences for prior decisions, recorded honestly: the Khamrah dupe removed from this entry on 2026-07-24 had been rated against the confused reference; and Rayhaan Corium was excluded on 2026-07-26 partly because chestnut marks it as an Absolutely clone — correct against real ground truth, but our own entry also had chestnut, so matching Corium against the DB rather than against research would have let it in.
+
+**Reformulation handling (curator decision, Option A).** Intensely is reported reformulated with chestnut added and toffee reduced, and current retail listings show chestnut, so chestnut was retained as plausibly present in the live bottle. Rum was not — nothing attests it in Intensely. The reformulation is recorded as **prose in the description, not as a schema change**: there is one weakly-attested case, and designing a dual-pyramid schema from a single example is how the FAMILIES map had to be rebuilt the same day it shipped. The durable output was a rule instead — §12.13, reformulation invalidates similarity scores.
+
+**Two additions, both from curator-supplied candidates:**
+- **Xeena Hypnotic Amber → SWYI @ 88%.** Nine shared molecules, matching on juniper, toffee and suede — precisely the notes missing from the corrupted entry. Had this been researched a day earlier against the old pyramid it would have looked poor and been rejected. **Fixing the original first is what made it findable.** SWYI's first dupe after two failed research passes.
+- **Dua Greatness → Eros EDT @ 87%.** Complete ten-note match. Dua state it models the **vintage 2012 formulation**, and reviewers report current bottles open with a sharper lemon — noted in `whySimilar` rather than hidden.
+
+**Collision caught in testing:** bare "greatness" was claimed for Dua's clone, but it already resolved to **Initio Oud for Greatness**, which is the correct answer. Alias removed; only "dua greatness" is mapped. Same call as leaving bare "icarus" unclaimed.
+
+**Structural finding.** Three of the remaining dead-ends are not research failures — **the clone market targets the more famous concentration**. Nobody clones Eros EDP when Eros EDT is the icon. Candidates supplied for Eros all proved to target the EDT, where two already correctly sat. This drove the sibling-pointer feature shipped the same day.
+
+**Ambient repair (§11.5.6):** broken `/s?k=` Amazon search URLs removed from Spicebomb EDT and Prada Candy; both retain real FragranceNet product URLs.
+
+**Result:** 121 entries, 220 dupe records, 0 sub-85. Zero-dupe entries 6 → 5.
+
+**Deployment date:** 2026-07-27 (Cloudflare)
+
+---
+
+### 2026-07-27 — Brand-Results Pages + Sibling Pointer
+
+**Trigger:** A brand-only query resolved through `lookupVerified()` to one arbitrary entry. **93 of 118 originals sat inside a brand with multiple entries**, so four times in five a brand search buried siblings the user might have wanted. Seven brands — including Yves Saint Laurent, Maison Francis Kurkdjian and Jo Malone London — returned **nothing at all**, and MFK owns Baccarat Rouge 540.
+
+**Enumerate-before-building.** Every render path and every existing brand-name claim was enumerated *before* any code was written — a direct response to the render-path failure of 2026-07-27, where fixing what was noticed rather than enumerating what existed caused the same bug to be missed twice. The audit confirmed **not one bare brand name was claimed** by ALIASES or DUPE_TO_ORIGINAL, so the feature adds behaviour without shadowing any query.
+
+**Design decisions and why:**
+
+- **`BRAND_INDEX` is derived from `VERIFIED_DB` at module load, never hand-maintained.** A hand-kept brand list would drift the moment an entry is added and the list is not updated. Deriving it makes drift structurally impossible.
+- **Two buckets per brand** — `originals` (designer houses) and `dupes` (clone houses, with what each one targets). Most brands populate only one; the client renders whichever is non-empty. Lattafa has 49 dupes, Maison Alhambra 40, Dossier 37, Dua 26, Rayhaan 12.
+- **Exact normalized brand match only, ahead of product lookup.** "Tom Ford" matches; "Tom Ford Oud Wood" does not and falls through untouched. Normalization handles ampersands (Viktor & Rolf) and apostrophes (Penhaligon's).
+- **Single-item brands deliberately fall through** rather than rendering a one-item page that costs a click and gives nothing. Penhaligon's is the worked example.
+- **Sorting is stable:** originals by dupe count descending, dupes by similarity descending, alphabetical tiebreak on both so ordering never depends on object insertion order.
+- **Dupe lists cap at 40 rendered cards** with the true count shown. Lattafa's 49 uncapped buries the strongest matches below the fold; a silent cap would be dishonest.
+
+**Client:** a fourth branch added to the `doSearch` dispatch, which previously handled only `isStandalone` / `isDupe` / else. Cards reuse the variant-tab mechanism — `data-*` attribute, `querySelectorAll`, `doSearch(key)`. **Dupe cards navigate to the original they clone, not to their own name**, because many dupe names are absent from `DUPE_TO_ORIGINAL` and would fall through to the AI path; the original key always resolves and lands the user on the comparison view.
+
+**Sibling pointer.** Zero-dupe entries now point at the related variant that does have dupes, inside the existing "No verified dupe found" card. **Sorting by dupe count alone produced wrong answers** — Spicebomb EDT suggested Flowerbomb, a women's floral, and Prada Candy suggested Luna Rossa Carbon, a men's aquatic. Relatedness is therefore gated: a sibling must share a significant word in its name, with concentration stopwords (EDT, EDP, Parfum, Elixir, Intense…) stripped. Prada Candy correctly shows nothing, because no sibling exists.
+
+**Validation:** 77 brands indexed, 40 qualifying. **All 295 card click targets across all 40 brand pages tested — zero broken links.** Full regression on product queries, variant tabs and the 85% floor.
+
+**Deployment date:** 2026-07-27 (Cloudflare + GitHub Pages)
+
+---
+
 ## Appendix A: Reusable Command Reference
 
 ```bash
