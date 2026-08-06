@@ -7,18 +7,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes/</loc>
-    <lastmod>2026-08-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/dupes-es/</loc>
-    <lastmod>2026-08-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://decodedscents.com/Articles/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -38,6 +26,11 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/decoded-rayhaan-dupes-15-tested-12-cleared"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/probamos-15-dupes-rayhaan-doce-superaron-el-85"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/decoded-honest-truth-about-afnan-most-hyped-dupes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/Articles/why-tom-ford-private-blend-dupes-are-harder-than-people-admit</loc>
@@ -96,13 +89,6 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/obsesion-vainilla-fragancias-lujo-dupes-2026"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/Articles/fragrance-guide-for-her-luxury-without-price-2025</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/fragrance-guide-for-her-luxury-without-price-2025"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/guia-fragancias-para-ella-lujo-sin-precio-2025"/>
-  </url>
-  <url>
     <loc>https://decodedscents.com/Articles/guia-fragancias-para-ella-lujo-sin-precio-2025</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -110,11 +96,16 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/guia-fragancias-para-ella-lujo-sin-precio-2025"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/Articles/top-10-fragrance-dupes-2025</loc>
+    <loc>https://decodedscents.com/Articles/fragrance-guide-for-her-luxury-without-price-2025</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/top-10-fragrance-dupes-2025"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/top-10-dupes-fragancias-2025"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/fragrance-guide-for-her-luxury-without-price-2025"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/guia-fragancias-para-ella-lujo-sin-precio-2025"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/perfumes-arabes-conquistan-el-mundo-2025</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/Articles/top-10-dupes-fragancias-2025</loc>
@@ -124,6 +115,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/top-10-dupes-fragancias-2025"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/Articles/fragancias-nicho-gemas-ocultas-dupes-2025</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/niche-fragrance-hidden-gems-dupes-2025"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/fragancias-nicho-gemas-ocultas-dupes-2025"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/Articles/niche-fragrance-hidden-gems-dupes-2025</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -131,11 +129,18 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/fragancias-nicho-gemas-ocultas-dupes-2025"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/Articles/fragancias-nicho-gemas-ocultas-dupes-2025</loc>
+    <loc>https://decodedscents.com/Articles/top-10-fragrance-dupes-2025</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/niche-fragrance-hidden-gems-dupes-2025"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/fragancias-nicho-gemas-ocultas-dupes-2025"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/top-10-fragrance-dupes-2025"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/top-10-dupes-fragancias-2025"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/guia-regalos-dia-del-padre-fragancias-2026</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/fathers-day-fragrance-gift-guide-2026"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/guia-regalos-dia-del-padre-fragancias-2026"/>
   </url>
   <url>
     <loc>https://decodedscents.com/Articles/fathers-day-fragrance-gift-guide-2026</loc>
@@ -145,11 +150,29 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/guia-regalos-dia-del-padre-fragancias-2026"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/Articles/guia-regalos-dia-del-padre-fragancias-2026</loc>
+    <loc>https://decodedscents.com/Articles/ysl-black-opium-dupes</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/fathers-day-fragrance-gift-guide-2026"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/guia-regalos-dia-del-padre-fragancias-2026"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/dior-sauvage-dupes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/baccarat-rouge-540-dupes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/creed-aventus-dupes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/dossier-vs-la-vie-est-belle</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/Articles/fathers-day-last-minute-fragrance-gifts-2026</loc>
@@ -166,103 +189,71 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/dia-del-padre-regalos-ultimo-momento-2026"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/Articles/decoded-honest-truth-about-afnan-most-hyped-dupes</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://decodedscents.com/dupes/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/Articles/baccarat-rouge-540-dupes</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://decodedscents.com/dupes-es/</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/creed-aventus-dupes</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/dior-sauvage-dupes</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/ysl-black-opium-dupes</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/dossier-vs-la-vie-est-belle</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/perfumes-arabes-conquistan-el-mundo-2025</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/amouage-interlude-man-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/amouage-outlands</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/ariana-grande-cloud-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/azzaro-the-most-wanted-edp-intense</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/burberry-goddess-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/bvlgari-tygar-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/byredo-gypsy-water-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/carolina-herrera-212-men-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/carolina-herrera-bad-boy-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/carolina-herrera-good-girl-blush-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/carolina-herrera-good-girl-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/carolina-herrera-good-girl-edp"/>
@@ -270,13 +261,11 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-allure-homme-sport-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-bleu-de-chanel-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/chanel-bleu-de-chanel-edp"/>
@@ -284,43 +273,38 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-bleu-de-chanel-lexclusif</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-coco-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-coco-mademoiselle-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/chanel-coco-mademoiselle-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/chanel-coco-mademoiselle-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-coco-mademoiselle-intense-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/chanel-no-5-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/christian-dior-fahrenheit-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/creed-aventus</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/creed-aventus"/>
@@ -328,49 +312,41 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/creed-aventus-absolu</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/creed-centaurus</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/creed-virgin-island-water</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-homme-intense-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-hypnotic-poison-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-jadore-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-miss-dior-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-sauvage</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/dior-sauvage"/>
@@ -378,151 +354,132 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-sauvage-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-sauvage-elixir</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/dior-sauvage-elixir"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/dior-sauvage-elixir"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dolce-and-gabbana-light-blue-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dolce-and-gabbana-light-blue-pour-homme-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/ex-nihilo-blue-talisman-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/ex-nihilo-blue-talisman-extrait-de-parfum</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giardini-di-toscana-bianco-latte-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/giardini-di-toscana-bianco-latte-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/giardini-di-toscana-bianco-latte-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-acqua-di-gio-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-acqua-di-gio-parfum</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-acqua-di-gio-profondo-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-acqua-di-gioia-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-code-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-my-way-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-stronger-with-you-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/giorgio-armani-stronger-with-you-intensely-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/givenchy-gentleman-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/givenchy-linterdit-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/givenchy-pi-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/goldfield-and-banks-australia-ingenious-ginger-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/gucci-flora-gorgeous-gardenia-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/hermes-terre-dhermes</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/hugo-boss-bottled-parfum</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/initio-oud-for-greatness-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/initio-oud-for-greatness-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/initio-oud-for-greatness-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/initio-parfums-prives-atomic-rose</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jean-paul-gaultier-le-male-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/jean-paul-gaultier-le-male-edt"/>
@@ -530,67 +487,58 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jean-paul-gaultier-le-male-elixir-parfum</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/jean-paul-gaultier-le-male-elixir-parfum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/jean-paul-gaultier-le-male-elixir-parfum"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jean-paul-gaultier-scandal-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jean-paul-gaultier-ultra-male-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jo-malone-london-blackberry-and-bay-cologne</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jo-malone-london-peony-and-blush-suede-cologne</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jo-malone-london-wood-sage-and-sea-salt-cologne</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/kayali-eden-juicy-apple-01-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/kayali-vanilla-28-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/kilian-love-dont-be-shy-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/kilian-paris-angels-share</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/lancome-la-vie-est-belle</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/lancome-la-vie-est-belle"/>
@@ -598,43 +546,36 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/le-labo-santal-33</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/louis-vuitton-afternoon-swim</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/louis-vuitton-attrape-reves</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/louis-vuitton-imagination-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/louis-vuitton-limmensitee-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/louis-vuitton-pacific-chill</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/maison-francis-kurkdjian-baccarat-rouge-540</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/maison-francis-kurkdjian-baccarat-rouge-540"/>
@@ -642,91 +583,80 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/maison-francis-kurkdjian-baccarat-rouge-540-extrait</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/maison-francis-kurkdjian-baccarat-rouge-540-extrait"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/maison-francis-kurkdjian-baccarat-rouge-540-extrait"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/maison-francis-kurkdjian-grand-soir-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/maison-francis-kurkdjian-grand-soir-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/maison-francis-kurkdjian-grand-soir-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/maison-margiela-replica-by-the-fireplace-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/maison-margiela-replica-jazz-club-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/mancera-roses-vanille</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/montale-intense-cafe</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/montblanc-explorer-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/mugler-alien-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/mugler-angel</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/narciso-rodriguez-for-her-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/narciso-rodriguez-for-her-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/narciso-rodriguez-for-her-musc-noir-rose-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/narciso-rodriguez-for-her-musc-nude-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/nishane-hacivat</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/paco-rabanne-1-million-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/paco-rabanne-1-million-edt"/>
@@ -734,109 +664,93 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/paco-rabanne-1-million-lucky-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-delina</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-layton</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-layton-exclusif-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-oriana-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-pegasus-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/penhaligons-halfeti-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/prada-candy-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/prada-luna-rossa-black-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/prada-luna-rossa-carbon-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/ralph-lauren-polo-blue-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/ralph-lauren-polo-green-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/sospiro-perfumes-vibrato-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/tom-ford-black-orchid-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/tom-ford-lost-cherry-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/tom-ford-lost-cherry-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/tom-ford-lost-cherry-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/tom-ford-neroli-portofino-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/tom-ford-ombre-leather-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/tom-ford-oud-wood</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/tom-ford-oud-wood"/>
@@ -844,79 +758,70 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/tom-ford-tobacco-vanille-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/tom-ford-tobacco-vanille-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/tom-ford-tobacco-vanille-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/valentino-donna-born-in-roma-intense-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/versace-bright-crystal-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/versace-dylan-blue-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/versace-eros-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/versace-eros-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/versace-eros-edt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/versace-eros-edt"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/viktor-and-rolf-flowerbomb</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/viktor-and-rolf-spicebomb-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/viktor-and-rolf-spicebomb-extreme-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/xerjoff-erba-pura-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/xerjoff-naxos</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/xerjoff-opera</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/yves-saint-laurent-black-opium</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/yves-saint-laurent-black-opium"/>
@@ -924,105 +829,161 @@
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/yves-saint-laurent-la-nuit-de-lhomme-bleu-electrique-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/yves-saint-laurent-lhomme-edt</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/yves-saint-laurent-libre-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/yves-saint-laurent-y-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes-es/carolina-herrera-good-girl-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/carolina-herrera-good-girl-edp"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/carolina-herrera-good-girl-edp"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes-es/chanel-bleu-de-chanel-edp</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/chanel-bleu-de-chanel-edp"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/chanel-bleu-de-chanel-edp"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/creed-aventus</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://decodedscents.com/dupes-es/chanel-coco-mademoiselle-edp</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/chanel-coco-mademoiselle-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/chanel-coco-mademoiselle-edp"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/creed-aventus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/creed-aventus"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/creed-aventus"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes-es/dior-sauvage</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/dior-sauvage"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/dior-sauvage"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/jean-paul-gaultier-le-male-edt</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://decodedscents.com/dupes-es/dior-sauvage-elixir</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/dior-sauvage-elixir"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/dior-sauvage-elixir"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/giardini-di-toscana-bianco-latte-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/giardini-di-toscana-bianco-latte-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/giardini-di-toscana-bianco-latte-edp"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/initio-oud-for-greatness-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/initio-oud-for-greatness-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/initio-oud-for-greatness-edp"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/jean-paul-gaultier-le-male-edt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/jean-paul-gaultier-le-male-edt"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/jean-paul-gaultier-le-male-edt"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/lancome-la-vie-est-belle</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://decodedscents.com/dupes-es/jean-paul-gaultier-le-male-elixir-parfum</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/jean-paul-gaultier-le-male-elixir-parfum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/jean-paul-gaultier-le-male-elixir-parfum"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/lancome-la-vie-est-belle</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/lancome-la-vie-est-belle"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/lancome-la-vie-est-belle"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes-es/maison-francis-kurkdjian-baccarat-rouge-540</loc>
-    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/maison-francis-kurkdjian-baccarat-rouge-540"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/maison-francis-kurkdjian-baccarat-rouge-540"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/paco-rabanne-1-million-edt</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://decodedscents.com/dupes-es/maison-francis-kurkdjian-baccarat-rouge-540-extrait</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/maison-francis-kurkdjian-baccarat-rouge-540-extrait"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/maison-francis-kurkdjian-baccarat-rouge-540-extrait"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/maison-francis-kurkdjian-grand-soir-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/maison-francis-kurkdjian-grand-soir-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/maison-francis-kurkdjian-grand-soir-edp"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/paco-rabanne-1-million-edt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/paco-rabanne-1-million-edt"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/paco-rabanne-1-million-edt"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/tom-ford-oud-wood</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://decodedscents.com/dupes-es/tom-ford-lost-cherry-edp</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/tom-ford-lost-cherry-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/tom-ford-lost-cherry-edp"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/tom-ford-oud-wood</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/tom-ford-oud-wood"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/tom-ford-oud-wood"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/yves-saint-laurent-black-opium</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://decodedscents.com/dupes-es/tom-ford-tobacco-vanille-edp</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/tom-ford-tobacco-vanille-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/tom-ford-tobacco-vanille-edp"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/versace-eros-edt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/versace-eros-edt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/versace-eros-edt"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/yves-saint-laurent-black-opium</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/yves-saint-laurent-black-opium"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/yves-saint-laurent-black-opium"/>
   </url>
