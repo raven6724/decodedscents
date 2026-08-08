@@ -1257,4 +1257,46 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/yves-saint-laurent-y-edp"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/yves-saint-laurent-y-edp"/>
   </url>
+  <url>
+    <loc>https://decodedscents.com/about/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/acerca-de/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/acerca-de/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/acerca-de/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/disclosure/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/disclosure/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/divulgacion/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/divulgacion/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/disclosure/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/divulgacion/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/privacidad/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/privacidad/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/privacidad/"/>
+  </url>
 </urlset>
