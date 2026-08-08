@@ -305,13 +305,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes/christian-dior-fahrenheit-edt</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/christian-dior-fahrenheit-edt"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/christian-dior-fahrenheit-edt"/>
-  </url>
-  <url>
     <loc>https://decodedscents.com/dupes/creed-aventus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -332,6 +325,13 @@
     <loc>https://decodedscents.com/dupes/creed-virgin-island-water</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes/dior-fahrenheit-edt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/dior-fahrenheit-edt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/dior-fahrenheit-edt"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/dior-homme-intense-edp</loc>
@@ -491,16 +491,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes/initio-atomic-rose</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes/initio-oud-for-greatness-edp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/initio-oud-for-greatness-edp"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/initio-oud-for-greatness-edp"/>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/dupes/initio-parfums-prives-atomic-rose</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/jean-paul-gaultier-le-male-edt</loc>
@@ -556,18 +556,18 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kayali-vanilla-28-edp"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes/kilian-angels-share</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/kilian-angels-share"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kilian-angels-share"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes/kilian-love-dont-be-shy-edp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/kilian-love-dont-be-shy-edp"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kilian-love-dont-be-shy-edp"/>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/dupes/kilian-paris-angels-share</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/kilian-paris-angels-share"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kilian-paris-angels-share"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes/lancome-la-vie-est-belle</loc>
@@ -597,7 +597,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes/louis-vuitton-limmensitee-edp</loc>
+    <loc>https://decodedscents.com/dupes/louis-vuitton-limmensite-edp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -950,18 +950,18 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/chanel-coco-mademoiselle-intense-edp"/>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes-es/christian-dior-fahrenheit-edt</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/christian-dior-fahrenheit-edt"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/christian-dior-fahrenheit-edt"/>
-  </url>
-  <url>
     <loc>https://decodedscents.com/dupes-es/creed-aventus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/creed-aventus"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/creed-aventus"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/dupes-es/dior-fahrenheit-edt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/dior-fahrenheit-edt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/dior-fahrenheit-edt"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes-es/dior-homme-intense-edp</loc>
@@ -1076,18 +1076,18 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kayali-vanilla-28-edp"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes-es/kilian-angels-share</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/kilian-angels-share"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kilian-angels-share"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes-es/kilian-love-dont-be-shy-edp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/kilian-love-dont-be-shy-edp"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kilian-love-dont-be-shy-edp"/>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/dupes-es/kilian-paris-angels-share</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/kilian-paris-angels-share"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/kilian-paris-angels-share"/>
   </url>
   <url>
     <loc>https://decodedscents.com/dupes-es/lancome-la-vie-est-belle</loc>
