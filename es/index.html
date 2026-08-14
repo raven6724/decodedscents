@@ -644,6 +644,7 @@
     </a>
     <div class="nav-links">
       <a href="/dupes-es/">Todos los Dupes</a>
+      <a href="/marcas/">Marcas</a>
       <a href="/acerca-de/">Quiénes somos</a>
       <a href="#journal">The Scent Journal</a>
       <a href="https://decodedscents.com/es/">Buscador de Dupes</a>
@@ -1009,6 +1010,22 @@
 
   <script>
     const WORKER_URL = "https://decodedscents.cfe1585.workers.dev";
+
+    // ── SEARCH ANALYTICS ──
+    // The dupe finder never changes the URL, so GA4's page_view tracking cannot
+    // see it: every search was invisible. This reports what people look for and,
+    // more usefully, what we FAIL to answer -- result_type "ai_fallback" means the
+    // query reached the AI path because the database had nothing, which is the
+    // content roadmap. Aggregate only, never tied to a user id, per /privacy/.
+    function trackSearch(term, resultType) {
+      if (typeof gtag !== "function") return;
+      try {
+        gtag("event", "search", {
+          search_term: String(term || "").toLowerCase().trim().slice(0, 100),
+          result_type: resultType
+        });
+      } catch (e) { /* analytics must never break the search */ }
+    }
     const AFFILIATE  = "decodedscents-20";
     const PERFUMANIA_CJ = "https://www.tkqlhce.com/click-101769387-17283068?url=";
     const SHOP_SIMON = "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=50745&murl=https%3A%2F%2Fshop.simon.com%2Fcollections%2Faccessories-health-beauty-fragrance";
@@ -1569,6 +1586,7 @@
 
       if (cache[q.toLowerCase()]) {
         statusEl.style.display = "none";
+        trackSearch(q, "cached");
         render(cache[q.toLowerCase()]);
         return;
       }
@@ -1587,12 +1605,19 @@
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
         if (parsed.isBrand) {
+          trackSearch(q, "brand");
           renderBrand(parsed);
         } else if (parsed.isStandalone) {
+          trackSearch(q, "standalone");
           renderStandaloneInfo(parsed);
         } else if (parsed.isDupe) {
+          trackSearch(q, "dupe");
           renderDupeInfo(parsed);
         } else {
+          // matchedKey is only set when the query resolved to a VERIFIED_DB entry.
+          // Without it the worker fell through to the AI path -- i.e. we had no
+          // answer of our own.
+          trackSearch(q, parsed.matchedKey ? "verified" : "ai_fallback");
           render(parsed);
         }
         resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1606,6 +1631,7 @@
         if (tw) tw.href = "https://twitter.com/intent/tweet?text=" + shareText + "&url=" + shareUrl;
 
       } catch(e) {
+        trackSearch(q, "error");
         statusEl.style.display = "none";
         errorEl.style.display  = "block";
         errorEl.textContent    = "Something went wrong. Please try a specific fragrance name (e.g. 'Creed Aventus'). " + (e.message||"");
