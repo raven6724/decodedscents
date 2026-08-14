@@ -649,11 +649,21 @@
     .bstat b { display:block; font-size:1.5rem; color:var(--gold,#c9a84c); line-height:1.2; }
     .bstat span { font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
                   color:var(--text-dim,#7a756c); }
-    .blist { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 30px; }
-    .blist a { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.22);
-               border-radius:20px; padding:7px 15px; font-size:.88rem; text-decoration:none; border-bottom-width:1px; }
-    .blist a:hover { border-color:var(--gold,#c9a84c); }
-    .blist .n { color:var(--text-dim,#7a756c); font-size:.78rem; margin-left:5px; }
+    .bgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+             gap:12px; margin:22px 0 28px; }
+    .bcard { display:block; padding:16px 18px; border-radius:10px; text-decoration:none;
+             background:var(--bg2,#111118); border:1px solid var(--border,rgba(255,255,255,.07));
+             border-left:3px solid rgba(201,168,76,.3); transition:border-color .15s, transform .15s; }
+    .bcard:hover { border-color:var(--gold,#c9a84c); border-left-color:var(--gold,#c9a84c);
+                   transform:translateY(-1px); }
+    article a.bcard { border-bottom:1px solid var(--border,rgba(255,255,255,.07)); }
+    article a.bcard:hover { border-bottom-color:var(--gold,#c9a84c); }
+    .bcard .bn { display:block; font-size:1.02rem; color:var(--text,#e8e4dc); margin-bottom:7px; }
+    .bcard .bm { font-size:.79rem; color:var(--text-dim,#7a756c); letter-spacing:.02em; }
+    .bcard .bm b { color:var(--gold,#c9a84c); font-weight:700; font-variant-numeric:tabular-nums; }
+    .bthin { font-size:.85rem; color:var(--text-dim,#7a756c); line-height:1.6;
+             padding:14px 16px; border-left:2px solid var(--border,rgba(255,255,255,.09));
+             margin:6px 0 22px; }
     @media(max-width:640px){ .bt th,.bt td{padding:8px 6px;font-size:.86rem} .bstat{gap:16px} }
   </style>
 </head>
@@ -665,7 +675,7 @@
   <div class="hero-byline">15 houses · 191 verified matches · nothing below 85%</div>
 </div></header>
 <main class="container"><article>
-<p>Most people search the expensive fragrance. Sometimes the question runs the other way — what has a clone house actually made, and how much of it holds up. These pages answer that.</p><a href="/brands/lattafa/">Lattafa<span class="n">39</span></a><a href="/brands/maison-alhambra/">Maison Alhambra<span class="n">39</span></a><a href="/brands/dossier/">Dossier<span class="n">37</span></a><a href="/brands/dua-fragrances/">Dua Fragrances<span class="n">26</span></a><a href="/brands/rayhaan/">Rayhaan<span class="n">12</span></a><a href="/brands/armaf/">Armaf<span class="n">8</span></a><a href="/brands/afnan/">Afnan<span class="n">8</span></a><a href="/brands/arabiyat-prestige/">Arabiyat Prestige<span class="n">6</span></a><a href="/brands/paris-corner/">Paris Corner<span class="n">3</span></a><a href="/brands/fragrance-world/">Fragrance World<span class="n">3</span></a><a href="/brands/al-haramain/">Al Haramain<span class="n">2</span></a><a href="/brands/zara/">Zara<span class="n">2</span></a><a href="/brands/rasasi/">Rasasi<span class="n">2</span></a><a href="/brands/velixir/">Velixir<span class="n">2</span></a><a href="/brands/ard-al-zaafaran/">Ard Al Zaafaran<span class="n">2</span></a><p style="font-size:.85rem;opacity:.75">One verified dupe each, so no page of their own yet: Bujairami, Camara Perfumes, Cyrus Parfums, French Avenue, Khadlaj, Maison Asrar, Nusuk, Oakcha, Riiffs, Swiss Arabian, Thameen, Verset, Xeena.</p><p><a href="/dupes/">See the full database →</a></p>
+<p>Most people search the expensive fragrance. Sometimes the question runs the other way — what has a clone house actually made, and how much of it holds up. These pages answer that.</p><div class="bgrid"><a class="bcard" href="/brands/lattafa/"><span class="bn">Lattafa</span><span class="bm"><b>39</b> dupes · <b>36</b> originals · best <b>93%</b></span></a><a class="bcard" href="/brands/maison-alhambra/"><span class="bn">Maison Alhambra</span><span class="bm"><b>39</b> dupes · <b>37</b> originals · best <b>95%</b></span></a><a class="bcard" href="/brands/dossier/"><span class="bn">Dossier</span><span class="bm"><b>37</b> dupes · <b>37</b> originals · best <b>92%</b></span></a><a class="bcard" href="/brands/dua-fragrances/"><span class="bn">Dua Fragrances</span><span class="bm"><b>26</b> dupes · <b>26</b> originals · best <b>92%</b></span></a><a class="bcard" href="/brands/rayhaan/"><span class="bn">Rayhaan</span><span class="bm"><b>12</b> dupes · <b>12</b> originals · best <b>91%</b></span></a><a class="bcard" href="/brands/armaf/"><span class="bn">Armaf</span><span class="bm"><b>8</b> dupes · <b>8</b> originals · best <b>94%</b></span></a><a class="bcard" href="/brands/afnan/"><span class="bn">Afnan</span><span class="bm"><b>8</b> dupes · <b>8</b> originals · best <b>89%</b></span></a><a class="bcard" href="/brands/arabiyat-prestige/"><span class="bn">Arabiyat Prestige</span><span class="bm"><b>6</b> dupes · <b>6</b> originals · best <b>93%</b></span></a><a class="bcard" href="/brands/paris-corner/"><span class="bn">Paris Corner</span><span class="bm"><b>3</b> dupes · <b>3</b> originals · best <b>88%</b></span></a><a class="bcard" href="/brands/fragrance-world/"><span class="bn">Fragrance World</span><span class="bm"><b>3</b> dupes · <b>2</b> originals · best <b>90%</b></span></a><a class="bcard" href="/brands/al-haramain/"><span class="bn">Al Haramain</span><span class="bm"><b>2</b> dupes · <b>2</b> originals · best <b>90%</b></span></a><a class="bcard" href="/brands/zara/"><span class="bn">Zara</span><span class="bm"><b>2</b> dupes · <b>2</b> originals · best <b>88%</b></span></a><a class="bcard" href="/brands/rasasi/"><span class="bn">Rasasi</span><span class="bm"><b>2</b> dupes · <b>2</b> originals · best <b>90%</b></span></a><a class="bcard" href="/brands/velixir/"><span class="bn">Velixir</span><span class="bm"><b>2</b> dupes · <b>2</b> originals · best <b>91%</b></span></a><a class="bcard" href="/brands/ard-al-zaafaran/"><span class="bn">Ard Al Zaafaran</span><span class="bm"><b>2</b> dupes · <b>2</b> originals · best <b>87%</b></span></a></div><p class="bthin">One verified dupe each, so no page of their own yet: Bujairami, Camara Perfumes, Cyrus Parfums, French Avenue, Khadlaj, Maison Asrar, Nusuk, Oakcha, Riiffs, Swiss Arabian, Thameen, Verset, Xeena.</p><p><a href="/dupes/">See the full database →</a></p>
 </article></main>
 <footer>
     <a href="https://decodedscents.com" class="footer-logo">✦ Decoded Scents</a>
