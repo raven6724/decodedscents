@@ -1309,4 +1309,228 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/privacy/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/privacidad/"/>
   </url>
+  <url>
+    <loc>https://decodedscents.com/brands/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/afnan/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/afnan/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/afnan/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/afnan/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/afnan/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/afnan/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/al-haramain/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/al-haramain/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/al-haramain/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/al-haramain/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/al-haramain/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/al-haramain/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/arabiyat-prestige/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/arabiyat-prestige/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/arabiyat-prestige/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/arabiyat-prestige/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/arabiyat-prestige/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/arabiyat-prestige/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/ard-al-zaafaran/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/ard-al-zaafaran/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/ard-al-zaafaran/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/ard-al-zaafaran/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/ard-al-zaafaran/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/ard-al-zaafaran/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/armaf/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/armaf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/armaf/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/armaf/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/armaf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/armaf/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/dossier/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/dossier/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/dossier/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/dossier/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/dossier/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/dossier/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/dua-fragrances/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/dua-fragrances/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/dua-fragrances/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/dua-fragrances/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/dua-fragrances/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/dua-fragrances/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/fragrance-world/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/fragrance-world/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/fragrance-world/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/fragrance-world/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/fragrance-world/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/fragrance-world/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/lattafa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/lattafa/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/lattafa/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/lattafa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/lattafa/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/lattafa/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/maison-alhambra/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/maison-alhambra/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/maison-alhambra/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/maison-alhambra/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/maison-alhambra/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/maison-alhambra/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/paris-corner/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/paris-corner/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/paris-corner/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/paris-corner/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/paris-corner/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/paris-corner/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/rasasi/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/rasasi/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/rasasi/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/rasasi/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/rasasi/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/rasasi/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/rayhaan/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/rayhaan/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/rayhaan/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/rayhaan/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/rayhaan/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/rayhaan/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/velixir/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/velixir/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/velixir/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/velixir/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/velixir/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/velixir/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/zara/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/zara/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/zara/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/zara/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/zara/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/zara/"/>
+  </url>
 </urlset>
