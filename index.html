@@ -1595,7 +1595,15 @@
         const data = await res.json();
         statusEl.style.display = "none";
 
-        if (data.error) throw new Error(data.error);
+        // The worker now returns an errorCode ("rate_limit", "overloaded",
+        // "auth", "exception"...) alongside the message. Carry it through so the
+        // analytics event records WHY a search failed, not just that it did.
+        if (data.error) {
+          const err = new Error(data.error);
+          err.code = data.errorCode || "unknown";
+          err.retryAfter = data.retryAfter || null;
+          throw err;
+        }
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
@@ -1626,8 +1634,16 @@
         if (tw) tw.href = "https://twitter.com/intent/tweet?text=" + shareText + "&url=" + shareUrl;
 
       } catch(e) {
-        trackSearch(q, "error");
+        const code = e && e.code ? e.code : "network";
+        trackSearch(q, "error_" + code);
         statusEl.style.display = "none";
+        // A rate limit or an overload clears on its own, so say so rather than
+        // showing the same dead end for every failure.
+        if (errorEl && (code === "rate_limit" || code === "overloaded")) {
+          const wait = e.retryAfter ? ` Try again in about ${e.retryAfter} seconds.` : " Try again in a moment.";
+          errorEl.textContent = "Our lookup service is busy right now." + wait +
+                                " Meanwhile you can browse every verified dupe at /dupes/.";
+        }
         errorEl.style.display  = "block";
         errorEl.textContent    = "Something went wrong. Please try a specific fragrance name (e.g. 'Creed Aventus'). " + (e.message||"");
       }
