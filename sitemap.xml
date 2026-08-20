@@ -387,6 +387,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes/essential-parfums-bois-imperial-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes/ex-nihilo-blue-talisman-edp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1532,19 +1537,5 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/zara/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/zara/"/>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/is-a-dupe-a-fake</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/is-a-dupe-a-fake"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/es-un-dupe-una-falsificacion"/>
-  </url>
-  <url>
-    <loc>https://decodedscents.com/Articles/es-un-dupe-una-falsificacion</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/Articles/is-a-dupe-a-fake"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/Articles/es-un-dupe-una-falsificacion"/>
   </url>
 </urlset>
