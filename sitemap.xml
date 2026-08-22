@@ -711,12 +711,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes/parfums-de-marly-althair-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-delina</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://decodedscents.com/dupes/parfums-de-marly-delina-exclusif</loc>
+    <loc>https://decodedscents.com/dupes/parfums-de-marly-delina-exclusif-parfum</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1444,6 +1449,20 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/fragrance-world/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/fragrance-world/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/brands/french-avenue/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/french-avenue/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/french-avenue/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/french-avenue/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/french-avenue/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/french-avenue/"/>
   </url>
   <url>
     <loc>https://decodedscents.com/brands/lattafa/</loc>
