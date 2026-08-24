@@ -1465,6 +1465,20 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/french-avenue/"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/brands/khadlaj/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/khadlaj/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/khadlaj/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/khadlaj/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/khadlaj/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/khadlaj/"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/brands/lattafa/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
