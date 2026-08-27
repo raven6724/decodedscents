@@ -603,6 +603,23 @@
       .dupe-card-header { gap: 0.6rem; }
       .sim-bar-bg { width: 55px; }
     }
+  
+    .dq-wrap { max-width:640px; margin:26px auto; padding:22px 24px; text-align:left;
+      background:rgba(255,255,255,.03); border:1px solid rgba(201,168,76,.22); border-radius:12px; }
+    .dq-head { font-size:1.02rem; color:#e8e4dc; margin-bottom:14px; }
+    .dq-head strong { color:#e8c97a; }
+    .dq-chips { display:flex; flex-wrap:wrap; gap:9px; }
+    .dq-chip { font:inherit; font-size:.92rem; cursor:pointer; padding:10px 15px; border-radius:8px;
+      color:#e8e4dc; background:rgba(255,255,255,.05); border:1px solid rgba(201,168,76,.3);
+      display:inline-flex; align-items:baseline; gap:8px; transition:border-color .15s,background .15s; }
+    .dq-chip:hover { border-color:#c9a84c; background:rgba(201,168,76,.1); }
+    .dq-n { font-size:.76rem; color:#8a8479; }
+    .dq-foot { font-size:.86rem; color:#8a8479; margin:16px 0 0; }
+    .dq-foot a { color:#c9a84c; }
+    .dq-corrected { max-width:640px; margin:0 auto 18px; padding:11px 15px; font-size:.9rem;
+      color:#a9a396; background:rgba(255,255,255,.03); border-left:3px solid rgba(201,168,76,.4);
+      border-radius:0 8px 8px 0; text-align:left; }
+    .dq-corrected em { color:#e8e4dc; font-style:normal; }
   </style>
 
   <script type="application/ld+json">
@@ -1371,6 +1388,40 @@
       });
     }
 
+    //  The worker returns suggestions when a query is close to something we have
+    //  but not an exact match. Chips re-run the search; nothing reaches the AI.
+    function renderSuggestions(parsed) {
+      const chips = parsed.suggestions.map(sug =>
+        `<button class="dq-chip" data-q="${escapeHtml(sug.key)}">${escapeHtml(sug.label)}` +
+        `<span class="dq-n">${sug.dupes} dupe${sug.dupes === 1 ? "" : "s"}</span></button>`
+      ).join("");
+      resultsEl.innerHTML =
+        `<div class="dq-wrap">` +
+        `<div class="dq-head">We don\u2019t have <strong>${escapeHtml(parsed.query)}</strong> \u2014 did you mean:</div>` +
+        `<div class="dq-chips">${chips}</div>` +
+        `<p class="dq-foot">If none of these are right, browse <a href="/dupes/">every verified dupe</a> ` +
+        `or <a href="/brands/">search by brand</a>.</p></div>`;
+      resultsEl.querySelectorAll(".dq-chip").forEach(b =>
+        b.addEventListener("click", () => {
+          if (inputEl) inputEl.value = b.dataset.q;
+          doSearch(b.dataset.q);
+        })
+      );
+    }
+
+    //  Say when we have corrected a spelling. Silent correction would be its own
+    //  small dishonesty, and someone who meant something else needs to know.
+    function correctionNotice(parsed) {
+      if (!parsed || !parsed.correctedFrom) return "";
+      return `<div class="dq-corrected">Showing results for the closest match \u2014 ` +
+             `you searched for <em>${escapeHtml(parsed.correctedFrom)}</em>.</div>`;
+    }
+
+    function escapeHtml(t) {
+      return String(t == null ? "" : t).replace(/[&<>"']/g,
+        c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
     function render(data) {
       const orig  = data.original || {};
       const dupes = data.dupes    || [];
@@ -1620,6 +1671,13 @@
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
+        if (parsed.isSuggestion) {
+          trackSearch(q, "suggestion");
+          renderSuggestions(parsed);
+          resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+        if (parsed.correctedFrom) trackSearch(q, "autocorrected");
         if (parsed.isBrand) {
           trackSearch(q, "brand");
           renderBrand(parsed);
@@ -1635,6 +1693,9 @@
           // answer of our own.
           trackSearch(q, parsed.matchedKey ? "verified" : "ai_fallback");
           render(parsed);
+        }
+        if (parsed.correctedFrom) {
+          resultsEl.insertAdjacentHTML("afterbegin", correctionNotice(parsed));
         }
         resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
 
