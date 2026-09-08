@@ -2,7 +2,8 @@
 
 **Location:** `github.com/raven6724/decodedscents/WORKER_PROTOCOLS.md`
 **Live Worker:** `decodedscents.cfe1585.workers.dev`
-**Last updated:** 2026-07-02
+**Last updated:** 2026-09-03
+**Companion documents:** `PROJECT_HANDOFF.md` (current state, research method, working relationship), `ARTICLE_PROTOCOLS.md` (editorial)
 
 ---
 
@@ -172,8 +173,9 @@ Every new entry must match the existing schema exactly. Copy from existing entri
       middle: ["Note1", "Note2"],
       base: ["Note1", "Note2"]
     },
-    amazonLink: "https://www.amazon.com/s?k=Brand+Name+Fragrance+perfume+buy&tag=decodedscents-20&i=beauty",
-    fragranceNetLink: "https://click.linksynergy.com/link?id=qPG3GkVv1uU&offerid=507761.XXXXXXXXX&type=2&murl=...",  // Optional, only if verified
+    amazonLink: "https://www.amazon.com/dp/ASIN?tag=decodedscents-20",   // /dp/ only -- see 5.3
+    fragranceNetLink: "https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=216&murl=...",  // pre-wrapped
+    directLink: "https://retailer.example/product",                      // raw, see 5.3
     description: "One-line description of the fragrance."
   },
   dupes: [
@@ -190,10 +192,11 @@ Every new entry must match the existing schema exactly. Copy from existing entri
   brand: "Brand",
   price: "$XX",
   similarity: 87,                    // INTEGER between 85 and 100, no ranges
-  fragranceNetLink: "...",           // Optional, only if verified
   scentFamily: "Category",
-  amazonSearch: "Brand Name Target Original",  // Text used for Amazon search
-  amazonLink: "https://www.amazon.com/s?k=Brand+Name+Target+Original&tag=decodedscents-20&i=beauty",
+  amazonLink: "https://www.amazon.com/dp/ASIN?tag=decodedscents-20",   // /dp/ only
+  fragranceNetLink: "...",           // pre-wrapped through Rakuten
+  brandLink: "...",                  // the brand's own shop, raw
+  directLink: "...",                 // a third-party retailer, raw
   fragranticaQuery: "Brand Simple Name",
   notes: { top: [...], middle: [...], base: [...] },
   sharedNotes: ["Note1", "Note2"],   // Subset of notes present in BOTH dupe and target
@@ -202,7 +205,36 @@ Every new entry must match the existing schema exactly. Copy from existing entri
 }
 ```
 
-### 5.3 ALIASES Schema
+### 5.3 Link Fields — Two Wrapping Conventions
+*Added 2026-09-01 after a link was stored pre-wrapped in a field that wraps at
+render time, producing a URL that resolves and tracks nothing.*
+
+| Field | Wrapping | Notes |
+|---|---|---|
+| `amazonLink` | stored with `?tag=decodedscents-20` | **must be `/dp/ASIN`.** A search URL (`/s?k=`) resolves but earns nothing and can land on the wrong product. `check_links.py` rejects them. |
+| `fragranceNetLink` | **stored pre-wrapped** through Rakuten | `click.linksynergy.com/deeplink?id=qPG3GkVv1uU&mid=216&murl=<encoded>` |
+| `shopSimonLink` | **stored pre-wrapped** | same pattern |
+| `perfumaniaLink` | **wrapped at RENDER time** by `index.html` | store the RAW product URL. `perfumaniaDirectLink()` adds the CJ wrapper. Pre-wrapping double-wraps it. |
+| `brandLink` | raw | the brand's own shop |
+| `directLink` | raw | a third-party retailer |
+
+`brandLink` and `directLink` both render, so one product can show three retailers.
+Added 2026-09-01 for French Avenue Liquid Brun, which is sold by the brand, by
+Blue Chateau 25 and by FragranceNet.
+
+**Product-level URLs only.** A brand-level page (`/fragrances/prada/prada-paradoxe`)
+drops the reader on a list of concentrations, which is where flanker mistakes get
+made. Verified 2026-08-25.
+
+**Button labels derive from the URL host, never from the brand.** `direct_label()`
+in the page generators used to fall back to the brand name for any unmapped domain,
+which rendered "Buy at French Avenue" on a link to Blue Chateau 25. Nine products
+were mislabelled. The brand name is now used only when the host looks like that
+brand's own domain.
+
+---
+
+### 5.4 ALIASES Schema
 
 ```javascript
 "short search term":                                 "full target key",
@@ -214,7 +246,7 @@ Add aliases for:
 - Brand + short name (e.g., "creed aventus absolu" → "creed aventus absolu")
 - Any way users might search for the target
 
-### 5.4 DUPE_TO_ORIGINAL Schema
+### 5.5 DUPE_TO_ORIGINAL Schema
 
 ```javascript
 "lowercase dupe name": "target key",
@@ -341,8 +373,17 @@ Verify expected entry counts:
 ```bash
 # Number of h2 sections, structural landmarks
 grep -c 'export default' worker.js       # Should be 1
-grep -c '^};' worker.js                  # Should be 6 (VERIFIED_DB, ALIASES, STANDALONE, DUPE_TO_ORIGINAL, CORS, main handler)
+grep -c '^};' worker.js                  # Should be 8 -- see below
 ```
+
+**The expected `^};` count has changed twice and will change again.** It was 6,
+became 7 when `FAMILIES` was added (2026-07-13), and became 8 when `BRAND_ALIASES`
+was added (2026-09-01). The current eight are `VERIFIED_DB`, `FAMILIES`, `ALIASES`,
+`STANDALONE_FRAGRANCES`, `DUPE_TO_ORIGINAL`, `BRAND_ALIASES`, `CORS`, main handler.
+
+**When the count changes, confirm WHY before accepting it.** A count that rose
+because you added a top-level object is correct. A count that rose because a brace
+landed in the wrong place is the exact failure this check exists to catch.
 
 ### 7.3 Change-Specific Verification
 
@@ -670,6 +711,14 @@ Every link-verification decision (kept / removed / replaced with `directLink` / 
 
 #### 11.5.10 Scope limitations
 
+**This section governs which affiliate programmes we can use. It does not govern which fragrances we are allowed to cover.** That distinction matters and has already been misread once.
+
+A fragrance with no US retailer still earns a database entry if the research supports it. It ships Fragrantica-only with a plain-language availability note in the description — exactly the honest empty state §11.5.3's fallback ladder was written for. Withholding a true finding because *we* cannot monetise it inverts the site's purpose, and the site publishes in Spanish as well as English, so a meaningful share of readers are not buying from US retailers anyway.
+
+**Worked case (2026-07-30):** Mykonos Inception was researched at roughly 90% against LV Imagination on the strength of an owner-of-both review, but the only retail found was Indonesian eBay sellers and a sold-out BeautyHouse listing. The first instinct was to exclude it on §11.5.10 grounds. That was wrong. It qualifies editorially; it simply ships without a buy button and with a note saying so.
+
+**Availability notes go in the description as prose**, not as a schema field. Two cases so far is not enough to design a field around — see §12.13 on the FAMILIES map for why that matters. Revisit at four or five.
+
 - **US Amazon only.** International Amazon accounts are not currently supported by the DecodedScents affiliate setup.
 - **Rakuten/FragranceNet US only.** Same as above.
 - **Perfumania and Shop Simon US only.** Same as above.
@@ -846,7 +895,13 @@ Before deploying any new entry, ask:
 
 ### 12.8 Fabrication Shapes — Detection Patterns
 
-Established across the July 2026 audits (Narciso, Eros, Khamrah, Azzaro TMW, Bleu de Chanel). Fabricated note data is not random; it arrives in three shapes, each with a mechanical tell that does not require domain intuition to spot.
+Established across the July 2026 audits (Narciso, Eros, Khamrah, Azzaro TMW, Bleu
+de Chanel). Fabricated note data is not random; it arrives in recognisable shapes,
+each with a mechanical tell that does not require domain intuition to spot.
+
+**There are now seven.** Shapes 1-3 are below. Shape 4 is §12.11. Shapes 5, 6 and
+7 are §12.19, §12.20 and §12.21 — added after the August 2026 audits found forty
+more corrupted records than the July passes had.
 
 #### Shape 1 — Dupe notes copied from the original
 
@@ -888,6 +943,20 @@ Worked examples:
 ### 12.10 Source Quality Register
 
 Sources that have been tested against our own research and either earned trust or failed it. Add to this list as new sources are encountered.
+
+**Never cite (Tier D), added 2026-09-01:** AI-generated search summaries. They
+have been observed publishing note lists that differ from Fragrantica's for the
+same fragrance — the summary for French Avenue The Shadow added a base note that
+Fragrantica does not list. They read authoritatively and cite nothing checkable.
+
+**Brands whose text reviews are publicly contested** — accused of paid or bot
+activity by named users on their own product pages: **Velixir, Khadlaj, Alezz Oud,
+Maison Asrar**. On Maison Asrar Vanguard a commenter asked another reviewer
+outright how much the brand was paying him.
+
+Where a brand's text reviews are contested, **lean on the critical reviews** —
+nobody pays for those — and on video comparisons where both bottles are visible.
+Say on the page that this was done.
 
 **Trusted (Tier A/B)** — used repeatedly and held up:
 - Fragrantica reviews, especially owner-of-both side-by-side comparisons. The strongest single evidence type we have.
@@ -945,6 +1014,165 @@ This is the Obsidian failure with one variable changed. Obsidian was shelved bec
 **Rule:** sort `VERIFIED_DB` by dupe count ascending to produce a ranked audit queue. Zero-dupe entries first, then single-dupe entries, and so on. Entries with four or five well-researched dupes are the most cross-checked in the database and the lowest priority.
 
 **Corollary for new entries:** audit the original **before** researching dupes for it, never after. Dupes rated against an unverified original inherit its errors — this is how the Khamrah, Carlton and Divino phantoms entered.
+
+### 12.15 Retailer-Fabricated Pyramids Propagate
+
+§12.6 item 2 warns that retailer descriptions can be AI-generated or wrong. What it does not say is that a fabricated pyramid **spreads across retailers** until it looks like consensus, and that **the brand's own site is the tiebreak**.
+
+**Caught (2026-07-30):** Arabiyat Prestige Hypnotic Amber. Perfume.com, FragranceX and several eBay listings all describe pineapple, bergamot, apple, blackcurrant, birch, jasmine, rose and patchouli — Creed Aventus almost molecule for molecule. Fragrantica, Fragstalk **and thearabiyat.com** all give something entirely different: bergamot, rose, incense / oud, patchouli, black pepper / vanilla, ambroxan, musk. A smoky oud-rose with no relationship to Aventus.
+
+Three retailers agreeing is not corroboration when they are all republishing the same generated copy. The community confirms the brand's version: a detailed Fragrantica reviewer writes that it is "oft touted as an Aventus clone, but while related it's not that close," and calls it "a beautiful original creation."
+
+**Rule:** when retailer pyramids disagree with Fragrantica or with the brand's own site, **brand-official wins** per §4's source hierarchy. Retailer agreement carries no weight, because retailers copy from each other. This nearly produced a fabricated entry — the Aventus reading was immediate and wrong.
+
+### 12.16 URL Verification Catches Brand Misattribution
+
+A dupe listed under the wrong brand is invisible to note analysis: the target is right, the notes are plausible, the percentage looks reasonable. **Trying to build the product's URL exposes it instantly.**
+
+**Caught (2026-07-29):** 55 Dossier and Dua Fragrances products were checked against generated `dossier.co/products/{slug}` and `theduabrand.com/products/{slug}` URLs. 49 resolved. Of the six that did not, four were ordinary renames or discontinuations — but **Chloris Gardenia and Fearless Love were not Dua products at all.** Both are Fragrenza house fragrances, listed on Fragrenza's own site alongside Divino, which had been removed for the same reason three days earlier. Both entries cited "Fragrenza expert review" as their source.
+
+**Rule:** if a product cannot be found on its own brand's site, question the brand attribution before assuming the product was renamed. Add this to the §12.8 detection routine — it catches a shape that pyramid comparison cannot.
+
+### 12.17 Entry Text Goes Stale When Links Change
+
+**Any entry describing its own retail situation becomes false the moment its links change, and nothing flags it.**
+
+**Caught (2026-07-29):** Thameen Carved Oud's `whySimilar` ended with "Non-affiliate honest recommendation" and "BEST PRICE AT JOMASHOP." Both were true when written. A FragranceNet affiliate link was wired to that entry hours earlier, making the first statement false and the second misleading. It surfaced only because the entry came up while drafting social copy.
+
+**Rule:** when an ambient repair adds, removes or changes a link, grep that entry's `whySimilar` and `description` for retailer names and affiliate language. A false claim about our own commercial relationships is more damaging than a broken link, because a reader who notices has grounds to distrust everything else.
+
+A DB-wide sweep for `non-affiliate`, `no affiliate` and named retailers is cheap and worth running after any bulk link migration.
+
+### 12.18 Two Migration Failure Modes
+
+Both surfaced repeatedly during the July 2026 link migrations. Both produced silent or misleading results rather than obvious errors.
+
+**Mutating a string while iterating over matches of it.** A loop that calls `pattern.search(content)` and then rewrites `content` restarts from position zero every iteration, so it re-finds the same record and reports false failures on everything else — while having already half-applied changes. Caught twice on 2026-07-29.
+
+*Fix:* scan line-by-line in a single pass and build a new list, or collect all match positions before editing anything. Never search-and-mutate in the same loop.
+
+**Defining a helper and never calling it.** 21 FragranceNet links shipped as raw URLs because a Rakuten-wrapping function was written and then not applied. **The links worked perfectly and earned nothing.** Nothing on the site looked wrong; it surfaced only by accident when an unrelated anchor failed.
+
+*Fix:* after any link migration, assert the affiliate parameter is present — `tag=decodedscents-20` on Amazon, `linksynergy` on Rakuten-wrapped retailers — not merely that a URL exists. **Verifying that a link resolves is not verifying that it earns.**
+
+---
+
+### 12.19 Fabrication Shape 5 — The Original's Pyramid Written Onto the Dupe
+*Identified 2026-08-08. By volume, the most common shape of all.*
+
+The dupe record carries its own **original's** note list, wholesale. It looks like
+Shape 1 but is worse, because the two products are on the same page and a reader
+comparing them sees a perfect match that was manufactured, not observed.
+
+**Diagnostic that found it:** 26 of 207 dupe records carried a note list identical
+to their own original. Eleven were Dua Fragrances, which is defensible — Dua
+reverse-engineers and publishes reconstructed pyramids. The rest were this shape.
+
+**Caught since:** Maison Alhambra Jean Lowe Noir on YSL Y carried YSL Y's own
+pyramid — apple, bergamot, ginger, sage, geranium — while the real fragrance is
+oud, incense, rose, raspberry and saffron, and belongs on Ombre Nomade. Maison
+Alhambra Exclusif Rose on Delina carried Delina's notes; the real product is a
+Carolina Herrera Burning Rose clone.
+
+**Tell:** compare the two note lists as sets. Identical, or a strict subset with
+nothing added, on a product whose brand does not publish reconstructions.
+
+### 12.20 Fabrication Shape 6 — Copied From a Misfiled Entry
+*Identified 2026-08-15.*
+
+When one entry carries a wrong pyramid, later entries copy it, and the error
+spreads without anyone fabricating anything a second time.
+
+**Caught:** the LV Imagination entry held a wrong pyramid (cedrat, tea, iris, white
+cedar). Both Jean Lowe Fantasme and Dua #Imagine had been scored against it and
+carried the same wrong notes. Correcting Imagination to its real pyramid dropped
+both to two shared notes — and simultaneously vindicated Arabiyat Marwa, which had
+looked unsupported at one shared note and turned out to share nine.
+
+**Tell:** when an original's pyramid is corrected, **every dupe beneath it must be
+re-derived**, in both directions. Some will fall. Some will rise.
+
+**This is why §12.8's standing routine says to audit by name across the whole DB.**
+A bad original is not one bad entry, it is a bad reference for everything under it.
+
+### 12.21 Fabrication Shape 7 — Pyramid Written From Prose
+*Identified 2026-09-01. Committed by Claude, in the same session as writing the
+checker meant to catch this class of error.*
+
+A retailer description or an AI search summary describes a fragrance in words —
+"citrus, black tea, ambroxan over guaiac wood". The pyramid gets written from that
+sentence instead of from the note list.
+
+**Caught:** Jo Milano Game of Spades Full House was entered with an invented
+pyramid derived from prose. Fragrantica publishes ten notes for it, and those ten
+are Louis Vuitton Imagination's exactly. **The real pyramid was a far better match
+than the fabricated one** — the invention did not even serve its own purpose.
+
+**Why no checker catches it.** `check_shared.py` verifies that shared notes appear
+in both pyramids. A fabricated pyramid that happens to overlap its original passes
+cleanly. **Nothing verifies a pyramid against its own published source.** That gap
+is structural, not an oversight, and the only defence is the discipline below.
+
+**Rule:** every pyramid is transcribed from Fragrantica, Parfumo or the brand's own
+product page — a list, not a sentence. Never from prose. Never from memory. Never
+from an AI-generated summary. If no note list can be found, the record does not
+ship; see §12.12 on Fragrance World Bois de Bois, held for exactly this reason.
+
+### 12.22 The Automated Checkers
+*Added 2026-08-20 through 2026-09-01. Run all three before packaging anything.*
+
+**`check_links.py` — every product must give the reader somewhere to buy.**
+Written because Delina Exclusif and Bois Impérial both shipped with nothing but a
+Fragrantica reference. It also validates that Amazon links are `/dp/ASIN` with the
+tag, and that Rakuten links are actually wrapped.
+
+**It turned out to be a fabrication detector.** Three invented products were found
+because *a product that does not exist has no retailer page to link to*. **When a
+product has no findable retailer, check whether it exists before hunting harder for
+a link.**
+
+**What it cannot do:** tell whether a link *resolves*. A 404 passes. Retailers
+delist constantly, so spot-check links by hand — the dead Arabiyat Raees link was
+found by clicking it, not by the checker.
+
+**`check_shared.py` — sharedNotes must verify on BOTH sides, family-aware.**
+A claim is valid when the original and the dupe each list that material, under
+whatever name their own source uses. Arabiyat Aristo publishes "Ginger Flower"
+where Sospiro Vibrato publishes "Ginger". Requiring identical strings fails correct
+records; 106 of 1,438 claims are family-equivalent rather than exact.
+
+**`normalise_shared.py` — relabels sharedNotes to the original's vocabulary.**
+The original is the reference product, so its labels are canonical. **It does not
+touch either pyramid.** A dupe's notes should say what its own brand says, not be
+rewritten to match its target.
+
+Run once in 2026-08-30 across 108 unverifiable claims. **None were false.** Every
+one resolved to the same material under a different name — Blackcurrant/Black
+Currant, Gaiac/Guaiac, Cedrat/Citron, Agarwood/Oud, Orris/Iris.
+
+**`check_spanish.py` — register, calque and typography.** It catches only patterns
+it has been taught. It has now caught *coincidencia* from Claude in five separate
+batches. Assume it will recur; a native read is still required.
+
+### 12.23 Work Survives Only If It Is Packaged
+*Added 2026-09-02, after losing nine completed records.*
+
+The working container resets between sessions without warning. On 2026-09-02 it
+took three Maison Asrar and six Game of Spades records — researched, written,
+verified, none packaged. They were rebuilt from the conversation transcript, which
+worked only because the research was quoted in it.
+
+`normalise_shared.py` was lost to an earlier reset, which is why note-label drift
+accumulated unchecked for weeks before anyone noticed.
+
+**The rule is not "package at the end of the session."** It is **package after each
+meaningful addition** — copy the worker to the outputs directory immediately, and
+re-copy any script that was created or changed. It costs seconds.
+
+**Corollary: uploaded copies can be older than working copies.** On 2026-09-03 the
+repo's `build_dupe_pages.py` still carried a bug fixed that morning, and
+`notes_es.json` held 79 notes against the working copy's 290. **Check file dates
+before restoring anything from the repo.**
 
 ---
 
@@ -1152,7 +1380,25 @@ Do not attempt another deployment until the failure is understood:
 
 14. **Every post-deployment test must verify notes display correctly** — all three layers, correct capitalization, matching worker.js exactly. Notes are the primary content shoppers use to decide.
 
-15. **Perform ongoing monitoring per Section 13** — orphan detection, affiliate link health, price staleness, reformulation tracking, search query monitoring, cross-article reference integrity, site-to-DB consistency, fabrication audits, and backup rotation. Set calendar reminders for the recurring checks.
+15. **Every pyramid is transcribed from a note list, never from prose.** Fragrantica,
+Parfumo or the brand's own product page. Never from a retailer description, never
+from an AI-generated summary, never from memory. No note list means no record — see
+§12.21.
+
+16. **Package after every meaningful addition, not at the end of the session.** The
+container resets without warning and has already destroyed nine completed records.
+See §12.23.
+
+17. **Run `check_links.py`, `check_shared.py` and `check_spanish.py` before packaging
+anything.** All three, every time. See §12.22.
+
+18. **Scope every record edit to its entry span.** The same dupe can appear under two
+originals needing opposite changes. An unscoped search edits whichever comes first.
+
+19. **When an original's pyramid is corrected, re-derive every dupe beneath it.** In
+both directions — some scores fall, some rise. See §12.20.
+
+20. **Perform ongoing monitoring per Section 13** — orphan detection, affiliate link health, price staleness, reformulation tracking, search query monitoring, cross-article reference integrity, site-to-DB consistency, fabrication audits, and backup rotation. Set calendar reminders for the recurring checks.
 
 ---
 
@@ -1183,6 +1429,103 @@ Every worker.js update should log the change here:
 ---
 
 ## 17. Recorded Change History
+
+*Newest first from 2026-08 onward. The July 2026 entries below run oldest-first and
+are left in their original order.*
+
+### 2026-09-03 — Bond No 9 Added (5 originals, 5 dupes)
+
+**Trigger:** five Jo Milano Game of Spades fragrances target Bond No 9, which was
+entirely absent from the database.
+
+**Changes:** TriBeCa, Lafayette Street, Greenwich Village, The Scent of Peace for
+Him and New York Nights added with one dupe each — Royale (90%, 7/7 notes),
+Wildcard (90%, 9/9), Win (91%, 10/11), Boston (91%, 6/6), Moon (91%, 9/9).
+
+**Note:** Lafayette Street / Wildcard is the most complete note match in the
+database. Boston and Moon are exact pyramid reconstructions.
+
+**Also:** a line-wide warning added to every Jo Milano entry — a buyer of their
+nine-piece sample set reports the scents did not match the printed notes, several
+were headache-inducing, one had no scent, and the brand never replied when asked
+whether the set was genuine.
+
+### 2026-09-01 — Brand Search Fixed; Link Labels Fixed
+
+**Trigger:** searching "Armani" returned Armani Code rather than the Armani brand
+page.
+
+**Diagnosis:** `lookupBrand` was already running before product lookup and working
+correctly. `BRAND_INDEX` is keyed on full brand names, so "armani" missed
+"giorgio armani" and fell through to product lookup, which matched arbitrarily.
+
+**Fix:** `BRAND_ALIASES` added — 35 shorthands. Structural `^};` count 7 → 8.
+
+**Also fixed:** `direct_label()` in both page generators. Nine products were
+labelled "Buy at <brand>" on links to third-party retailers. See §5.5.
+
+**Also:** `brandLink` added to the schema so one product can show three retailers.
+
+### 2026-08-29 — Typo Handling in Search
+
+**Trigger:** a search for "Aqua di Gio Profondo" — no *c* — fell through to the AI
+fallback, which invented a $95 fragrance with the wrong notes and two dupes that
+are not in the database.
+
+**Fix:** Levenshtein layer between `lookupVerified` and the AI. One candidate
+within edit distance 1 auto-corrects and says so; anything else close offers
+suggestion chips. Only genuinely unknown queries now reach the AI.
+
+**Still open:** the AI fallback continues to fabricate for fragrances genuinely
+absent. Replacing it with an honest not-found page is agreed in principle.
+
+### 2026-08-30 — sharedNotes Normalisation
+
+108 claims could not be verified by exact string match on both sides. **None were
+false.** All resolved to the same material under different names. Fixed by
+relabelling to the original's vocabulary; neither pyramid touched. See §12.22.
+
+### 2026-08-20 onward — The Buy-Link Pass
+
+**Trigger:** `check_links.py` written so no reader hits a dead end.
+
+**What it actually found:** seven fabricated or corrupted records.
+
+| Record | Problem |
+|---|---|
+| Dossier Woody Oakmoss Intense | product does not exist |
+| Dossier Gourmand Orris | product does not exist |
+| MA Exclusif Rose | wrong target (Burning Rose), fabricated notes |
+| Dua Miss Congeniality | fabricated notes, wrong page |
+| Dua Fortune | notes copied from the original |
+| MA Jean Lowe Noir | wrong page (YSL Y), YSL Y's notes grafted on |
+| Lattafa Liam Blue Shine | wrong page (ADG Parfum), notes matching neither |
+
+**Also:** two products renamed to their correct full names, several prices
+corrected (Althaïr $255 → $400, Ombre Nomade → $455 boutique), and the last empty
+price field filled.
+
+**Lesson recorded as §12.22:** a missing buy link is often a missing product.
+
+### 2026-08-08 — Full Pyramid-Conflict Audit
+
+**Trigger:** while selecting fragrances to translate, one dupe (Maison Alhambra
+Perseus) appeared under two originals with two different pyramids.
+
+**Found:** 12 products carrying conflicting pyramids across 27 entries. Lattafa
+Sumou Platinum had three appearances with three formulas. Lattafa Yara Moi grew
+coffee under Good Girl and honey under Scandal — each the target's signature note.
+
+**Resolved:** 14 records removed, 10 pyramids corrected from sources, 2 moved, 5
+blank originals populated, all `sharedNotes` normalised.
+
+**Scores were deliberately NOT rewritten.** Inventing replacements during an audit
+about invented numbers would repeat the mistake. The twelve unsupported scores are
+listed in `PROJECT_HANDOFF.md` §11 and re-derived individually.
+
+**Fabrication Shape 5 identified here** — see §12.19.
+
+---
 
 ### 2026-07-02 — Afnan Article DB Sync
 
