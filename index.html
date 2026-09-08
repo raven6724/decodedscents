@@ -1713,13 +1713,25 @@
         statusEl.style.display = "none";
         // A rate limit or an overload clears on its own, so say so rather than
         // showing the same dead end for every failure.
-        if (errorEl && (code === "rate_limit" || code === "overloaded")) {
-          const wait = e.retryAfter ? ` Try again in about ${e.retryAfter} seconds.` : " Try again in a moment.";
-          errorEl.textContent = "Our lookup service is busy right now." + wait +
-                                " Meanwhile you can browse every verified dupe at /dupes/.";
+        if (errorEl) {
+          //  One branch only. This used to set a helpful message for the temporary
+          //  failures and then overwrite it unconditionally on the next line, so
+          //  every error showed the same dead end regardless of cause.
+          if (code === "rate_limit" || code === "overloaded") {
+            const wait = e.retryAfter ? ` Try again in about ${e.retryAfter} seconds.` : " Try again in a moment.";
+            errorEl.textContent = "Our lookup service is busy right now." + wait +
+                                  " Meanwhile you can browse every verified dupe at /dupes/.";
+          } else if (code === "network") {
+            errorEl.textContent = "We could not reach our lookup service. That is usually " +
+                                  "temporary \u2014 try again in a moment, or browse every verified " +
+                                  "dupe at /dupes/.";
+          } else {
+            errorEl.textContent = "Something went wrong looking that up. Try a specific fragrance " +
+                                  "name such as \u2018Creed Aventus\u2019, or browse every verified dupe " +
+                                  "at /dupes/.";
+          }
+          errorEl.style.display = "block";
         }
-        errorEl.style.display  = "block";
-        errorEl.textContent    = "Something went wrong. Please try a specific fragrance name (e.g. 'Creed Aventus'). " + (e.message||"");
       }
     }
 
