@@ -1409,6 +1409,32 @@
       );
     }
 
+    //  We do not have this fragrance. Say so plainly rather than inventing an
+    //  answer, which is what the AI fallback used to do. Offer the nearest things
+    //  we do have and the two browse routes.
+    function renderNotFound(parsed) {
+      const near = (parsed.suggestions || []).map(sug =>
+        `<button class="dq-chip" data-q="${escapeHtml(sug.key)}">${escapeHtml(sug.label)}` +
+        `<span class="dq-n">${sug.dupes} dupe${sug.dupes === 1 ? "" : "s"}</span></button>`
+      ).join("");
+      resultsEl.innerHTML =
+        `<div class="dq-wrap">` +
+        `<div class="dq-head">We haven\u2019t verified <strong>${escapeHtml(parsed.query)}</strong> yet.</div>` +
+        `<p class="dq-foot" style="margin:0 0 16px">We only publish alternatives we can trace to a real ` +
+        `source, and we haven\u2019t researched this one. Rather than guess, we\u2019d rather tell you plainly ` +
+        `\u2014 and we\u2019ve logged it, so popular requests get researched first.</p>` +
+        (near ? `<div class="dq-head" style="font-size:.92rem">Closest things we do have:</div>` +
+                `<div class="dq-chips">${near}</div>` : "") +
+        `<p class="dq-foot">Browse <a href="/dupes/">all ${parsed.dbSize} originals and ` +
+        `${parsed.dupeCount} verified dupes</a>, or <a href="/brands/">search by brand</a>.</p></div>`;
+      resultsEl.querySelectorAll(".dq-chip").forEach(b =>
+        b.addEventListener("click", () => {
+          if (inputEl) inputEl.value = b.dataset.q;
+          doSearch(b.dataset.q);
+        })
+      );
+    }
+
     //  Say when we have corrected a spelling. Silent correction would be its own
     //  small dishonesty, and someone who meant something else needs to know.
     function correctionNotice(parsed) {
@@ -1671,6 +1697,12 @@
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
+        if (parsed.isNotFound) {
+          trackSearch(q, "not_found");
+          renderNotFound(parsed);
+          resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
         if (parsed.isSuggestion) {
           trackSearch(q, "suggestion");
           renderSuggestions(parsed);
@@ -1722,9 +1754,16 @@
             errorEl.textContent = "Our lookup service is busy right now." + wait +
                                   " Meanwhile you can browse every verified dupe at /dupes/.";
           } else if (code === "network") {
-            errorEl.textContent = "We could not reach our lookup service. That is usually " +
-                                  "temporary \u2014 try again in a moment, or browse every verified " +
-                                  "dupe at /dupes/.";
+            //  The fetch threw with no status. Usually an ad blocker or privacy
+            //  extension refusing a cross-origin request to workers.dev, which is
+            //  where our lookup lives. Nothing we can do from this end, so say so
+            //  and send them to the static pages, which cannot be blocked.
+            errorEl.innerHTML = "We could not reach our search service. This is often an ad " +
+              "blocker or privacy extension blocking the request \u2014 if you use one, allowing " +
+              "decodedscents.com should fix it. " +
+              "<strong>Either way, every fragrance is still available:</strong> " +
+              "<a href=\"/dupes/\" style=\"color:#c9a84c\">browse all verified dupes</a> or " +
+              "<a href=\"/brands/\" style=\"color:#c9a84c\">search by brand</a>.";
           } else {
             errorEl.textContent = "Something went wrong looking that up. Try a specific fragrance " +
                                   "name such as \u2018Creed Aventus\u2019, or browse every verified dupe " +
