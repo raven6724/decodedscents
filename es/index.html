@@ -1404,7 +1404,33 @@
         `<div class="dq-head">We don\u2019t have <strong>${escapeHtml(parsed.query)}</strong> \u2014 did you mean:</div>` +
         `<div class="dq-chips">${chips}</div>` +
         `<p class="dq-foot">If none of these are right, browse <a href="/dupes-es/">every verified dupe</a> ` +
-        `or <a href="/brands/">search by brand</a>.</p></div>`;
+        `or <a href="/brands/">busca por marca</a>.</p></div>`;
+      resultsEl.querySelectorAll(".dq-chip").forEach(b =>
+        b.addEventListener("click", () => {
+          if (inputEl) inputEl.value = b.dataset.q;
+          doSearch(b.dataset.q);
+        })
+      );
+    }
+
+    //  We do not have this fragrance. Say so plainly rather than inventing an
+    //  answer, which is what the AI fallback used to do. Offer the nearest things
+    //  we do have and the two browse routes.
+    function renderNotFound(parsed) {
+      const near = (parsed.suggestions || []).map(sug =>
+        `<button class="dq-chip" data-q="${escapeHtml(sug.key)}">${escapeHtml(sug.label)}` +
+        `<span class="dq-n">${sug.dupes} dupe${sug.dupes === 1 ? "" : "s"}</span></button>`
+      ).join("");
+      resultsEl.innerHTML =
+        `<div class="dq-wrap">` +
+        `<div class="dq-head">Todavía no hemos verificado <strong>${escapeHtml(parsed.query)}</strong> yet.</div>` +
+        `<p class="dq-foot" style="margin:0 0 16px">Solo publicamos alternativas que podamos rastrear hasta una fuente ` +
+        `real, y esta no la hemos investigado. Antes que adivinar, preferimos decírtelo con claridad ` +
+        `— y queda registrada, así que las más pedidas se investigan primero.</p>` +
+        (near ? `<div class="dq-head" style="font-size:.92rem">Lo más cercano que sí tenemos:</div>` +
+                `<div class="dq-chips">${near}</div>` : "") +
+        `<p class="dq-foot">Explora <a href="/dupes-es/">los ${parsed.dbSize} originales y ` +
+        `${parsed.dupeCount} dupes verificados</a>, o <a href="/marcas/">busca por marca</a>.</p></div>`;
       resultsEl.querySelectorAll(".dq-chip").forEach(b =>
         b.addEventListener("click", () => {
           if (inputEl) inputEl.value = b.dataset.q;
@@ -1675,6 +1701,12 @@
 
         const parsed = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
         cache[q.toLowerCase()] = parsed;
+        if (parsed.isNotFound) {
+          trackSearch(q, "not_found");
+          renderNotFound(parsed);
+          resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
         if (parsed.isSuggestion) {
           trackSearch(q, "suggestion");
           renderSuggestions(parsed);
@@ -1717,13 +1749,32 @@
         statusEl.style.display = "none";
         // A rate limit or an overload clears on its own, so say so rather than
         // showing the same dead end for every failure.
-        if (errorEl && (code === "rate_limit" || code === "overloaded")) {
-          const wait = e.retryAfter ? ` Try again in about ${e.retryAfter} seconds.` : " Try again in a moment.";
-          errorEl.textContent = "Our lookup service is busy right now." + wait +
-                                " Meanwhile you can browse every verified dupe at /dupes/.";
+        if (errorEl) {
+          //  One branch only. This used to set a helpful message for the temporary
+          //  failures and then overwrite it unconditionally on the next line, so
+          //  every error showed the same dead end regardless of cause.
+          if (code === "rate_limit" || code === "overloaded") {
+            const wait = e.retryAfter ? ` Try again in about ${e.retryAfter} seconds.` : " Try again in a moment.";
+            errorEl.textContent = "Our lookup service is busy right now." + wait +
+                                  " Meanwhile you can browse every verified dupe at /dupes/.";
+          } else if (code === "network") {
+            //  The fetch threw with no status. Usually an ad blocker or privacy
+            //  extension refusing a cross-origin request to workers.dev, which is
+            //  where our lookup lives. Nothing we can do from this end, so say so
+            //  and send them to the static pages, which cannot be blocked.
+            errorEl.innerHTML = "No pudimos conectar con nuestro servicio de búsqueda. Suele ser un bloqueador de " +
+              "anuncios o una extensión de privacidad bloqueando la petición — si usas alguno, permitir " +
+              "decodedscents.com debería resolverlo. " +
+              "<strong>En cualquier caso, todas las fragancias siguen disponibles:</strong> " +
+              "<a href=\"/dupes/\" style=\"color:#c9a84c\">explora todos los dupes verificados</a> or " +
+              "<a href=\"/brands/\" style=\"color:#c9a84c\">busca por marca</a>.";
+          } else {
+            errorEl.textContent = "Something went wrong looking that up. Try a specific fragrance " +
+                                  "name such as \u2018Creed Aventus\u2019, or browse every verified dupe " +
+                                  "at /dupes/.";
+          }
+          errorEl.style.display = "block";
         }
-        errorEl.style.display  = "block";
-        errorEl.textContent    = "Something went wrong. Please try a specific fragrance name (e.g. 'Creed Aventus'). " + (e.message||"");
       }
     }
 
