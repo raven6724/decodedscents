@@ -2191,6 +2191,20 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/armaf/"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/brands/bharara/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/bharara/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/bharara/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/marcas/bharara/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/bharara/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/bharara/"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/brands/dossier/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
