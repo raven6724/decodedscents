@@ -23,14 +23,16 @@
  "description": "Ten Creed Aventus dupes re-tested against a strict 85% floor. Four cleared, led by Club de Nuit Intense Man at 94%. Two famous \"Aventus clones\" turned out to copy something else entirely.",
  "url": "https://decodedscents.com/Articles/creed-aventus-dupes",
  "datePublished": "2026-06-16",
- "dateModified": "2026-09-17",
+ "dateModified": "2026-09-24",
  "author": {
   "@type": "Organization",
-  "name": "Decoded Scents"
+  "name": "Decoded Scents",
+  "url": "https://decodedscents.com"
  },
  "publisher": {
   "@type": "Organization",
-  "name": "Decoded Scents"
+  "name": "Decoded Scents",
+  "url": "https://decodedscents.com"
  },
  "mainEntityOfPage": "https://decodedscents.com/Articles/creed-aventus-dupes"
 }
@@ -43,194 +45,749 @@
   gtag('config', 'G-3KS1C0WH40');
 </script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#d4af37;--gold-dim:#b8860b;--bg:#0a0a0f;--bg2:#0d1117;--text:#e8e0d0;--muted:#888;--green:#7ec8a0;--red:#e07070}
-body{font-family:Georgia,serif;background:linear-gradient(135deg,var(--bg),var(--bg2),var(--bg));color:var(--text);min-height:100vh;padding:0 0 80px}
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
 
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(212,175,55,0.15);max-width:860px;margin:0 auto}
-.nav-logo{font-size:22px;font-weight:bold;letter-spacing:4px;color:var(--gold);text-decoration:none}
-.nav-logo span{color:#fff}
-.nav-link{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:1px;transition:color 0.2s;text-transform:uppercase}
-.nav-link:hover{color:var(--gold)}
-.nav-cta{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:bold;letter-spacing:1px;font-family:Georgia,serif}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.hero{max-width:860px;margin:0 auto;padding:48px 24px 32px;border-bottom:1px solid rgba(255,255,255,0.06)}
-.hero-cat{font-size:10px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
-.hero-title{font-size:34px;font-weight:bold;color:#f0e8d0;line-height:1.2;margin-bottom:16px;letter-spacing:1px}
-.hero-sub{font-size:15px;color:#bbb;line-height:1.7;margin-bottom:24px;max-width:680px}
-.hero-meta{display:flex;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:11px;letter-spacing:1px}
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.12);
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --bg3: #16161f;
+      --bg4: #1c1c28;
+      --text: #e8e4dc;
+      --text-muted: #9a9590;
+      --text-dim: #6b6760;
+      --border: rgba(201,168,76,0.2);
+      --green: #4caf7d;
+      --radius: 12px;
+    }
 
-.content{max-width:860px;margin:0 auto;padding:32px 24px}
-.section-label{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin:40px 0 14px}
-.content h3{font-size:17px;color:#f0e8d0;margin:24px 0 10px;letter-spacing:0.5px}
-.content p{color:#bbb;font-size:14px;line-height:1.9;margin-bottom:14px}
-.content strong{color:#f0e8d0}
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
 
-.dupe-card{background:rgba(255,255,255,0.03);border:1px solid rgba(212,175,55,0.4);border-radius:12px;padding:20px;margin:16px 0;transition:border-color 0.2s}
-.dupe-card:hover{border-color:rgba(212,175,55,0.7)}
-.dupe-rank{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
-.dupe-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-.dupe-name{font-size:19px;font-weight:bold;color:#f0e8d0}
-.dupe-brand{color:var(--muted);font-size:13px;margin-top:2px}
-.dupe-price{color:var(--green);font-weight:bold;font-size:15px;text-align:right}
-.badge{background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:10px;display:inline-block;margin-top:4px}
-.sim-wrap{margin:12px 0}
-.sim-header{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--muted)}
-.sim-score{color:var(--gold);font-weight:bold;font-size:13px}
-.sim-track{background:rgba(255,255,255,0.08);border-radius:10px;height:5px;overflow:hidden}
-.sim-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold-dim),var(--gold))}
-.note-tag{display:inline-block;margin:2px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:11px}
-.note-tag.shared{background:rgba(212,175,55,0.22);border-color:rgba(212,175,55,0.6);color:#f0d060}
-.dupe-desc{color:#bbb;font-size:13px;line-height:1.7;margin:12px 0}
-.community{margin-top:8px;padding:4px 10px;background:rgba(100,180,255,0.08);border:1px solid rgba(100,180,255,0.2);border-radius:8px;font-size:10px;color:#88aacc;display:inline-block}
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,15,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--gold);
+      text-decoration: none; letter-spacing: 0.04em;
+      display: flex; flex-direction: column; line-height: 1.3;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
 
-.buy-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.buy-btn{flex:1;min-width:120px;padding:9px 0;border-radius:8px;font-size:12px;font-weight:bold;text-decoration:none;text-align:center;letter-spacing:0.5px;font-family:Georgia,serif;display:block;transition:opacity 0.2s}
-.buy-btn:hover{opacity:0.85}
-.buy-amazon{background:linear-gradient(135deg,#ff9900,#e68a00);color:#111}
-.buy-finder{background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.35);color:var(--gold)}
-.buy-google{background:rgba(96,144,200,0.1);border:1px solid rgba(96,144,200,0.3);color:#6fa8f5;width:100%;flex:none;min-width:unset;margin-top:4px}
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 80px 2rem 60px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 65%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9a84c' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--gold-dim); border: 1px solid var(--border);
+      color: var(--gold); font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.4rem 1.1rem; border-radius: 50px; margin-bottom: 1.8rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700; color: #fff;
+      line-height: 1.15; margin-bottom: 1.2rem;
+      max-width: 700px; margin-left: auto; margin-right: auto;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text-muted);
+      max-width: 520px; margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
 
-.callout{background:linear-gradient(135deg,rgba(212,175,55,0.09),rgba(212,175,55,0.02));border:1px solid rgba(212,175,55,0.5);border-radius:14px;padding:24px;margin:32px 0}
-.callout-title{color:var(--gold);font-size:10px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
-.callout p{margin:0;font-size:14px;color:#bbb;line-height:1.7}
+    /* ── SEARCH ── */
+    .search-wrap {
+      max-width: 620px; margin: 0 auto 1.5rem;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%; padding: 1.1rem 7rem 1.1rem 1.4rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text);
+      font-size: 1rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+    .search-wrap input:focus { border-color: var(--gold); }
+    .search-wrap input::placeholder { color: var(--text-dim); }
+    .search-wrap button {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #000; border: none; border-radius: 8px;
+      padding: 0.65rem 1.3rem; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.04em;
+      font-family: 'Inter', sans-serif;
+    }
+    .search-wrap button:hover { opacity: 0.88; }
 
-.verdict-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:12px}
-.verdict-table th{color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 12px;border-bottom:1px solid rgba(212,175,55,0.3);text-align:left}
-.verdict-table td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,0.05);color:#bbb;vertical-align:middle}
-.verdict-table tr:hover td{background:rgba(255,255,255,0.02)}
+    /* ── CHIPS ── */
+    .chips {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center; max-width: 620px; margin: 0 auto;
+    }
+    .chip {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 50px;
+      padding: 0.4rem 1rem; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .chip:hover { border-color: var(--gold); color: var(--gold); }
 
-.faq-item{border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 0}
-.faq-q{color:#f0e8d0;font-size:15px;font-weight:bold;margin-bottom:10px}
-.faq-a{color:#bbb;font-size:14px;line-height:1.8}
+    /* ── STATUS / LOADER ── */
+    #status {
+      text-align: center; padding: 1.5rem; margin: 1rem auto;
+      max-width: 620px; display: none;
+    }
+    .loader-text {
+      color: var(--gold); font-size: 0.9rem; letter-spacing: 0.08em;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    #error-msg {
+      background: rgba(220,80,80,0.1); border: 1px solid rgba(220,80,80,0.3);
+      color: #f87171; border-radius: var(--radius);
+      padding: 1rem 1.5rem; margin: 1rem auto;
+      max-width: 620px; font-size: 0.9rem; display: none; text-align: center;
+    }
 
-.article-footer{max-width:860px;margin:60px auto 0;padding:32px 24px;border-top:1px solid rgba(255,255,255,0.06);text-align:center}
-.footer-logo{font-size:24px;font-weight:bold;letter-spacing:4px;color:var(--gold);margin-bottom:8px}
-.footer-logo span{color:#fff}
-.footer-links{display:flex;gap:16px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.footer-links a{color:#555;text-decoration:none;font-size:11px;letter-spacing:1px;transition:color 0.2s}
-.footer-links a:hover{color:var(--gold)}
+    /* ── RESULTS ── */
+    #results { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
 
-@media(max-width:600px){.hero-title{font-size:26px}.nav-link{display:none}.dupe-header{flex-direction:column}.verdict-table{font-size:11px}.verdict-table th,.verdict-table td{padding:8px 6px}}
-</style>
-<style>
-  .cmp-table{width:100%;border-collapse:collapse;margin:18px 0 8px;font-size:.93rem}
-  .cmp-table th{text-align:left;padding:9px 11px;border-bottom:2px solid rgba(201,168,76,.4);color:#c9a84c;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
-  .cmp-table td{padding:9px 11px;border-bottom:1px solid rgba(255,255,255,.07)}
-  .table-wrap{overflow-x:auto}
-  .method{border-left:3px solid rgba(201,168,76,.5);padding:12px 16px;margin:26px 0;background:rgba(255,255,255,.02);font-size:.9rem}
-</style>
+    .original-card {
+      background: var(--bg3); border: 1px solid var(--gold);
+      border-radius: var(--radius); padding: 1.8rem;
+      margin-bottom: 2rem; position: relative; overflow: hidden;
+    }
+    .original-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+    .original-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .original-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: #fff; margin-bottom: 0.2rem;
+    }
+    .original-brand { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.8rem; }
+    .original-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--gold); font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .original-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1rem; }
+    .notes-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .notes-group { flex: 1; min-width: 130px; }
+    .notes-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .notes-pills { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .note-pill {
+      background: var(--bg4); border: 1px solid rgba(201,168,76,0.15);
+      color: var(--text-muted); border-radius: 50px;
+      padding: 0.2rem 0.6rem; font-size: 0.75rem;
+    }
+    .original-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+    .btn-sm {
+      padding: 0.5rem 1rem; border-radius: 7px; font-size: 0.78rem;
+      font-weight: 600; text-decoration: none; letter-spacing: 0.03em;
+      transition: all 0.2s; display: inline-block;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-amazon { background: linear-gradient(135deg,var(--gold),var(--gold-light)); color:#000; }
+    .btn-amazon:hover { opacity:0.88; transform:translateY(-1px); }
+    .btn-fragrantica { background: var(--bg4); border:1px solid var(--border); color:var(--text-muted); }
+    .btn-fragrantica:hover { border-color:var(--gold); color:var(--gold); }
+    .btn-fragrancenet { background: var(--bg4); border:1px solid rgba(76,175,125,0.4); color:var(--green); }
+    .btn-fragrancenet:hover { border-color:var(--green); background:rgba(76,175,125,0.08); }
+    .btn-google { background: var(--bg4); border:1px solid var(--border); color:var(--text-muted); }
+    .btn-google:hover { border-color:var(--gold); color:var(--gold); }
+    .btn-perfumania { background: var(--bg4); border:1px solid rgba(201,168,76,0.4); color:var(--gold); }
+    .btn-perfumania:hover { background: var(--gold-dim); border-color:var(--gold); color:var(--gold-light); }
+    .btn-simon { background: var(--bg4); border:1px solid rgba(139,92,246,0.4); color:#a78bfa; }
+    .btn-simon:hover { background: rgba(139,92,246,0.1); border-color:#a78bfa; color:#c4b5fd; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: #fff;
+    }
+    .section-title span { color: var(--gold); }
+
+    /* ── DUPE CARDS ── */
+    .dupes-grid { display: flex; flex-direction: column; gap: 1rem; }
+    .dupe-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .dupe-card:hover { border-color: rgba(201,168,76,0.5); }
+    .dupe-card-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem; cursor: pointer;
+    }
+    .dupe-rank {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--gold); font-weight: 700;
+      width: 28px; flex-shrink: 0; text-align: center;
+    }
+    .dupe-bottle {
+      width: 48px; height: 56px; border-radius: 8px;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .dupe-info { flex: 1; min-width: 0; }
+    .dupe-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: #fff; margin-bottom: 0.1rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .dupe-brand { font-size: 0.78rem; color: var(--text-muted); }
+    .dupe-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
+    .dupe-price { font-size: 0.88rem; color: var(--green); font-weight: 600; }
+    .sim-wrap { display: flex; align-items: center; gap: 0.5rem; }
+    .sim-bar-bg { width: 80px; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+    .sim-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg,var(--gold),var(--gold-light)); }
+    .sim-pct { font-size: 0.75rem; color: var(--gold); font-weight: 600; width: 32px; text-align: right; }
+    .dupe-chevron { color: var(--text-dim); font-size: 0.8rem; transition: transform 0.2s; }
+    .dupe-card.open .dupe-chevron { transform: rotate(180deg); }
+
+    /* ── EXPANDED ── */
+    .dupe-body { display: none; padding: 0 1.2rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .dupe-card.open .dupe-body { display: block; }
+    .dupe-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0.8rem 0; }
+    .shared-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .shared-pills { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.8rem; }
+    .shared-pill {
+      background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-light); border-radius: 50px;
+      padding: 0.2rem 0.6rem; font-size: 0.73rem; font-weight: 500;
+    }
+    .community-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(76,175,125,0.1); border: 1px solid rgba(76,175,125,0.25);
+      color: #6fcf97; border-radius: 50px;
+      padding: 0.25rem 0.7rem; font-size: 0.72rem; margin-bottom: 0.8rem;
+    }
+    .dupe-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* ── SHOW MORE ── */
+    #show-more-btn {
+      display: block; width: 100%; margin-top: 1rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: var(--radius);
+      padding: 0.9rem; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+      font-family: 'Inter', sans-serif; letter-spacing: 0.05em;
+    }
+    #show-more-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── NEW SEARCH BTN ── */
+    #new-search-btn {
+      display: block; margin: 1.5rem auto 0;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: var(--radius);
+      padding: 0.7rem 2rem; font-size: 0.85rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Inter', sans-serif; letter-spacing: 0.05em;
+    }
+    #new-search-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── BLOG / SCENT JOURNAL ── */
+    .journal-section {
+      max-width: 900px; margin: 4rem auto 2rem;
+      padding: 0 1rem;
+    }
+    .journal-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .journal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: #fff;
+    }
+    .journal-title span { color: var(--gold); font-style: italic; }
+    .journal-subtitle { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* ── CATEGORY FILTER ── */
+    .cat-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .cat-btn {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 50px;
+      padding: 0.35rem 1rem; font-size: 0.78rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .cat-btn:hover, .cat-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+    /* LANGUAGE BUTTONS — sit inside cat-filter row */
+    .lang-divider {
+      color: var(--border); font-size: 1rem;
+      margin: 0 0.25rem; user-select: none;
+    }
+    .lang-btn {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 50px;
+      padding: 0.35rem 1rem; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .lang-btn:hover, .lang-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+    /* ARTICLE SEARCH */
+    .article-search-wrap { position: relative; margin-bottom: 1.2rem; }
+    .article-search {
+      width: 100%; padding: 0.65rem 1rem 0.65rem 2.5rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 50px; color: var(--text);
+      font-size: 0.88rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+    .article-search::placeholder { color: var(--text-dim); }
+    .article-search:focus { border-color: var(--gold); }
+    .article-search-icon {
+      position: absolute; left: 0.9rem; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim); font-size: 0.85rem; pointer-events: none;
+    }
+    .no-results {
+      text-align: center; color: var(--text-muted);
+      font-size: 0.9rem; padding: 2rem; display: none;
+      grid-column: 1/-1;
+    }
+
+    /* ── ARTICLE CARDS ── */
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .article-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      text-decoration: none; display: block;
+      transition: all 0.2s; position: relative; overflow: hidden;
+    }
+    .article-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg,var(--gold),var(--gold-light));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .article-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+    .article-card:hover::before { transform: scaleX(1); }
+    .article-cat {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: #fff; line-height: 1.4;
+      margin-bottom: 0.6rem;
+    }
+    .article-teaser { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+    .article-read {
+      font-size: 0.75rem; font-weight: 600; color: var(--gold);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .article-card.coming-soon { opacity: 0.5; cursor: default; pointer-events: none; }
+    .coming-soon-tag {
+      display: inline-block; background: var(--bg4); border: 1px solid var(--border);
+      color: var(--text-dim); border-radius: 50px;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem; margin-bottom: 0.6rem;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 900px; margin: 3rem auto;
+      border: none; border-top: 1px solid var(--border);
+    }
+
+    /* ── SEO STATIC SECTION ── */
+    .seo-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem;
+    }
+    .seo-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .seo-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+    .seo-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 60px; height: 2px;
+      background: var(--gold);
+    }
+    .seo-body p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .seo-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .seo-body em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ── SHARE SECTION ── */
+    .share-section {
+      background: linear-gradient(135deg, var(--bg2), var(--bg3));
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .share-inner { max-width: 600px; margin: 0 auto; }
+    .share-label-row {
+      display: flex; align-items: center;
+      gap: 1rem; margin-bottom: 0.75rem;
+    }
+    .share-line { flex: 1; height: 1px; background: var(--border); }
+    .share-label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--gold);
+      white-space: nowrap;
+    }
+    .share-tagline {
+      font-size: 0.92rem; color: var(--text-muted);
+      font-family: 'Playfair Display', serif;
+      font-style: italic; margin-bottom: 1.5rem;
+    }
+    .share-buttons {
+      display: flex; align-items: center;
+      justify-content: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .share-btn-main {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.4rem; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.2s; border: 1px solid var(--border);
+      background: var(--bg4); color: var(--gold);
+    }
+    .share-btn-main:hover {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      transform: translateY(-1px);
+    }
+    .share-btn-wa {
+      border-color: rgba(37,211,102,0.4);
+      color: #25d366;
+    }
+    .share-btn-wa:hover {
+      border-color: #25d366;
+      background: rgba(37,211,102,0.1);
+    }
+    .share-btn-x {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text-muted);
+    }
+    .share-btn-x:hover {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem; text-align: center;
+      margin-top: 4rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--gold);
+      text-decoration: none; display: block; margin-bottom: 0.4rem;
+    }
+    .footer-tagline { font-size: 0.78rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 1rem 40px; }
+      .notes-row { gap: 0.8rem; }
+      .dupe-card-header { gap: 0.6rem; }
+      .sim-bar-bg { width: 55px; }
+    }
+
+    /* ── layout primitives the templates assume ── */
+    .container { width:100%; max-width:1040px; margin:0 auto; padding:0 24px; }
+    @media (max-width:640px) { .container { padding:0 16px; } }
+
+    main.container { padding-top:6px; padding-bottom:64px; }
+    article { max-width:100%; }
+    article p { line-height:1.65; color:var(--text-muted,#a9a396); margin:0 0 14px; }
+    article h2 { font-size:1.25rem; letter-spacing:-0.01em; color:var(--text,#e8e4dc);
+                 margin:38px 0 12px; }
+    article h3 { font-size:1.05rem; margin:0 0 8px; color:var(--text,#e8e4dc); }
+    article a { color:var(--gold-light,#e8c97a); text-decoration:none;
+                border-bottom:1px solid rgba(201,168,76,0.28); transition:border-color .15s; }
+    article a:hover { border-bottom-color:var(--gold,#c9a84c); }
+    article a:focus-visible { outline:2px solid var(--gold,#c9a84c); outline-offset:2px; }
+
+    /* ── top nav (Spanish pages use .top-nav; EN nav ships its own markup) ── */
+    .top-nav { border-bottom:1px solid var(--border,rgba(255,255,255,0.08));
+               background:rgba(10,10,15,0.92); backdrop-filter:blur(8px);
+               position:sticky; top:0; z-index:60; }
+    .top-nav .container { display:flex; align-items:center; justify-content:space-between;
+                          gap:20px; height:60px; }
+    .top-nav .nav-logo { font-family:Georgia,'Times New Roman',serif; font-size:1.05rem;
+        letter-spacing:0.06em; color:var(--gold,#c9a84c); text-decoration:none; border:0; }
+    .top-nav .nav-links { display:flex; gap:1.6rem; }
+    .top-nav .nav-links a { color:var(--text-muted,#a9a396); text-decoration:none; border:0;
+        font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; }
+    .top-nav .nav-links a:hover { color:var(--gold,#c9a84c); }
+    @media (max-width:560px) { .top-nav .nav-links { gap:1rem; } .top-nav .nav-links a { font-size:0.7rem; } }
+
+    /* ── page header ── */
+    .article-hero { padding:46px 0 30px; border-bottom:1px solid var(--border,rgba(255,255,255,0.07));
+                    margin-bottom:26px; }
+    .article-hero h1 { font-family:Georgia,'Times New Roman',serif; font-weight:400;
+        font-size:clamp(1.85rem,4.4vw,2.9rem); line-height:1.12; letter-spacing:-0.015em;
+        margin:0 0 12px; color:var(--text,#e8e4dc); }
+    .hero-meta { font-size:0.73rem; letter-spacing:0.14em; text-transform:uppercase;
+                 color:var(--gold,#c9a84c); margin-bottom:14px; }
+    .hero-byline { font-size:0.88rem; color:var(--text-dim,#7a756c); letter-spacing:0.01em; }
+    @media (max-width:640px) { .article-hero { padding:30px 0 22px; } }
+
+    /* ── entry cards ── */
+    .dupe-entry { background:var(--bg2,#111118); border:1px solid var(--border,rgba(255,255,255,0.07));
+                  border-left:3px solid rgba(201,168,76,0.3);
+                  border-radius:10px; padding:20px 22px; margin:16px 0; }
+    .dupe-entry h3 { display:flex; align-items:baseline; gap:2px; flex-wrap:wrap; }
+    .dupe-entry.tier-callout { border-left-color:var(--gold,#c9a84c);
+                               background:linear-gradient(180deg,rgba(201,168,76,0.06),transparent 60%),var(--bg2,#111118); }
+    .dupe-entry.tier-real { border-left-color:#4ade80; }
+    .dupe-entry.tier-inspired { border-left-color:#facc15; }
+    .dupe-meta { font-size:0.86rem; color:var(--text-dim,#7a756c); margin:2px 0 10px; }
+    @media (max-width:640px) { .dupe-entry { padding:16px 15px; } }
+
+    /* ── buy buttons ── */
+    .buying-options { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .cta-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px;
+        font-size:0.82rem; line-height:1; border-radius:7px; text-decoration:none;
+        background:var(--bg4,#1c1c28); border:1px solid var(--border,rgba(255,255,255,0.09));
+        color:var(--text-muted,#a9a396); transition:border-color .15s, color .15s; }
+    .cta-btn:hover { border-color:var(--gold,#c9a84c); color:var(--gold-light,#e8c97a); }
+    .cta-btn:focus-visible { outline:2px solid var(--gold,#c9a84c); outline-offset:2px; }
+    article .cta-btn { border-bottom:1px solid var(--border,rgba(255,255,255,0.09)); }
+    article .cta-btn:hover { border-bottom-color:var(--gold,#c9a84c); }
+
+
+    .footer-disclosure { max-width:640px; margin:14px auto 0; padding:0 20px;
+        font-size:0.76rem; line-height:1.6; color:var(--text-dim,#7a756c); }
+    .footer-disclosure a { color:var(--text-muted,#a9a396); text-decoration:none;
+                           border-bottom:1px solid rgba(255,255,255,0.14); }
+    .footer-disclosure a:hover { color:var(--gold,#c9a84c); border-bottom-color:var(--gold,#c9a84c); }
+
+    .visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden;
+                       clip:rect(0 0 0 0); white-space:nowrap; }
+
+    @media (prefers-reduced-motion:reduce) {
+      * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+    }
+
+    .lede { font-size:1.1rem; line-height:1.6; color:var(--text,#e8e4dc); margin:0 0 10px; }
+    .answer { border-left:3px solid var(--gold,#c9a84c); background:rgba(201,168,76,.06);
+              padding:16px 20px; border-radius:0 10px 10px 0; margin:22px 0 28px; }
+    .answer p { color:var(--text,#e8e4dc); margin:0 0 8px; }
+    .answer p:last-child { margin:0; }
+    .jump { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 4px; }
+    .jump a { padding:7px 14px; border:1px solid rgba(201,168,76,.35); border-radius:20px;
+              font-size:.84rem; border-bottom-width:1px; }
+    .jump a:hover { background:rgba(201,168,76,.1); }
+    .cmp-table { width:100%; border-collapse:collapse; margin:16px 0 6px; font-size:.93rem; }
+    .cmp-table th { text-align:left; padding:10px 12px; border-bottom:2px solid rgba(201,168,76,.4);
+                    color:var(--gold,#c9a84c); font-size:.72rem; letter-spacing:.07em; text-transform:uppercase; }
+    .cmp-table td { padding:10px 12px; border-bottom:1px solid var(--border,rgba(255,255,255,.07));
+                    color:var(--text,#e8e4dc); vertical-align:top; }
+    .cmp-table td.pct, .pct-big { color:#4ade80; font-weight:700; white-space:nowrap; }
+    .cmp-table tr.no td { opacity:.55; }
+    .table-wrap { overflow-x:auto; }
+    .orig-line { font-size:.86rem; color:var(--text-dim,#7a756c); letter-spacing:.03em;
+                 text-transform:uppercase; margin-bottom:4px; }
+    .pick { display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+            margin:14px 0 6px; padding-top:14px; border-top:1px solid var(--border,rgba(255,255,255,.07)); }
+    .pick-name { color:var(--text,#e8e4dc); font-weight:600; }
+    .pick-pct { font-size:1.6rem; font-weight:700; color:#4ade80; line-height:1; }
+    .bar { height:5px; background:rgba(255,255,255,.07); border-radius:3px; overflow:hidden; margin:6px 0 10px; }
+    .bar > span { display:block; height:100%; background:linear-gradient(90deg,#c9a84c,#4ade80); }
+    .save { font-size:.86rem; color:var(--gold-light,#e8c97a); margin:0 0 4px; }
+    .tags { margin:8px 0 10px; }
+    .tag { display:inline-block; font-size:.74rem; padding:3px 8px; margin:0 5px 5px 0; border-radius:10px;
+           background:rgba(255,255,255,.05); color:var(--text-muted,#a9a396); }
+    .tag.shared { background:rgba(74,222,128,.12); color:#86efac; }
+    .source { font-size:.8rem; color:var(--text-dim,#7a756c); margin:4px 0 12px; }
+    .miss { border-left:3px solid rgba(248,113,113,.5); }
+    .miss h3 .by { color:var(--text-dim,#7a756c); font-weight:400; font-size:.9rem; }
+    .note { font-size:.88rem; color:var(--text-dim,#7a756c); border-top:1px solid var(--border,rgba(255,255,255,.07));
+            margin-top:34px; padding-top:16px; line-height:1.6; }
+    h2[id], .dupe-entry[id] { scroll-margin-top:110px; }
+    @media (max-width:640px) { .pick { flex-direction:column; align-items:flex-start; gap:4px; } }
+  </style>
 </head>
 <body>
+<nav>
+    <a href="https://decodedscents.com" class="nav-logo">
+      ✦ Decoded Scents
+      <span style="display:block;font-size:0.55rem;font-weight:400;letter-spacing:0.12em;color:var(--text-dim);font-family:'Inter',sans-serif;text-transform:uppercase;margin-top:2px;">Luxury Perfume Dupes &amp; Alternatives</span>
+    </a>
+    <div class="nav-links">
+      <a href="#journal">The Scent Journal</a>
+      <a href="https://decodedscents.com">Dupe Finder</a>
+      <a href="https://www.instagram.com/decodedscents" target="_blank" rel="noopener" style="color:var(--gold);">📸 Instagram</a>
+    </div>
+  </nav>
+<header class="article-hero"><div class="container">
+  <div class="hero-meta">✦ Tested Dupe Guide · Creed</div>
+  <h1>Creed Aventus Dupes: We Tested 10, Only 4 Cleared</h1>
+  <div class="hero-byline">Updated September 2026 · 85% floor · 6 minute read</div>
+</div></header>
+<main class="container"><article>
 
-<div class="hero">
-  <div class="hero-cat">✦ Tested Dupe Guide · Creed</div>
-  <h1 class="hero-title">Creed Aventus Dupes: We Tested 10, Only 4 Cleared</h1>
-  <p class="hero-sub">Creed Aventus sells for around $435. We re-tested ten of the most
-  recommended alternatives against the same standard we use everywhere: nothing below 85% gets published.
-  Four cleared. Two of the famous ones turned out to clone a different fragrance entirely.</p>
-  <div class="hero-meta">
-    <span>✦ Updated September 2026</span>
-    <span>✦ 85% floor</span>
-    <span>✦ 6 minute read</span>
-  </div>
+<div class="answer">
+  <p><strong>The short answer:</strong> of ten popular Creed Aventus alternatives, four clear our 85%
+  floor. The closest is <strong>Montagne Parfums Pineapple Intense EDP at 89%</strong>
+  (about $55). The most tested and easiest to find is
+  <strong>Armaf Club de Nuit Intense Man EDP at 88%</strong>, for about
+  $30 against Aventus at $435. Two famous &ldquo;Aventus
+  clones&rdquo; turned out to copy a different fragrance entirely.</p>
 </div>
 
-<div class="content">
-
-  <div class="section-label">The short answer</div>
-  <div class="table-wrap"><table class="cmp-table">
-    <thead><tr><th>Fragrance</th><th>Match</th><th>Price</th><th>Result</th></tr></thead>
-    <tbody><tr><td><strong>Armaf Club de Nuit Intense Man EDP</strong></td><td style="color:#4ade80;font-weight:700">94%</td><td>$30</td><td>✓ Cleared</td></tr><tr><td><strong>Montagne Parfums Pineapple Intense EDP</strong></td><td style="color:#4ade80;font-weight:700">89%</td><td>$55</td><td>✓ Cleared</td></tr><tr><td><strong>Afnan Supremacy Not Only Intense Extrait</strong></td><td style="color:#4ade80;font-weight:700">86%</td><td>$40</td><td>✓ Cleared</td></tr><tr><td><strong>Afnan Supremacy Silver EDP</strong></td><td style="color:#4ade80;font-weight:700">85%</td><td>$28</td><td>✓ Cleared</td></tr><tr style="opacity:.62"><td>Al Haramain L&#x27;Aventure</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr style="opacity:.62"><td>Lattafa Asad</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr style="opacity:.62"><td>Armaf Club de Nuit Milestone</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr style="opacity:.62"><td>Armaf Tres Nuit</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr style="opacity:.62"><td>Riiffs Zenith</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr style="opacity:.62"><td>Pendora Scents King Aventus</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr></tbody>
-  </table></div>
-  <p style="font-size:.86rem;opacity:.7">Creed Aventus retails around $435 for 100ml.</p>
-
-  <div class="method">
-    <p><strong>How we scored these.</strong> Every note pyramid comes from Fragrantica or the brand's own
-    product page, never from a retailer's description. The percentage then weighs what people who own
-    <em>both</em> fragrances actually report — which counts for more than the note list. Anything under
-    85% does not appear, and where something barely clears, we say so.</p>
-  </div>
-
-  <div class="section-label">The four that cleared</div>
-  
-  <div class="dupe-card">
-    <div class="dupe-rank">✦ #1</div>
-    <div class="dupe-header">
-      <div><div class="dupe-name">Club de Nuit Intense Man EDP</div><div class="dupe-brand">Armaf</div></div>
-      <div><div class="dupe-price">$30</div><span class="badge">Fruity Chypre</span></div>
-    </div>
-    <div class="sim-wrap">
-      <div class="sim-header"><span>Similarity to Aventus</span><span class="sim-score">94%</span></div>
-      <div class="sim-track"><div class="sim-fill" style="width:94%"></div></div>
-    </div>
-    <div><span class="note-tag shared">Pineapple</span><span class="note-tag shared">Bergamot</span><span class="note-tag">Blackcurrant</span><span class="note-tag shared">Apple</span><span class="note-tag">Jasmine</span><span class="note-tag shared">Rose</span><span class="note-tag shared">Birch</span><span class="note-tag shared">Patchouli</span><span class="note-tag shared">Ambergris</span><span class="note-tag shared">Musk</span><span class="note-tag shared">Vanilla</span></div>
-    <p class="dupe-desc">The most famous Creed Aventus dupe in the world. Reddit fragrance community unanimously confirms CDNI as the closest Aventus alternative -- blind tests consistently fool Aventus owners. 94% community similarity rating.</p>
-    <div class="community">📚 Reddit r/fragrance, Fragrantica community, ScentClones expert blind test</div>
-    <div class="buy-btns"><a href="https://www.amazon.com/dp/B084D1N7JJ?tag=decodedscents-20" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-amazon">🛒 Buy on Amazon</a><a href="https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&amp;mid=216&amp;murl=https%3A%2F%2Fwww.fragrancenet.com%2Fcologne%2Farmaf%2Farmaf-club-de-nuit-intense%2Feau-de-parfum" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-google">🏪 FragranceNet</a><a href="https://www.fragrantica.com/search/?query=Armaf+Club+de+Nuit+Intense+Man+EDP" target="_blank" rel="noopener" class="buy-btn buy-finder">📖 Fragrantica</a></div>
-  </div>
-  <div class="dupe-card">
-    <div class="dupe-rank">✦ #2</div>
-    <div class="dupe-header">
-      <div><div class="dupe-name">Pineapple Intense EDP</div><div class="dupe-brand">Montagne Parfums</div></div>
-      <div><div class="dupe-price">$55</div><span class="badge">Chypre Fruity</span></div>
-    </div>
-    <div class="sim-wrap">
-      <div class="sim-header"><span>Similarity to Aventus</span><span class="sim-score">89%</span></div>
-      <div class="sim-track"><div class="sim-fill" style="width:89%"></div></div>
-    </div>
-    <div><span class="note-tag shared">Bergamot</span><span class="note-tag shared">Apple</span><span class="note-tag shared">Black Currant</span><span class="note-tag shared">Pineapple</span><span class="note-tag shared">Moroccan Jasmine</span><span class="note-tag">Juniper Berries</span><span class="note-tag shared">Rose</span><span class="note-tag shared">Birch</span><span class="note-tag shared">Patchouli</span><span class="note-tag shared">Oak Moss</span><span class="note-tag shared">Ambergris</span><span class="note-tag shared">Musk</span></div>
-    <p class="dupe-desc">Eleven of Aventus&#x27;s twelve notes — the pineapple, blackcurrant and apple opening, the birch and jasmine heart, the oakmoss and ambergris base. Only the vanilla is missing. That is the most complete note match of any Aventus alternative we hold, Club de Nuit Intense included. Montagne names its target on its own product page, and specifically: the 2016 batches of Aventus, which many owners consider the smokier, more fruit-forward vintage before later reformulations. Reddit&#x27;s verdict, repeated so widely it has become a byword, is that it is scary close. Two honest caveats keep it at 89 rather than higher. That evidence is the brand&#x27;s own claim plus a community phrase, not a detailed side-by-side from someone who owns both. And it needs two to three months of maturation before it performs properly — a fresh bottle will disappoint, and several owners say so.</p>
-    <div class="community">📚 Montagne Parfums official product page naming Aventus 2016 as the target · brand-published pyramid · widely repeated Reddit community verdict</div>
-    <div class="buy-btns"><a href="https://www.montagneparfums.com/fragrance/pineapple-intense" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-google">🌐 Buy direct</a><a href="https://www.fragrantica.com/search/?query=Montagne+Parfums+Pineapple+Intense" target="_blank" rel="noopener" class="buy-btn buy-finder">📖 Fragrantica</a></div>
-  </div>
-  <div class="dupe-card">
-    <div class="dupe-rank">✦ #3</div>
-    <div class="dupe-header">
-      <div><div class="dupe-name">Supremacy Not Only Intense Extrait</div><div class="dupe-brand">Afnan</div></div>
-      <div><div class="dupe-price">$40</div><span class="badge">Chypre Fruity</span></div>
-    </div>
-    <div class="sim-wrap">
-      <div class="sim-header"><span>Similarity to Aventus</span><span class="sim-score">86%</span></div>
-      <div class="sim-track"><div class="sim-fill" style="width:86%"></div></div>
-    </div>
-    <div><span class="note-tag shared">Black Currant</span><span class="note-tag shared">Bergamot</span><span class="note-tag shared">Apple</span><span class="note-tag shared">Oak Moss</span><span class="note-tag shared">Patchouli</span><span class="note-tag">Lavender</span><span class="note-tag shared">Ambergris</span><span class="note-tag shared">Musk</span><span class="note-tag">Saffron</span></div>
-    <p class="dupe-desc">The one Aventus alternative that genuinely divides people, and its note list explains why. It shares seven of Aventus&#x27;s twelve notes but lacks the two that define it — no pineapple and no birch — with lavender and saffron in their place and oakmoss pushed forward. So it reads mossy and earthy where Aventus reads fruity and smoky. Owners pull both ways. A Fragrantica reviewer finds it closer to Aventus than to Nishane Hacivat and smoother than Club de Nuit Intense; an eBay buyer calls it virtually a one-to-one clone of a smoky, fruity batch of classic Aventus. Against that, a detailed comparison says plainly that it is not a perfect copy — denser, greener, darker and more aggressive. The honest summary is that it sits between Aventus and Hacivat, which is why it scores 86 here and not higher. If you want Aventus specifically, look above. If you like the Aventus DNA but want something deeper and mossier, this is the better buy. It is an extrait, and performance is exceptional.</p>
-    <div class="community">📚 Fragrantica owner reviews · eBay verified purchase · dedicated Aventus comparison · pyramid from Fragrantica</div>
-    <div class="buy-btns"><a href="https://www.amazon.com/dp/B07W6WLZKD?tag=decodedscents-20" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-amazon">🛒 Buy on Amazon</a><a href="https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&amp;mid=216&amp;murl=https%3A%2F%2Fwww.fragrancenet.com%2Fcologne%2Fafnan-perfumes%2Fafnan-supremacy-not-only-intense%2Fextrait-de-parfum" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-google">🏪 FragranceNet</a><a href="https://www.fragrantica.com/search/?query=Afnan+Supremacy+Not+Only+Intense" target="_blank" rel="noopener" class="buy-btn buy-finder">📖 Fragrantica</a></div>
-  </div>
-  <div class="dupe-card">
-    <div class="dupe-rank">✦ #4</div>
-    <div class="dupe-header">
-      <div><div class="dupe-name">Supremacy Silver EDP</div><div class="dupe-brand">Afnan</div></div>
-      <div><div class="dupe-price">$28</div><span class="badge">Fruity Chypre</span></div>
-    </div>
-    <div class="sim-wrap">
-      <div class="sim-header"><span>Similarity to Aventus</span><span class="sim-score">85%</span></div>
-      <div class="sim-track"><div class="sim-fill" style="width:85%"></div></div>
-    </div>
-    <div><span class="note-tag shared">Pineapple</span><span class="note-tag shared">Black Currant</span><span class="note-tag shared">Bergamot</span><span class="note-tag shared">Apple</span><span class="note-tag shared">Birch</span><span class="note-tag shared">Patchouli</span><span class="note-tag shared">Moroccan Jasmine</span><span class="note-tag shared">Rose</span><span class="note-tag shared">Musk</span><span class="note-tag">Oakmoss</span><span class="note-tag shared">Ambergris</span><span class="note-tag shared">Vanilla</span></div>
-    <p class="dupe-desc">Note pyramid is nearly identical to Creed Aventus, with all key signature molecules (pineapple, birch, ambergris, oakmoss) present. Community verdict is honestly split -- ScentClones 2026 blind tests rate 90-95% after 4-8 weeks of maceration, but out-of-box reviews consistently flag a synthetic-leaning pineapple opening and less sophistication in the top notes compared to Aventus. Sits at the 85% floor: real dupe DNA, real gaps. Longevity is a strength (8-11 hours per 2026 blind testing), not the weakness earlier reviews suggested.</p>
-    <div class="community">📚 ScentClones 2026 blind test, Parfumei aggregated blind tests, PickMyClone dedicated side-by-side review, Parfumo owner comparisons, Fragrantica community (4.06/5 from 2,283 voters)</div>
-    <div class="buy-btns"><a href="https://www.amazon.com/dp/B07BGDV4WD?tag=decodedscents-20" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-amazon">🛒 Buy on Amazon</a><a href="https://click.linksynergy.com/link?id=qPG3GkVv1uU&amp;offerid=507761.216299206&amp;type=2&amp;murl=https%3a%2f%2fwww.fragrancenet.com%2fafnan-supremacy-silver-cologne%2fAfnan-Perfumes%2fmens-Fragrances%2fmf%2fen_US%2f32168%2f299206" target="_blank" rel="noopener nofollow sponsored" class="buy-btn buy-google">🏪 FragranceNet</a><a href="https://www.fragrantica.com/search/?query=Afnan+Supremacy+Silver" target="_blank" rel="noopener" class="buy-btn buy-finder">📖 Fragrantica</a></div>
-  </div>
-
-  <div class="section-label">The six that did not — and why</div>
-  <p class="dupe-desc">This is the part most dupe lists leave out. Each of these appears in other
-  Aventus round-ups. None cleared ours.</p>
-  <div class="dupe-card" style="border-left:3px solid rgba(248,113,113,.45)"><div class="dupe-name" style="font-size:1.05rem">L&#x27;Aventure <span class="dupe-brand" style="display:inline">· Al Haramain</span></div><p class="dupe-desc" style="margin-top:8px">The most surprising result here, because it is one of the most recommended Aventus clones on the internet. Its published pyramid shares four of Aventus's twelve notes and <strong>none of its fruit</strong> — no pineapple, no black currant, no apple, no birch. One owner puts it at 95% after maceration; another smells only lime and pine. The explanation that reconciles them is an owner's own: it clones the <em>newer</em>, weaker Aventus without birch. If that is the Aventus you like, it may suit you. If you want the smoky fruit the name is famous for, it will not deliver it.</p></div><div class="dupe-card" style="border-left:3px solid rgba(248,113,113,.45)"><div class="dupe-name" style="font-size:1.05rem">Asad <span class="dupe-brand" style="display:inline">· Lattafa</span></div><p class="dupe-desc" style="margin-top:8px">Listed in many Aventus round-ups, including an earlier version of this page. Our own research files it as a <strong>Dior Sauvage Elixir</strong> dupe, and that is where it belongs — a spiced amber, not a fruity chypre. Recommending it for Aventus was simply wrong, and we have corrected it.</p></div><div class="dupe-card" style="border-left:3px solid rgba(248,113,113,.45)"><div class="dupe-name" style="font-size:1.05rem">Club de Nuit Milestone <span class="dupe-brand" style="display:inline">· Armaf</span></div><p class="dupe-desc" style="margin-top:8px">Another holdover from the earlier version, which also credited it to the wrong house. It is Armaf's, and it is a <strong>Hugo Boss Bottled</strong> alternative, not an Aventus one.</p></div><div class="dupe-card" style="border-left:3px solid rgba(248,113,113,.45)"><div class="dupe-name" style="font-size:1.05rem">Tres Nuit <span class="dupe-brand" style="display:inline">· Armaf</span></div><p class="dupe-desc" style="margin-top:8px">Frequently sold as an Aventus alternative. Owners are blunt that it is not — it is one of the best-known clones of <strong>Creed Green Irish Tweed</strong>, a violet-and-iris freshie with none of Aventus's pineapple or smoke.</p></div><div class="dupe-card" style="border-left:3px solid rgba(248,113,113,.45)"><div class="dupe-name" style="font-size:1.05rem">Zenith <span class="dupe-brand" style="display:inline">· Riiffs</span></div><p class="dupe-desc" style="margin-top:8px">Popular on TikTok as an Aventus pick. We could not find a single comparison from anyone who owns both, or a reliable note pyramid. No evidence, no entry.</p></div><div class="dupe-card" style="border-left:3px solid rgba(248,113,113,.45)"><div class="dupe-name" style="font-size:1.05rem">King Aventus <span class="dupe-brand" style="display:inline">· Pendora Scents</span></div><p class="dupe-desc" style="margin-top:8px">The name does a lot of work. We found no owner comparisons and no published pyramid to test against. Same standard as Zenith: until someone who owns both says so, it does not go in.</p></div>
-
-  <div class="method">
-    <p><strong>A correction.</strong> An earlier version of this page, from June 2026, recommended ten
-    dupes without our current standard and listed Lattafa Asad and Armaf Milestone as Aventus
-    alternatives. Our own database files both as dupes of other fragrances. This version replaces it.</p>
-  </div>
-
-  <p class="dupe-desc">Every dupe above also appears on our
-  <a href="/dupes/creed-aventus" style="color:#c9a84c">Creed Aventus dupes page</a>, with the same scores —
-  and you can <a href="/" style="color:#c9a84c">search any fragrance</a> in our database.</p>
-
+<div class="jump">
+  <a href="#cleared">The four that cleared</a><a href="#failed">The six that did not</a>
+  <a href="#compare">Compare all ten</a>
 </div>
+
+<h2 id="compare">All ten at a glance</h2>
+<div class="table-wrap"><table class="cmp-table">
+  <thead><tr><th>Fragrance</th><th>Match</th><th>Price</th><th>Result</th></tr></thead>
+  <tbody><tr><td><a href="#dupe-1">Montagne Parfums Pineapple Intense EDP</a></td><td class="pct" style="color:#4ade80">89%</td><td>$55</td><td>✓ Cleared</td></tr><tr><td><a href="#dupe-2">Armaf Club de Nuit Intense Man EDP</a></td><td class="pct" style="color:#4ade80">88%</td><td>$30</td><td>✓ Cleared</td></tr><tr><td><a href="#dupe-3">Afnan Supremacy Not Only Intense Extrait</a></td><td class="pct" style="color:#4ade80">86%</td><td>$40</td><td>✓ Cleared</td></tr><tr><td><a href="#dupe-4">Afnan Supremacy Silver EDP</a></td><td class="pct" style="color:#facc15">85%</td><td>$28</td><td>✓ Cleared</td></tr><tr class="no"><td>Al Haramain L&#x27;Aventure</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr class="no"><td>Lattafa Asad</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr class="no"><td>Armaf Club de Nuit Milestone</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr class="no"><td>Armaf Tres Nuit</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr class="no"><td>Riiffs Zenith</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr><tr class="no"><td>Pendora Scents King Aventus</td><td>—</td><td>—</td><td>✗ Did not clear</td></tr></tbody>
+</table></div>
+
+<h2 id="cleared">The four that cleared</h2>
+
+<div class="dupe-entry" id="dupe-1">
+  <div class="orig-line">#1 &nbsp;·&nbsp; $55 &nbsp;·&nbsp; Chypre Fruity</div>
+  <div class="pick" style="border-top:0;padding-top:0;margin-top:4px">
+    <h3 style="margin:0">Montagne Parfums Pineapple Intense EDP</h3>
+    <div class="pick-pct" style="color:#4ade80">89%</div>
+  </div>
+  <div class="bar"><span style="width:89%"></span></div>
+  <div class="tags"><span class="tag shared">Bergamot</span><span class="tag shared">Apple</span><span class="tag shared">Black Currant</span><span class="tag shared">Pineapple</span><span class="tag shared">Moroccan Jasmine</span><span class="tag">Juniper Berries</span><span class="tag shared">Rose</span><span class="tag shared">Birch</span><span class="tag shared">Patchouli</span><span class="tag shared">Oak Moss</span><span class="tag shared">Ambergris</span><span class="tag shared">Musk</span></div>
+  <p>Eleven of Aventus&#x27;s twelve notes — the pineapple, blackcurrant and apple opening, the birch and jasmine heart, the oakmoss and ambergris base. Only the vanilla is missing. That is the most complete note match of any Aventus alternative we hold, Club de Nuit Intense included. Montagne names its target on its own product page, and specifically: the 2016 batches of Aventus, which many owners consider the smokier, more fruit-forward vintage before later reformulations. Reddit&#x27;s verdict, repeated so widely it has become a byword, is that it is scary close. Two honest caveats keep it at 89 rather than higher. That evidence is the brand&#x27;s own claim plus a community phrase, not a detailed side-by-side from someone who owns both. And it needs two to three months of maturation before it performs properly — a fresh bottle will disappoint, and several owners say so.</p>
+  <p class="source">Sources: Montagne Parfums official product page naming Aventus 2016 as the target · brand-published pyramid · widely repeated Reddit community verdict</p>
+  <div class="buying-options"><a href="https://www.montagneparfums.com/fragrance/pineapple-intense" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🌐 Buy direct</a><a href="https://www.fragrantica.com/search/?query=Montagne+Parfums+Pineapple+Intense" target="_blank" rel="noopener" class="cta-btn">📖 Fragrantica</a></div>
+</div>
+<div class="dupe-entry" id="dupe-2">
+  <div class="orig-line">#2 &nbsp;·&nbsp; $30 &nbsp;·&nbsp; Fruity Chypre</div>
+  <div class="pick" style="border-top:0;padding-top:0;margin-top:4px">
+    <h3 style="margin:0">Armaf Club de Nuit Intense Man EDP</h3>
+    <div class="pick-pct" style="color:#4ade80">88%</div>
+  </div>
+  <div class="bar"><span style="width:88%"></span></div>
+  <div class="tags"><span class="tag shared">Pineapple</span><span class="tag shared">Bergamot</span><span class="tag shared">Blackcurrant</span><span class="tag shared">Apple</span><span class="tag shared">Jasmine</span><span class="tag shared">Rose</span><span class="tag shared">Birch</span><span class="tag shared">Patchouli</span><span class="tag shared">Ambergris</span><span class="tag shared">Musk</span><span class="tag shared">Vanilla</span></div>
+  <p>The most famous Aventus alternative and the most tested, at about $30 — but not the closest, and we revised its score from 94 to 88 in September 2026 to say so. Owners of both agree on the opening. A Basenotes owner who compared them side by side says it opens exactly like his M01 and W01 batches of Aventus, with one difference: a noticeable lemony note Aventus does not have. German verified buyers put it more bluntly — lemon where Aventus has pineapple. They disagree about where it drifts. A collector of twelve years who owns both puts it at 80 to 85 per cent on the opening and heart, with the widest gap in the drydown, where several buyers say it turns smoky and jasmine-heavy and loses the fruit. Another owner goes lower, about 70 per cent, closer to 80 once it dries down. Batch matters more than with almost any fragrance: one long-time buyer calls his 2016 bottles better than Aventus and a 2019 bottle cheap and synthetic. So why not lower? Because nobody who owns both argues it is not an Aventus dupe — one reviewer who tested them together says only minor details are missing, and performance matches the original at seven to nine hours. Pineapple Intense scores a point higher on a near-complete note match and the brand&#x27;s own claim, but its evidence is thinner. If you want the proven, easy-to-find choice, this is it.</p>
+  <p class="source">Sources: Basenotes side-by-side owner comparison · Aromatick owner-of-both comparison (12-year collector, decant seller) · bestmenscolognes side-by-side test · eBay.de verified buyers · Slickdeals owner of both · score revised from 94 to 88, September 2026</p>
+  <div class="buying-options"><a href="https://www.amazon.com/dp/B084D1N7JJ?tag=decodedscents-20" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🛒 Amazon</a><a href="https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&amp;mid=216&amp;murl=https%3A%2F%2Fwww.fragrancenet.com%2Fcologne%2Farmaf%2Farmaf-club-de-nuit-intense%2Feau-de-parfum" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🏪 FragranceNet</a><a href="https://www.fragrantica.com/search/?query=Armaf+Club+de+Nuit+Intense+Man+EDP" target="_blank" rel="noopener" class="cta-btn">📖 Fragrantica</a></div>
+</div>
+<div class="dupe-entry" id="dupe-3">
+  <div class="orig-line">#3 &nbsp;·&nbsp; $40 &nbsp;·&nbsp; Chypre Fruity</div>
+  <div class="pick" style="border-top:0;padding-top:0;margin-top:4px">
+    <h3 style="margin:0">Afnan Supremacy Not Only Intense Extrait</h3>
+    <div class="pick-pct" style="color:#4ade80">86%</div>
+  </div>
+  <div class="bar"><span style="width:86%"></span></div>
+  <div class="tags"><span class="tag shared">Black Currant</span><span class="tag shared">Bergamot</span><span class="tag shared">Apple</span><span class="tag shared">Oak Moss</span><span class="tag shared">Patchouli</span><span class="tag">Lavender</span><span class="tag shared">Ambergris</span><span class="tag shared">Musk</span><span class="tag">Saffron</span></div>
+  <p>The one Aventus alternative that genuinely divides people, and its note list explains why. It shares seven of Aventus&#x27;s twelve notes but lacks the two that define it — no pineapple and no birch — with lavender and saffron in their place and oakmoss pushed forward. So it reads mossy and earthy where Aventus reads fruity and smoky. Owners pull both ways. A Fragrantica reviewer finds it closer to Aventus than to Nishane Hacivat and smoother than Club de Nuit Intense; an eBay buyer calls it virtually a one-to-one clone of a smoky, fruity batch of classic Aventus. Against that, a detailed comparison says plainly that it is not a perfect copy — denser, greener, darker and more aggressive. The honest summary is that it sits between Aventus and Hacivat, which is why it scores 86 here and not higher. If you want Aventus specifically, look above. If you like the Aventus DNA but want something deeper and mossier, this is the better buy. It is an extrait, and performance is exceptional.</p>
+  <p class="source">Sources: Fragrantica owner reviews · eBay verified purchase · dedicated Aventus comparison · pyramid from Fragrantica</p>
+  <div class="buying-options"><a href="https://www.amazon.com/dp/B07W6WLZKD?tag=decodedscents-20" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🛒 Amazon</a><a href="https://click.linksynergy.com/deeplink?id=qPG3GkVv1uU&amp;mid=216&amp;murl=https%3A%2F%2Fwww.fragrancenet.com%2Fcologne%2Fafnan-perfumes%2Fafnan-supremacy-not-only-intense%2Fextrait-de-parfum" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🏪 FragranceNet</a><a href="https://www.fragrantica.com/search/?query=Afnan+Supremacy+Not+Only+Intense" target="_blank" rel="noopener" class="cta-btn">📖 Fragrantica</a></div>
+</div>
+<div class="dupe-entry" id="dupe-4">
+  <div class="orig-line">#4 &nbsp;·&nbsp; $28 &nbsp;·&nbsp; Fruity Chypre</div>
+  <div class="pick" style="border-top:0;padding-top:0;margin-top:4px">
+    <h3 style="margin:0">Afnan Supremacy Silver EDP</h3>
+    <div class="pick-pct" style="color:#facc15">85%</div>
+  </div>
+  <div class="bar"><span style="width:85%"></span></div>
+  <div class="tags"><span class="tag shared">Pineapple</span><span class="tag shared">Black Currant</span><span class="tag shared">Bergamot</span><span class="tag shared">Apple</span><span class="tag shared">Birch</span><span class="tag shared">Patchouli</span><span class="tag shared">Moroccan Jasmine</span><span class="tag shared">Rose</span><span class="tag shared">Musk</span><span class="tag shared">Oakmoss</span><span class="tag shared">Ambergris</span><span class="tag shared">Vanilla</span></div>
+  <p>Note pyramid is nearly identical to Creed Aventus, with all key signature molecules (pineapple, birch, ambergris, oakmoss) present. Community verdict is honestly split -- ScentClones 2026 blind tests rate 90-95% after 4-8 weeks of maceration, but out-of-box reviews consistently flag a synthetic-leaning pineapple opening and less sophistication in the top notes compared to Aventus. Sits at the 85% floor: real dupe DNA, real gaps. Longevity is a strength (8-11 hours per 2026 blind testing), not the weakness earlier reviews suggested.</p>
+  <p class="source">Sources: ScentClones 2026 blind test, Parfumei aggregated blind tests, PickMyClone dedicated side-by-side review, Parfumo owner comparisons, Fragrantica community (4.06/5 from 2,283 voters)</p>
+  <div class="buying-options"><a href="https://www.amazon.com/dp/B07BGDV4WD?tag=decodedscents-20" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🛒 Amazon</a><a href="https://click.linksynergy.com/link?id=qPG3GkVv1uU&amp;offerid=507761.216299206&amp;type=2&amp;murl=https%3a%2f%2fwww.fragrancenet.com%2fafnan-supremacy-silver-cologne%2fAfnan-Perfumes%2fmens-Fragrances%2fmf%2fen_US%2f32168%2f299206" target="_blank" rel="noopener nofollow sponsored" class="cta-btn">🏪 FragranceNet</a><a href="https://www.fragrantica.com/search/?query=Afnan+Supremacy+Silver" target="_blank" rel="noopener" class="cta-btn">📖 Fragrantica</a></div>
+</div>
+
+<h2 id="failed">The six that did not — and why</h2>
+<p>This is the part most dupe lists leave out. Each of these appears in other Aventus round-ups.
+None cleared ours.</p>
+<div class="dupe-entry miss"><h3>L&#x27;Aventure <span class="by">· Al Haramain</span></h3><p>The most surprising result here, because it is one of the most recommended Aventus clones on the internet. Its published pyramid shares four of Aventus's twelve notes and <strong>none of its fruit</strong> — no pineapple, no black currant, no apple, no birch. One owner puts it at 95% after maceration; another smells only lime and pine. The explanation that reconciles them is an owner's own: it clones the <em>newer</em>, weaker Aventus without birch. If that is the Aventus you like, it may suit you. If you want the smoky fruit the name is famous for, it will not deliver it.</p></div><div class="dupe-entry miss"><h3>Asad <span class="by">· Lattafa</span></h3><p>Listed in many Aventus round-ups, including an earlier version of this page. Our own research files it as a <strong>Dior Sauvage Elixir</strong> dupe, and that is where it belongs — a spiced amber, not a fruity chypre. Recommending it for Aventus was simply wrong, and we have corrected it.</p></div><div class="dupe-entry miss"><h3>Club de Nuit Milestone <span class="by">· Armaf</span></h3><p>Another holdover from the earlier version, which also credited it to the wrong house. It is Armaf's, and it is a <strong>Hugo Boss Bottled</strong> alternative, not an Aventus one.</p></div><div class="dupe-entry miss"><h3>Tres Nuit <span class="by">· Armaf</span></h3><p>Frequently sold as an Aventus alternative. Owners are blunt that it is not — it is one of the best-known clones of <strong>Creed Green Irish Tweed</strong>, a violet-and-iris freshie with none of Aventus's pineapple or smoke.</p></div><div class="dupe-entry miss"><h3>Zenith <span class="by">· Riiffs</span></h3><p>Popular on TikTok as an Aventus pick. We could not find a single comparison from anyone who owns both, or a reliable note pyramid. No evidence, no entry.</p></div><div class="dupe-entry miss"><h3>King Aventus <span class="by">· Pendora Scents</span></h3><p>The name does a lot of work. We found no owner comparisons and no published pyramid to test against. Same standard as Zenith: until someone who owns both says so, it does not go in.</p></div>
+
+<p class="note"><strong>A correction.</strong> An earlier version of this page, from June 2026,
+recommended ten dupes without our current standard and listed Lattafa Asad and Armaf Milestone as
+Aventus alternatives. Our own database files both as dupes of other fragrances. This version replaces it.
+In September 2026 we also revised Club de Nuit Intense Man from 94% to 88%: its earlier score had no documented basis, and owners of both put it lower.
+<br><br><strong>How we score.</strong> Every pyramid comes from Fragrantica or the brand&rsquo;s own page,
+never a retailer. The percentage weighs what people who own <em>both</em> report above the note list.
+Nothing under 85% appears. Every dupe above is also on our
+<a href="/dupes/creed-aventus">Creed Aventus dupes page</a> with the same scores.</p>
+
+</article></main>
 <footer>
     <a href="https://decodedscents.com" class="footer-logo">✦ Decoded Scents</a>
     <p class="footer-tagline">Every Scent, Decoded.</p>
