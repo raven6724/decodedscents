@@ -882,6 +882,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/parfums-de-marly-delina-exclusif-parfum"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes/parfums-de-marly-herod-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/parfums-de-marly-herod-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/parfums-de-marly-herod-edp"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes/parfums-de-marly-layton</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1813,6 +1820,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/parfums-de-marly-delina-exclusif-parfum"/>
   </url>
   <url>
+    <loc>https://decodedscents.com/dupes-es/parfums-de-marly-herod-edp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/dupes/parfums-de-marly-herod-edp"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/dupes-es/parfums-de-marly-herod-edp"/>
+  </url>
+  <url>
     <loc>https://decodedscents.com/dupes-es/parfums-de-marly-layton</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -2399,5 +2413,11 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://decodedscents.com/brands/zara/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://decodedscents.com/marcas/zara/"/>
+  </url>
+  <url>
+    <loc>https://decodedscents.com/Articles/fall-fragrance-dupes</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
